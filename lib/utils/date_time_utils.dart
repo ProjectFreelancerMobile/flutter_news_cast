@@ -149,15 +149,8 @@ String readTimeStampFull(int? timestamp, String? languageCode) {
 
 String readTimeDayAndHour(int? timestamp) {
   if (timestamp == null) return "";
-  var format = DateFormat('dd-MM-yyyy HH:mm:ss');
-  var date = DateTime.fromMillisecondsSinceEpoch(timestamp);
-  return format.format(date);
-}
-
-String readTimeDayAndHourNoti(int? timestamp) {
-  if (timestamp == null) return "";
-  var format = DateFormat('dd/MM/yyyy HH:mm');
-  var date = DateTime.fromMillisecondsSinceEpoch(timestamp);
+  var format = DateFormat('dd/MM/yyyy - HH:mm');
+  var date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
   return format.format(date);
 }
 
@@ -175,16 +168,10 @@ DateTime getDateBySecond(int? timestampInSeconds) {
   return date;
 }
 
-DateTime getDateByMilliseconds(int? timestampInMilliseconds) {
-  if (timestampInMilliseconds == null) return DateTime.now();
-  var date = DateTime.fromMillisecondsSinceEpoch(timestampInMilliseconds);
-  return date;
-}
-
 String getTimeByUnixTimestamp(int? timestampInSeconds) {
   if (timestampInSeconds == null) return "";
   var format = DateFormat('HH:mm');
-  var date = DateTime.fromMillisecondsSinceEpoch(timestampInSeconds);
+  var date = DateTime.fromMillisecondsSinceEpoch(timestampInSeconds * 1000);
   return format.format(date);
 }
 
@@ -280,19 +267,4 @@ String readTimeStampBySecond(String? dateTime) {
   }
 
   return time;
-}
-
-String formatTimeBank(DateTime now) {
-  var hourStr = "${now.hour}";
-  var minuteStr = "${now.minute}";
-
-  if (now.hour < 10) {
-    hourStr = "0${now.hour}";
-  }
-
-  if (now.minute < 10) {
-    minuteStr = "0${now.minute}";
-  }
-
-  return "$hourStr:$minuteStr";
 }

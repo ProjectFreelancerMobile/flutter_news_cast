@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_news_cast/data/api/models/token_model.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../../res/languages/localization_service.dart';
@@ -9,15 +10,25 @@ import '../api/models/TUser.dart';
 class MyStorage {
   late GetStorage box;
   static const STORAGE_NAME = "my_storage";
-  static const APP_USER_INFO = "app_user_info";
+  static const APP_USER_INFO = "telemed_user_info";
+  static const APP_NEW_INSTALL = "app_new_install";
   static const APP_THEME = "app_theme";
   static const APP_LANGUAGE = "app_language";
-  static const APP_KEY = "app_key";
-  static const APP_MAIN_THEME = "app_main_theme";
+  static const DEVICE_TOKEN = "device_token";
 
   init() async {
     await GetStorage.init(STORAGE_NAME);
     box = GetStorage(STORAGE_NAME);
+  }
+
+  Future<void> saveDeviceToken(TokenModel tokenModel) async {
+    String json = jsonEncode(tokenModel.toJson());
+    box.write(DEVICE_TOKEN, json);
+  }
+
+  Future<TokenModel?> getDeviceToken() async {
+    final tokenJson = await box.read(DEVICE_TOKEN);
+    return tokenJson != null ? TokenModel.fromJson(json.decode(tokenJson)) : null;
   }
 
   Future<void> saveUserInfo(TUser user) async {
@@ -30,19 +41,14 @@ class MyStorage {
     return userJson != null ? TUser.fromJson(json.decode(userJson)) : null;
   }
 
-  /* Future<void> saveListUserInfo(List<String> listUser) async {
-    box.write(APP_LIST_USER, jsonEncode(listUser));
+  Future<void> saveInstall(bool isInstall) async {
+    box.write(APP_NEW_INSTALL, isInstall);
   }
 
-  Future<List<String>?> getListUserInfo() async {
-    final dataList = await box.read(APP_LIST_USER);
-    if (dataList != null) {
-      var listUserJson = (jsonDecode(dataList) as List<dynamic>).cast<String>();
-      return listUserJson;
-    } else {
-      return [];
-    }
-  }*/
+  Future<bool> isInstall() async {
+    final isInstall = await box.read(APP_NEW_INSTALL) ?? false;
+    return isInstall;
+  }
 
   Future<void> setTheme(int theme) async {
     box.write(APP_THEME, theme);
@@ -50,15 +56,6 @@ class MyStorage {
 
   Future<int> getTheme() async {
     final theme = await box.read(APP_THEME) ?? ThemeService.LIGHT_THEME;
-    return theme;
-  }
-
-  Future<void> setAppTheme(int theme) async {
-    box.write(APP_MAIN_THEME, theme);
-  }
-
-  Future<int> getAppTheme() async {
-    final theme = await box.read(APP_MAIN_THEME) ?? 0;
     return theme;
   }
 
@@ -71,20 +68,10 @@ class MyStorage {
     return theme;
   }
 
-  Future<void> setKey(String key) async {
-    box.write(APP_KEY, key);
-  }
-
-  Future<String> getKey() async {
-    final key = await box.read(APP_KEY) ?? '';
-    return key;
-  }
-
   Future<void> logout() async {
     if (box.hasData(APP_LANGUAGE)) await box.remove(APP_LANGUAGE);
     if (box.hasData(APP_THEME)) await box.remove(APP_THEME);
     if (box.hasData(APP_USER_INFO)) await box.remove(APP_USER_INFO);
-    if (box.hasData(APP_KEY)) await box.remove(APP_KEY);
-    //if (box.hasData(APP_LIST_USER)) await box.remove(APP_LIST_USER);
+    if (box.hasData(DEVICE_TOKEN)) await box.remove(DEVICE_TOKEN);
   }
 }

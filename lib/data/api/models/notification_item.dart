@@ -15,11 +15,6 @@ class NotificationItem {
 
   NotificationItem({this.id, this.title, this.content, this.receiver, this.type, this.notify, this.booking, this.isRead, this.image, this.createdAt, this.updatedAt});
 
-  @override
-  String toString() {
-    return 'NotificationItem{id: $id, title: $title, content: $content, receiver: $receiver, type: $type, notify: $notify, booking: $booking, isRead: $isRead, image: $image, createdAt: $createdAt, updatedAt: $updatedAt}';
-  }
-
   factory NotificationItem.fromJson(Map<String, dynamic> json) => NotificationItem(
         id: json["id"] ?? "",
         title: json["title"] ?? "",

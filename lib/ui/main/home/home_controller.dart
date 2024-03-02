@@ -1,41 +1,35 @@
 // ignore_for_file: invalid_use_of_protected_member
+
 import 'dart:async';
 
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter_news_cast/data/api/models/device/device_item.dart';
+import 'package:flutter_news_cast/data/api/repositories/device_repository.dart';
+import 'package:flutter_news_cast/data/storage/key_constant.dart';
+import 'package:flutter_news_cast/res/style.dart';
+import 'package:flutter_news_cast/ui/main/main_controller.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter_news_cast/data/api/repositories/payment_repository.dart';
-
+import 'package:logger/logger.dart';
 import '../../../app/app_controller.dart';
-import '../../../data/api/api_constants.dart';
+import '../../../app/app_pages.dart';
 import '../../../data/api/models/TUser.dart';
 import '../../base/base_controller.dart';
+import '../../widgets/dialogs/app_popup.dart';
 
-class HomeController extends BaseController with GetSingleTickerProviderStateMixin{
+class HomeController extends BaseController {
+  final _mainController = Get.find<MainController>();
+  final _deviceRepository = Get.find<DeviceRepository>();
   final _appController = Get.find<AppController>();
   var _user = TUser().obs;
 
   TUser get user => _user.value;
+  final GlobalKey widgetKey = GlobalKey();
+
+  List<DeviceItem> get listDevice => _listDevice$.value;
+  final _listDevice$ = <DeviceItem>[].obs;
+  Timer? periodicTimer = null;
 
   bool get isShowScreenError => false;
-  final deviceInfoPlugin = DeviceInfoPlugin();
-//Notification
-  List<dynamic> get listNotification => _listNotification$.value;
-  final _listNotification$ = <dynamic>[].obs;
-  //Home
-  PageController controllerIntro = PageController(initialPage: 0, viewportFraction: 0.93);
-  var pageIndexIntro = 0.obs;
-
-  ImageProvider<Object> themeMain() => _appController.themeMain();
-
-  //Vietinbank
-  final ScrollController controller = ScrollController();
-  RxBool showTabBarFull = true.obs;
-
-  RxBool showInfoFull = true.obs;
-  RxBool showInfoMoney = true.obs;
 
   @override
   void onClose() {
@@ -46,68 +40,117 @@ class HomeController extends BaseController with GetSingleTickerProviderStateMix
   @override
   void onInit() async {
     super.onInit();
-    _user.value = _appController.user ?? TUser();
-    updateBienDong(user);
-    onScroll();
-    print('user::' + user.toString());
+    _user.value = _appController.user ?? TUser(name: '', gender: SEX_TYPE.MEN.name, phone: '');
+    autoRefreshList();
   }
 
-  void onScroll() {
-    controller.addListener(() {
-      if (controller.hasClients) {
-        if (controller.position.userScrollDirection == ScrollDirection.forward && !showTabBarFull.value) {
-          showTabBarFull.value = true;
-        } else if (controller.position.userScrollDirection == ScrollDirection.reverse && showTabBarFull.value) {
-          showTabBarFull.value = false;
-        }
+  void autoRefreshList({bool isFore = false}) async {
+    print('HomeController:autoRefreshList:' + _mainController.pageIndex.value.toString());
+    if (_mainController.pageIndex.value == 0 || isFore) {
+      await getListDevice();
+      periodicTimer?.cancel();
+      periodicTimer = Timer.periodic(Duration(seconds: 5), (timer) async {
+        periodicTimer = timer;
+        await getListDevice(isShowLoading: false);
+      });
+    }
+  }
+
+  MainController get getMainController => _mainController;
+
+  Future<void> getListDevice({bool? isShowLoading = true}) async {
+    try {
+      if (AppPopup.pairDevice) return;
+      if (isShowLoading == true) {
+        showLoading();
       }
-    });
+      await _deviceRepository.getListDevice(_mainController.farmPick).then((value) {
+        if (value != null) {
+          _listDevice$.value = value;
+          Logger(
+                  printer: PrettyPrinter(
+                      methodCount: 2,
+                      // Number of method calls to be displayed
+                      errorMethodCount: 8,
+                      // Number of method calls if stacktrace is provided
+                      lineLength: 120,
+                      // Width of the output
+                      colors: true,
+                      // Colorful log messages
+                      printEmojis: true,
+                      // Print an emoji for each log message
+                      printTime: true // Should each log print contain a timestamp
+                      ))
+              .i("getListDevice::");
+        }
+      });
+      if (isShowLoading == true) {
+        hideLoading();
+      }
+    } catch (e) {
+      if (isShowLoading == true) {
+        hideLoading();
+      }
+      showMessage(getErrors(e), isForeShow: isShowLoading == true);
+    }
   }
 
-  onChangeVisibleInfo() {
-    showInfoFull.value = !showInfoFull.value;
+  Future<void> pushDevice(DeviceItem? deviceItem, String? sn, {Function(bool)? isState}) async {
+    try {
+      if (sn == null || deviceItem == null) return isState != null ? isState(false) : null;
+      showLoading();
+      await _deviceRepository.pushDevice(sn: sn).then((value) {
+        if (value != null) {
+          if (value.state == true) {
+            isState != null ? isState(true) : null;
+            final deviceUpdate = deviceItem.copyWith(data: CONTROL_TYPE.ON.name);
+            listDevice[listDevice.indexWhere((element) => element.serialNo == sn)] = deviceUpdate;
+          } else if (value.state == false) {
+            isState != null ? isState(false) : null;
+            final deviceUpdate = deviceItem.copyWith(data: CONTROL_TYPE.OFF.name);
+            listDevice[listDevice.indexWhere((element) => element.serialNo == sn)] = deviceUpdate;
+          }
+          _listDevice$.value = listDevice;
+        } else {
+          isState != null ? isState(false) : null;
+          showMessage(textLocalization('data.error'));
+        }
+      });
+      hideLoading();
+    } catch (e) {
+      isState != null ? isState(false) : null;
+      hideLoading();
+      showMessage(getErrors(e));
+    }
   }
 
-  onChangeVisibleInfoMoney() {
-    showInfoMoney.value = !showInfoMoney.value;
-  }
-
-  onTabChangedIntro(int index) {
-    pageIndexIntro.value = index;
-  }
-
-  String getTimeDate(DateTime dateTime) {
-    var timeString = '${DateFormat(DATE_FORMAT_NOTIFICATION_DAY).format(dateTime)} tháng ${DateFormat(DATE_FORMAT_NOTIFICATION_YEAR).format(dateTime)}';
-    return timeString;
-  }
-
-  getListNotification() {
-    _listNotification$.value = _appController.user?.bienDong ?? List.empty();
-  }
-
-  void updateBienDong(TUser user) {
-    _appController.user = user;
-  }
-
-  Future<void> onGetBalance() async {
-    final balance = await Get.find<PaymentRepository>().paymentGetBalance(user.userName);
+  void updateName(String nameUpdate) {
     _user.update((_user) {
-      user.updateUser(balance: balance);
+      user.updateUser(name: nameUpdate);
     });
-    updateBienDong(user);
-    print('onGetBalance:' + balance.toString());
+    print('updateName:::' + user.name.toString());
   }
 
-  void resetPayment() {
-    _appController.resetPayment();
+  onGotoAddDevice() {
+    periodicTimer?.cancel();
+    Get.toNamed(AppRoutes.ADD_DEVICE);
   }
+
+  onGotoManagerDevice(DeviceItem deviceItem) {
+    periodicTimer?.cancel();
+    removePopUp();
+    Get.toNamed(AppRoutes.MANAGER_DEVICE, arguments: deviceItem);
+  }
+
+  removePopUp() {
+    _mainController.appPopup?.removePopup();
+  }
+
+  getPopup() => _mainController.appPopup;
 
   @override
   void dispose() {
-    controller.dispose();
-    controllerIntro.dispose();
+    periodicTimer?.cancel();
     super.dispose();
   }
-
-  bool get checkLogin => _appController.user != null && _appController.user!.userName.isNotEmpty;
 }

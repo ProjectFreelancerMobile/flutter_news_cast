@@ -1,84 +1,72 @@
-import '../../../utils/data_util.dart';
+import '../converters/date_time_converter.dart';
+
+/// birthday : "1980-01-01"
+/// gender : 1
+/// phone : ""
+/// name : "Chương"
 
 class TUser {
   TUser({
-    String? userName,
-    String? displayName,
-    num? balance,
-    String? soDienThoai,
-    String? soTaiKhoan,
-    bool? sdSTKDeKiemTra,
-    List<dynamic>? bienDong,
-    List<dynamic>? taiKhoanChuyenTien,
+    DateTime? birthday,
+    num? gender,
+    String? phone,
+    String? name,
   }) {
-    _userName = userName;
-    _displayName = displayName;
-    _balance = balance;
-    _soDienThoai = soDienThoai;
-    _soTaiKhoan = soTaiKhoan;
-    _sdSTKDeKiemTra = sdSTKDeKiemTra;
-    _bienDong = bienDong;
-    _taiKhoanChuyenTien = taiKhoanChuyenTien;
+    _birthday = birthday;
+    _gender = gender;
+    _phone = phone;
+    _name = name;
   }
 
   @override
   String toString() {
-    return 'TUser{_userName: $_userName, _displayName: $_displayName, _balance: $_balance, _soDienThoai: $_soDienThoai, _soTaiKhoan: $_soTaiKhoan, _sdSTKDeKiemTra: $_sdSTKDeKiemTra, _bienDong: $_bienDong, _taiKhoanChuyenTien: $_taiKhoanChuyenTien}';
+    return 'TUser{_birthday: $_birthday, _gender: $_gender, _phone: $_phone, _name: $_name}';
   }
 
-  String? _userName;
-  String? _displayName;
-  num? _balance;
-  String? _soDienThoai;
-  String? _soTaiKhoan;
-  bool? _sdSTKDeKiemTra;
-  List<dynamic>? _bienDong;
-  List<dynamic>? _taiKhoanChuyenTien;
+  final dateTime = DateTimeConverter();
 
-  String get userName => _userName ?? _displayName ?? '';
+  TUser.fromJson(dynamic json) {
+    _birthday = dateTime.fromJson(json['birthday']);
+    _gender = json['gender'];
+    _phone = json['phone'];
+    _name = json['name'];
+  }
 
-  String? get displayName => _displayName;
+  DateTime? _birthday;
+  num? _gender;
+  String? _phone;
+  String? _name;
 
-  num get balance => _balance ?? 0;
+  DateTime? get birthday => _birthday;
 
-  String get getTotalMoney => formatCurrencyRaw(balance);
+  num? get gender => _gender;
 
-  String? get soDienThoai => _soDienThoai;
+  String? get phone => _phone;
 
-  String get soTaiKhoan => _soTaiKhoan ?? '';
-
-  bool get sdSTKDeKiemTra => _sdSTKDeKiemTra ?? false;
-
-  List<dynamic> get bienDong => _bienDong ?? List.empty();
-
-  List<dynamic> get taiKhoanChuyenTien => _taiKhoanChuyenTien ?? List.empty();
-
-  bool get userExist => userName.isNotEmpty && soTaiKhoan.isNotEmpty;
+  String? get name => _name;
 
   Map<String, dynamic> toJson() {
-    return {
-      'userName': _userName,
-      'displayName': _displayName,
-      'balance': _balance,
-      'soDienThoai': _soDienThoai,
-      'soTaiKhoan': _soTaiKhoan,
-      'bienDong': _bienDong,
-      'taiKhoanChuyenTien': _taiKhoanChuyenTien,
-      'sdSTKDeKiemTra': _sdSTKDeKiemTra,
-    };
+    final map = <String, dynamic>{};
+    map['birthday'] = dateTime.toJson(_birthday ?? DateTime.now());
+    map['gender'] = _gender;
+    map['phone'] = _phone;
+    map['name'] = _name;
+    return map;
   }
 
-  TUser.fromJson(Map<String, dynamic> json)
-      : _userName = json['userName'],
-        _displayName = json['displayName'],
-        _balance = json['balance'],
-        _soDienThoai = json['soDienThoai'],
-        _soTaiKhoan = json['soTaiKhoan'],
-        _bienDong = json['bienDong'] ?? [],
-        _taiKhoanChuyenTien = json['taiKhoanChuyenTien'] ?? [],
-        _sdSTKDeKiemTra = json['sdSTKDeKiemTra'];
+  TUser copyWith() {
+    return TUser(
+      birthday: _birthday,
+      gender: _gender,
+      name: _name,
+      phone: _phone,
+    );
+  }
 
-  updateUser({num? balance}) {
-    this._balance = balance ?? this._balance;
+  updateUser({DateTime? birthday, num? gender, String? phone, String? name}) {
+    this._birthday = birthday ?? this._birthday;
+    this._gender = gender ?? this._gender;
+    this._phone = phone ?? this._phone;
+    this._name = name ?? this._name;
   }
 }

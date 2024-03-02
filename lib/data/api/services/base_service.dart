@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart' as dio;
+import 'package:flutter_news_cast/data/api/api_constants.dart';
 import 'package:flutter_news_cast/res/style.dart';
 
 import '../../storage/key_constant.dart';
@@ -18,24 +19,22 @@ abstract class BaseService {
     return response.data;
   }
 
-  Future<dynamic> getWithCustomUrlGet(String customUrl, String path, {Map<String, dynamic>? params}) async {
-    final response = await RestClient.getDio(customUrl: customUrl).get(path, queryParameters: params);
-    return response.data;
-  }
-
   Future<ApiResponse> get(String path, {Map<String, dynamic>? params}) async {
-    final response = await RestClient.getDio().get(path, queryParameters: params);
-    return _handleResponse(response);
+    if (isConnection) {
+      final response = await RestClient.getDio().get(path, queryParameters: params);
+      return _handleResponse(response);
+    } else {
+      return _handleResponseLostConnect();
+    }
   }
 
   Future<ApiResponse> post(String path, {data, bool enableCache = false}) async {
-    final response = await RestClient.getDio().post(path, data: data);
-    return _handleResponse(response);
-  }
-
-  Future<dynamic> postString(String path, {data, bool enableCache = false}) async {
-    final response = await RestClient.getDio().post(path, data: data);
-    return response.data;
+    if (isConnection) {
+      final response = await RestClient.getDio().post(path, data: data);
+      return _handleResponse(response);
+    } else {
+      return _handleResponseLostConnect();
+    }
   }
 
   Future<ApiResponse> put(String path, {data}) async {
@@ -54,20 +53,6 @@ abstract class BaseService {
   }
 
   ApiResponse _handleResponse(dio.Response response) {
-    Map result = response.data;
-    if (result['success']) {
-      return ApiResponse(
-        success: true,
-        data: response.data,
-      );
-    } else {
-      var apiResponse = ApiResponse.fromJson(response.data);
-      print('_handleResponse:fail::' + apiResponse.toString());
-      return throw apiResponse;
-    }
-  }
-
-  ApiResponse _handleResponseOld(dio.Response response) {
     Map result = jsonDecode(response.data);
     if (result['status'] == STATUS_TYPE.OK.name) {
       final apiResponse = ApiResponse.fromJson(jsonDecode(response.data));
@@ -83,6 +68,7 @@ abstract class BaseService {
   ApiResponse _handleResponseLostConnect() {
     print("_handleResponseLostConnect::");
     return throw ApiResponse(
+      code: 0,
       message: textLocalization('setting.error.connect'),
     );
   }

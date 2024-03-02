@@ -1,5 +1,5 @@
 final Map<String, String> enUS = {
-  'appName': 'Techcombank',
+  'appName': 'Urvega',
   'login.title': 'Đăng nhập',
   'logout.title': 'Thoát',
   'login.password': 'Password',
@@ -44,8 +44,6 @@ final Map<String, String> enUS = {
   //Dialog
   'dialog.permission.location':
       'Urvega cần truy cập dịch vụ định vị thiết bị của bạn để thiết bị tự động kết nối với mạng Wi-Fi. Nếu bạn từ chối, bạn sẽ không thể thêm thiết bị mới.',
-  'dialog.request.wifi':
-      'Urvega cần truy cập dịch vụ định vị thiết bị của bạn để thiết bị tự động kết nối với mạng Wi-Fi. Bạn hãy nhấn “CHO PHÉP” từ ứng dụng này hoặc vào phần Cài Đặt của thiết bị tìm ứng dụng Urvega và bật cho phép sử dụng quyền vị trí.',
   'dialog.device.title': 'Tìm được thiết bị mới',
   'dialog.device.title.error': 'Không tìm được thiết bị',
   'dialog.device.content.error': 'Bạn cần chắc chắn thiết bị đã bật nguồn, đặt trong phạm vi phủ sóng Wi-Fi và có kết nối internet.',
@@ -62,7 +60,7 @@ final Map<String, String> enUS = {
   'dialog.save2': 'Lưu',
   'dialog.update': 'Cập nhật',
   'dialog.next': 'TIẾP THEO',
-  'dialog.confirm': 'ĐỒNG Ý',
+  'dialog.confirm': 'Đồng ý',
   //Home
   'home.user.title': 'Chào ',
   'home_list_device': 'Danh sách thiết bị',

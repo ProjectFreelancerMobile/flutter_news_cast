@@ -25,7 +25,7 @@ class _ButtonIconWidgetState extends State<ButtonIconWidget> {
       alignment: Alignment.center,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(widget.radius!)),
-          border: Border.all(color: getColor().themeColorGrey, width: widget.borderWidth!),
+          border: Border.all(color: getColor().themeColorFF6F15, width: widget.borderWidth!),
           color: widget.background),
       child: widget.icon,
     );

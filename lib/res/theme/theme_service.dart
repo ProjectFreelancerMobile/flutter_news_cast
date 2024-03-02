@@ -64,46 +64,108 @@ extension MyColorScheme on ColorScheme {
 
   //***************************START TEXT COLOR*****************************************
   //Màu của chữ trong toàn bộ ứng dụng
-  Color get textColorBlue => getColorTheme(colorTextBlue, colorTextBlue);
 
-  Color get textColorMainDark => getColorTheme(colorMainDark, colorMainDark);
+  Color get textColor141414 => getColorTheme(color141414, color141414);
 
-  Color get textColorMainDarkBlack => getColorTheme(colorMainDarkBlack, colorMainDarkBlack);
+  Color get textColor777777 => getColorTheme(color777777, color777777);
 
-  Color get textColorMainMedium => getColorTheme(colorTextMain, colorTextMain);
+  Color get textColorB2B2B2 => getColorTheme(colorB2B2B2, colorB2B2B2);
 
-  Color get textColorMainLight => getColorTheme(colorTextMain2, colorTextMain2);
+  Color get textColorF20606 => getColorTheme(colorF20606, colorF20606);
 
-  Color get textColorTextGrey => getColorTheme(colorTextGrey, colorTextGrey);
+  Color get textColorFF6F15 => getColorTheme(colorFF6F15, colorFF6F15);
 
-  Color get textColorTextGreyLight => getColorTheme(colorTextGreyLight, colorTextGreyLight);
+  Color get textColor00AC44 => getColorTheme(color00AC44, color00AC44);
 
-  Color get textColorBlack => getColorTheme(colorBlack, colorBlack);
+  Color get textColor0083ED => getColorTheme(color0083ED, color0083ED);
 
   Color get textColorPrimary => getColorTheme(colorPrimary, colorPrimary);
 
   Color get textColorWhite => getColorTheme(colorWhite, colorWhite);
 
+  Color get textColor929394 => getColorTheme(color929394, color929394);
+
+  Color get textColorD67402 => getColorTheme(colorD67402, colorD67402);
+
+  Color get textColor0E66AC => getColorTheme(color0E66AC, color0E66AC);
+
+  Color get textColorB90D18 => getColorTheme(colorB90D18, colorB90D18);
+
+  Color get textColorD3D3D4 => getColorTheme(colorD3D3D4, colorD3D3D4);
+
   //***************************COMPONENT COLOR*****************************************
   //Màu của các button,checkbox.....
 
-  Color get themeColorBackground => getColorTheme(colorBackground, colorBackground);
-
   Color get themeColorPrimary => getColorTheme(colorPrimary, colorPrimary);
+
+  Color get themeColorB2B2B2 => getColorTheme(colorB2B2B2, colorB2B2B2);
+
+  Color get themeColor00AC44 => getColorTheme(color00AC44, color00AC44);
+
+  Color get themeColorF5F6F8 => getColorTheme(colorF5F6F8, colorF5F6F8);
 
   Color get themeColorWhite => getColorTheme(colorWhite, colorWhite);
 
-  Color get themeColorBlack => getColorTheme(colorBlack, colorBlack);
+  Color get themeColor0060E0 => getColorTheme(color0060E0, color0060E0);
 
-  Color get themeColorGrey => getColorTheme(colorBgGrey, colorBgGrey);
+  Color get themeColor00DDD4 => getColorTheme(color00DDD4, color00DDD4);
+
+  Color get themeColorF2F9FE => getColorTheme(colorF2F9FE, colorF2F9FE);
+
+  Color get themeColor141414 => getColorTheme(color141414, color141414);
+
+  Color get themeColor929394 => getColorTheme(color929394, color929394);
+
+  Color get themeColorE5F2FF => getColorTheme(colorE5F2FF, colorE5F2FF);
+
+  Color get themeColorD3D3D4 => getColorTheme(colorD3D3D4, colorD3D3D4);
+
+  Color get themeColorBBDEFA => getColorTheme(colorBBDEFA, colorBBDEFA);
+
+  Color get themeColorEBEBEC => getColorTheme(colorEBEBEC, colorEBEBEC);
+
+  Color get themeColor0EAC71 => getColorTheme(color0EAC71, color0EAC71);
+
+  Color get themeColorD67402 => getColorTheme(colorD67402, colorD67402);
+
+  Color get themeColorB90D18 => getColorTheme(colorB90D18, colorB90D18);
+
+  Color get themeColor0E66AC => getColorTheme(color0E66AC, color0E66AC);
+
+  Color get themeColor00B2FD => getColorTheme(color00B2FD, color00B2FD);
+
+  Color get themeColorFFEFE5 => getColorTheme(colorFFEFE5, colorFFEFE5);
+
+  Color get themeColor009CDF => getColorTheme(color009CDF, color009CDF);
+
+  Color get themeColor00CCDD => getColorTheme(color00CCDD, color00CCDD);
 
   Color get themeColorPrimaryOpacity10 => getColorTheme(colorPrimary.withOpacity(0.1), colorPrimary.withOpacity(0.1));
 
   Color get themeColorPrimaryOpacity30 => getColorTheme(colorPrimary.withOpacity(0.3), colorPrimary.withOpacity(0.3));
+
+  Color get themeColor00AC44Opacity10 => getColorTheme(color00AC44.withOpacity(0.1), color00AC44.withOpacity(0.1));
+
+  Color get themeColor00AC44Opacity30 => getColorTheme(color00AC44.withOpacity(0.3), color00AC44.withOpacity(0.3));
+
+  Color get themeColorFF6F15 => getColorTheme(colorFF6F15, colorFF6F15);
+
+  Color get themeColorFF6F15Opacity10 => getColorTheme(colorFF6F15.withOpacity(0.1), colorFF6F15.withOpacity(0.1));
+
+  Color get themeColorFF6F15Opacity30 => getColorTheme(colorFF6F15.withOpacity(0.3), colorFF6F15.withOpacity(0.3));
+
 //***************************BACKGROUND COLOR*****************************************
   //Màu của các background
 
+  Color get bgThemeColorF5F6F8 => getColorTheme(colorF5F6F8, colorF5F6F8);
+
   Color get bgThemeColorWhite => getColorTheme(colorWhite, colorWhite);
+
+  Color get bgThemeColor0060E0 => getColorTheme(color0060E0, color0060E0);
+
+  Color get bgThemeColor00DDD4 => getColorTheme(color00DDD4, color00DDD4);
+
+  Color get bgThemeColorF2F9FE => getColorTheme(colorF2F9FE, colorF2F9FE);
 
 // Color get bgThemeColor0060E0 => getColorTheme(color0060E0, color0060E0);
 }

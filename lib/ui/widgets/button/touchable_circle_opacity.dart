@@ -21,7 +21,7 @@ class TouchableCircleOpacity extends StatelessWidget {
       iconSize: size,
       icon: Container(
         alignment: Alignment.center,
-        decoration: BoxDecoration(color: getColor().themeColorGrey.withOpacity(0.7), borderRadius: BorderRadius.all(Radius.circular(size / 2))),
+        decoration: BoxDecoration(color: getColor().themeColorB2B2B2.withOpacity(0.7), borderRadius: BorderRadius.all(Radius.circular(size / 2))),
         child: icon,
       ),
     );

@@ -26,7 +26,7 @@ class DataEmptyWidget extends StatelessWidget {
           ),
           Text(
             textLocalization('data.empty'),
-            style: text16.textColorBlack,
+            style: text16.textColor141414,
           )
         ],
       ),

@@ -1,9 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
-import 'package:flutter_news_cast/res/gen/assets.gen.dart';
 
 import '../../ui/widgets/data_error_widget.dart';
+import '../../ui/widgets/loading_widget.dart';
 import 'base_controller.dart';
 
 //ignore: must_be_immutable
@@ -37,12 +37,9 @@ abstract class BasePage<C extends BaseController> extends GetWidget<C> {
   }
 
   Widget buildDefaultLoading() {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      color: Colors.black45,
-      child: Center(
-        child: IgnorePointer(child: Lottie.asset(Assets.json.loading)),
+    return Center(
+      child: LoadingWidget(
+        radius: 16,
       ),
     );
   }

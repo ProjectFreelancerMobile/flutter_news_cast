@@ -1,6 +1,8 @@
 const String MIN_DATETIME = '1800-05-12';
 const String MAX_DATETIME = '2023-05-25';
 const String INIT_DATETIME = '1990-01-01';
+const String fkTest = ""; //"YNAt3Y51";
+const String ukTest = ""; //"/4mkVhaEkQVbtSpy+p1bMUpOpntpT66ZhYKwf692VDY=";
 
 enum ADD_DEVICE_TYPE { WIFI, SEARCH, REGISTER, CREATE, DONE }
 
@@ -16,7 +18,7 @@ enum STATUS_TYPE { FAIL, OK }
 
 enum CONTROL_TYPE { ON, OFF }
 
-enum PAYMENT_TYPE { NONE, INFO, DETAIL, SUCCESS, QRCODE }
+enum SOCIAL_TYPE { GOOGLE, FACEBOOK, ZALO }
 
 extension DeviceTypeExt on DEVICE_TYPE {
   num get name {
@@ -39,7 +41,22 @@ extension StatusTypeExt on STATUS_TYPE {
       case STATUS_TYPE.FAIL:
         return 'fail';
       case STATUS_TYPE.OK:
-        return 'success';
+        return 'ok';
+      default:
+        return '';
+    }
+  }
+}
+
+extension SocialTypeExt on SOCIAL_TYPE {
+  String get name {
+    switch (this) {
+      case SOCIAL_TYPE.FACEBOOK:
+        return 'facebook';
+      case SOCIAL_TYPE.GOOGLE:
+        return 'google';
+      case SOCIAL_TYPE.ZALO:
+        return 'zalo';
       default:
         return '';
     }

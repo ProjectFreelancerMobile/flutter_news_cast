@@ -1,4 +1,8 @@
+import 'package:event_bus/event_bus.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_news_cast/data/api/models/token_model.dart';
+import 'package:flutter_news_cast/data/storage/key_constant.dart';
 import 'package:get/get.dart';
 
 import '../../res/languages/localization_service.dart';
@@ -7,10 +11,10 @@ import '../../res/theme/theme_service.dart';
 import '../app/app_pages.dart';
 import '../data/api/api_constants.dart';
 import '../data/api/models/TUser.dart';
-import '../data/api/models/payment/payment_item.dart';
 import '../data/api/rest_client.dart';
 import '../data/storage/my_storage.dart';
-import '../res/style.dart';
+import '../ui/main/home/home_controller.dart';
+import '../ui/widgets/dialogs/app_popup.dart';
 import 'base_app_config.dart';
 
 class AppController extends GetxController {
@@ -19,49 +23,24 @@ class AppController extends GetxController {
   Rx<ThemeData?>? themeData;
   Rx<AuthState> authState = AuthState.unauthorized.obs;
   TUser? user;
-  PaymentItem paymentItem = PaymentItem();
-  var indexTheme = 0.obs;
-
-  void resetPayment() {
-    paymentItem = PaymentItem();
-  }
-
-  void updateAppTheme(int index) {
-    indexTheme.value = index;
-  }
-
-  ImageProvider<Object> themeMain() {
-    print('themeMain::'+ indexTheme.toString());
-    if (indexTheme == 0) {
-      return Assets.images.imgThemeBgTet.image().image;
-    } else if (indexTheme == 1) {
-      return Assets.images.imgThemeBgMain.image().image;
-    } else if (indexTheme == 2) {
-      return Assets.images.imgThemeBgMain2.image().image;
-    } else {
-      return Assets.images.imgThemeBgMain.image().image;
-    }
-  }
 
   init(Environment environment) async {
     this.env = environment;
-    await Future.wait([initStorage()]);
+    await Future.wait([initFirebase(), initStorage()]);
     await setupLocator();
     await initTheme();
     await initLanguage();
     await initAuth();
-    final storage = Get.find<MyStorage>();
-    indexTheme.value = await storage.getAppTheme();
-    //initPhotos();
   }
 
   Future<void> initAuth() async {
     final storage = Get.find<MyStorage>();
     user = await storage.getUserInfo();
-    print('initAuth::success:${user}');
-    if (user != null) {
+    final tokenModel = await storage.getDeviceToken();
+
+    if (tokenModel != null) {
       await initApi();
-      if (user?.userExist == true) {
+      if (user?.name != null && user!.name!.isNotEmpty) {
         authState.value = AuthState.authorized;
       } else {
         authState.value = AuthState.uncompleted;
@@ -72,21 +51,28 @@ class AppController extends GetxController {
     }
   }
 
+  Future<void> initFirebase() async {
+    await Firebase.initializeApp();
+  }
+
   Future<void> initStorage() async {
     final storage = Get.put(MyStorage());
     await storage.init();
-  }
-
-  Future<void> initPhotos() async {
-    //Get.put(PhotoProvider()).init();
+    //TODO Test
+    if (fkTest.isNotEmpty && ukTest.isNotEmpty) {
+      storage.saveDeviceToken(TokenModel(ukTest, fkTest));
+    }
   }
 
   logout() async {
     user = null;
     locale = null;
     themeData = null;
+    AppPopup.pairDevice = false;
+    AppPopup.listFarm = null;
+    Get.find<HomeController>().periodicTimer?.cancel();
     await Get.find<MyStorage>().logout();
-    Get.offAllNamed(AppRoutes.MAIN);
+    Get.offAllNamed(AppRoutes.INITIAL);
   }
 
   Future<void> initTheme() async {
@@ -133,12 +119,12 @@ class AppController extends GetxController {
 
   Future<void> updateUserInfo(TUser userInfo) async {
     this.user = userInfo;
-    if (user!.taiKhoanChuyenTien.isNotEmpty) {
+    if (userInfo.name != null && user!.name!.isNotEmpty) {
       authState.value = AuthState.authorized;
       Get.offAllNamed(AppRoutes.MAIN);
     } else {
       authState.value = AuthState.uncompleted;
-      Get.offAllNamed(AppRoutes.SPLASH);
+      Get.offAllNamed(AppRoutes.UPDATE_PROFILE);
     }
   }
 
@@ -171,5 +157,7 @@ class AppController extends GetxController {
     // }
   }
 }
+
+EventBus eventBus = EventBus();
 
 enum AuthState { unauthorized, authorized, uncompleted, new_install }

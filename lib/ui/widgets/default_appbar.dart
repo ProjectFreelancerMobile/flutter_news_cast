@@ -13,8 +13,6 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
   final TextStyle? style;
   final String? leading;
   final Color? leadingColor;
-  final bool? isIconBank;
-  final bool? isIconBankCenter;
   final List<Widget>? actions;
   final double? height;
   AppBarStyle? appBarStyle = AppBarStyle.NONE;
@@ -22,20 +20,7 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onPress;
   final PreferredSizeWidget? tabBar;
 
-  DefaultAppbar({
-    this.leading,
-    this.title,
-    this.style,
-    this.color,
-    this.actions,
-    this.height,
-    this.leadingColor,
-    this.onPress,
-    this.tabBar,
-    this.appBarStyle = AppBarStyle.NONE,
-    this.isIconBankCenter = true,
-    this.isIconBank = false,
-  });
+  DefaultAppbar({this.leading, this.title, this.style, this.color, this.actions, this.height, this.leadingColor, this.onPress, this.tabBar, this.appBarStyle = AppBarStyle.NONE});
 
   @override
   Widget build(BuildContext context) {
@@ -45,21 +30,17 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         automaticallyImplyLeading: false,
         actions: actions,
-        leading: isIconBank == true && isIconBankCenter == false ? iconBankCustom() : buildWidgetLeading(appBarStyle, leading),
-        title: isIconBank == true
-            ? iconBankCustom()
-            : Text(
-                title ?? "",
-                style: style ?? text18.semiBold.textColorWhite,
-              ),
-        backgroundColor: color ?? Colors.transparent,
+        leading: buildWidgetLeading(appBarStyle, leading),
+        title: Text(
+          title ?? "",
+          style: style ?? text16.bold.textColor141414,
+        ),
+        backgroundColor: color ?? colorBackground,
         elevation: 0,
         bottom: tabBar,
       ),
     );
   }
-
-  Widget iconBankCustom() => Assets.icons.logo.icTextVietinIpay.svg(height: 18.ws);
 
   Widget buildWidgetLeading(AppBarStyle? appBarStyle, String? leading) {
     switch (appBarStyle) {
@@ -90,9 +71,9 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
         )
       : IconButton(
           icon: Icon(
-            isClose == true ? Icons.close : Icons.arrow_back_rounded,
-            color: leadingColor ?? colorWhite,
-            size: 24.ws,
+            isClose == true ? Icons.close : Icons.arrow_back_ios_new,
+            color: color141414,
+            size: 20,
           ),
           onPressed: () {
             onPress != null ? onPress!() : Get.back();

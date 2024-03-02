@@ -3,10 +3,8 @@ import 'dart:math';
 import 'package:get/get.dart';
 
 // Default guideline sizes are based on standard ~5" screen mobile device
-// const guidelineBaseWidth = 390;
-// const guidelineBaseHeight = 844;
-const guidelineBaseWidth = 360;
-const guidelineBaseHeight = 780;
+const guidelineBaseWidth = 390;
+const guidelineBaseHeight = 844;
 
 double get scaleWidth => Get.width / guidelineBaseWidth;
 

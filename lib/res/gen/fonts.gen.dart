@@ -10,12 +10,6 @@
 class FontFamily {
   FontFamily._();
 
-  /// Font family: Montserrat
-  static const String montserrat = 'Montserrat';
-
-  /// Font family: Muli
-  static const String muli = 'Muli';
-
-  /// Font family: SfPro
-  static const String sfPro = 'SfPro';
+  /// Font family: Roboto
+  static const String roboto = 'Roboto';
 }

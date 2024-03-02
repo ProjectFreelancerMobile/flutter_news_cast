@@ -1,64 +1,27 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter_news_cast/ui/base/base_controller.dart';
 
-import '../../app/app_controller.dart';
-import '../../data/api/api_constants.dart';
-import '../../data/api/models/TUser.dart';
+import '../../data/api/models/notification_item.dart';
+import '../../ui/base/base_list_controller.dart';
 
-class ListNotificationController extends BaseController {
-  final _appController = Get.find<AppController>();
-
-  RxInt pageIndex = 0.obs;
-
-  List<dynamic> get listNotification => _listNotification$.value;
-  final _listNotification$ = <dynamic>[].obs;
-
-  var _user = TUser().obs;
-
-  TUser get user => _user.value;
-
-  int get tabTkIndex => _tabTkIndex.value;
-  var _tabTkIndex = 0.obs;
-
-  ImageProvider<Object> themeMain() => _appController.themeMain();
-
-  final menu = [
-    'Biến động số dư',
-    'Tin cá nhân',
-    'Ưu đãi',
-    'Tin cá nhân',
-  ];
+class ListNotificationController extends BaseListController<NotificationItem> {
+  final menu = ["Tất cả hoạt động", "Thông báo tài khoản", "Nhắc nhở", "Thông báo hệ thống"];
+  var selectedMenu = "Tất cả hoạt động".obs;
 
   @override
-  void onInit() async {
-    super.onInit();
-    getListNotification();
-    onTabChanged(0);
+  Future<List<NotificationItem>?> getData() async {
+    return ListTest;
   }
 
-  void getListNotification() {
-    _user.value = _appController.user ?? TUser();
-    _listNotification$.value = user.bienDong;
-  }
-
-  String getTimeDate(DateTime dateTime) {
-    var timeString = '${DateFormat(DATE_FORMAT_NOTIFICATION_DAY).format(dateTime)} tháng ${DateFormat(DATE_FORMAT_NOTIFICATION_YEAR).format(dateTime)}';
-    return timeString;
-  }
-
-  onTabChanged(int index) {
-    pageIndex.value = index;
-  }
-
-  onTabTKChanged(int index) {
-    print('onTabTKChanged::' + index.toString());
-    _tabTkIndex.value = index;
-    if (index == 1) {
-      _listNotification$.value = List.empty();
-    } else {
-      _listNotification$.value = _appController.user?.bienDong ?? List.empty();
-    }
-  }
+  final ListTest = [
+    NotificationItem(
+        isRead: false.obs, type: "system", title: "Tài khoản của bạn đã hoàn tất chưa?", content: "Cập nhật ngay số điện thoại, địa chỉ email để hưởng ngay những ưu đãi nhé"),
+    NotificationItem(isRead: false.obs, title: "DUY NHẤT HÔM NAY", content: "Mua voucher được giảm giá ngay 150K mua nhanh kẻo hết mấy bạn ơi"),
+    NotificationItem(
+        isRead: true.obs,
+        type: "account",
+        image: "https://danatravel.vn/data/tour/900/ba-na-1560224326.jpg",
+        content: "Hạ Ngân Nguyễn chia sẻ bài viết Kinh nghiệm du lịch Phú Quốc "),
+    NotificationItem(type: "payment", isRead: true.obs, title: "Thanh toán thành công", content: "Bạn đã thanh toán thành công đơn hàng H591061. Nhấn vào xem lại chi tiết."),
+    NotificationItem(isRead: true.obs, title: "Nâng cấp hệ thống", content: "Các kênh liên hệ hỗ trợ khách hàng của chúng tôi sẽ bị gián đoạn 22h tối hôm nay(9/5) đến…")
+  ];
 }

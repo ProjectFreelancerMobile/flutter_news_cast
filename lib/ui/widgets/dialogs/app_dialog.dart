@@ -45,7 +45,7 @@ class AppDialog {
 
   Widget get _buildDialog {
     return Scaffold(
-      backgroundColor: colorBlack.withOpacity(0.6),
+      backgroundColor: color141414.withOpacity(0.6),
       body: WillPopScope(
         onWillPop: _onWillPop,
         child: GestureDetector(
@@ -106,7 +106,7 @@ class AppDialog {
       child: Text(
         title,
         textAlign: TextAlign.center,
-        style: text16.bold.textColorBlack,
+        style: text16.bold.textColor141414,
       ),
     );
   }
@@ -118,7 +118,7 @@ class AppDialog {
       child: Text(
         description,
         textAlign: TextAlign.center,
-        style: text14.textColorBlack,
+        style: text14.textColor141414,
       ),
     );
   }

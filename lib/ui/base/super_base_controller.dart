@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_news_cast/data/api/models/response/api_response.dart';
 import 'package:flutter_news_cast/res/style.dart';
+import 'package:get/get.dart';
 
 import '../../data/api/exceptions/api_exception.dart';
 import '../../res/theme/theme_service.dart';
@@ -48,7 +48,7 @@ abstract class BaseSuperController<C> extends SuperController {
         break;
       case 3:
         viewState.value = ViewState.loaded;
-        Get.snackbar(textLocalization('noti.title'), errorMessage ?? textLocalization('data.error'), backgroundColor: getColor().themeColorPrimaryOpacity10);
+        Get.snackbar(textLocalization('noti.title'), errorMessage ?? textLocalization('data.error'), backgroundColor: getColor().themeColorFF6F15);
         break;
     }
   }
@@ -92,14 +92,14 @@ abstract class BaseSuperController<C> extends SuperController {
             children: [
               Text(
                 textLocalization('noti.title'),
-                style: text18.bold.textColorBlack,
+                style: text18.bold.textColor141414,
               ),
               SizedBox(
                 height: 20.hs,
               ),
               Text(
                 content,
-                style: text14.textColorBlack,
+                style: text14.textColor141414,
                 textAlign: TextAlign.center,
               ),
               SizedBox(

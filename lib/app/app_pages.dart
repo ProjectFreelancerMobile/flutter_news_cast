@@ -1,114 +1,106 @@
 import 'package:get/get.dart';
 
+import '../../ui/main/main_binding.dart';
+import '../../ui/main/main_page.dart';
 import '../../ui/notification/list_notification_binding.dart';
 import '../../ui/notification/list_notification_page.dart';
-import '../ui/add_user/add_bill_page.dart';
-import '../ui/add_user/add_user_binding.dart';
-import '../ui/add_user/add_user_page.dart';
-import '../ui/auth/login_binding.dart';
-import '../ui/auth/login_page.dart';
-import '../ui/main/main_binding.dart';
-import '../ui/main/main_page.dart';
-import '../ui/main/tk/balance_info_page.dart';
-import '../ui/main/tk/bank_detail_page.dart';
-import '../ui/payment/payment_binding.dart';
-import '../ui/payment/payment_detail_page.dart';
-import '../ui/payment/payment_info_page.dart';
-import '../ui/payment/payment_page.dart';
-import '../ui/payment/payment_success_page.dart';
-import '../ui/payment/payment_welcome_page.dart';
-import '../ui/qrcode/qrcode_binding.dart';
-import '../ui/qrcode/qrcode_page.dart';
-import '../ui/settings/setting_binding.dart';
-import '../ui/settings/settings_page.dart';
-import '../ui/splash/splash_page.dart';
 
 part 'app_routes.dart';
 
 class AppPages {
   static final pages = [
-    GetPage(
-      name: AppRoutes.INITIAL,
-      page: () => LoginUserPage(),
-      binding: LoginBinding(),
-      children: [
-        GetPage(
-          name: AppRoutes.LOGIN_TK,
-          page: () => LoginUserPage(),
-        ),
-      ],
-    ),
-    GetPage(
-      name: AppRoutes.SPLASH,
-      page: () => const SplashPage(),
-    ),
+    // GetPage(
+    //   name: AppRoutes.INITIAL,
+    //   page: () => LoginPage(),
+    //   binding: LoginBinding(),
+    // ),
+    // GetPage(
+    //   name: AppRoutes.SPLASH,
+    //   page: () => const SplashPage(),
+    // ),
+    // GetPage(
+    //   name: AppRoutes.OTP_REGISTER,
+    //   page: () => OtpPage(),
+    //   binding: OtpBinding(),
+    // ),
+    // GetPage(
+    //   name: AppRoutes.REGISTER,
+    //   page: () => RegisterPage(),
+    //   binding: RegisterBinding(),
+    // ),
     GetPage(
       name: AppRoutes.MAIN,
       page: () => MainPage(),
       binding: MainBinding(),
-      children: [
-        GetPage(
-          name: AppRoutes.BALANCE,
-          page: () => BalanceInfoPage(),
-        ),
-        GetPage(
-          name: AppRoutes.BANK_DETAIL,
-          page: () => BankDetailPage(),
-        ),
-      ],
-    ),
-    GetPage(
-      name: AppRoutes.QRCODE,
-      page: () => QRCodePage(),
-      binding: QRCodeBinding(),
-    ),
-    GetPage(
-      name: AppRoutes.ADD_USER,
-      page: () => AddUserPage(),
-      binding: AddUserBinding(),
-    ),
-    GetPage(
-      name: AppRoutes.ADD_BILL,
-      page: () => AddBillPage(),
-      binding: AddUserBinding(),
     ),
     GetPage(
       name: AppRoutes.LIST_NOTIFICATION,
       page: () => ListNotificationPage(),
       binding: ListNotificationBinding(),
     ),
-    GetPage(
-      name: AppRoutes.SETTING,
-      page: () => SettingsPage(),
-      binding: SettingBinding(),
-    ),
-    GetPage(
-      name: AppRoutes.PAYMENT_WELCOME,
-      page: () => PaymentWelcomePage(),
-      binding: PaymentBinding(),
-      children: [
-        GetPage(
-          name: AppRoutes.PAYMENT,
-          page: () => PaymentPage(),
-        ),
-        GetPage(
-          name: AppRoutes.PAYMENT_INFO,
-          page: () => PaymentInfoPage(),
-        ),
-        GetPage(
-          name: AppRoutes.PAYMENT_DETAIL,
-          page: () => PaymentDetailPage(),
-        ),
-        GetPage(
-          name: AppRoutes.PAYMENT_SUCCESS,
-          page: () => PaymentSuccessPage(),
-        ),
-      ],
-    ),
-    GetPage(
-      name: AppRoutes.PAYMENT_INFO,
-      page: () => PaymentInfoPage(),
-      binding: PaymentBinding(),
-    ),
+    /*HOME*/
+    // GetPage(
+    //   name: AppRoutes.ADD_DEVICE,
+    //   page: () => AddDevicePage(),
+    //   binding: AddDeviceBinding(),
+    // ),
+    // GetPage(
+    //   name: AppRoutes.MANAGER_DEVICE,
+    //   page: () => DevicePage(),
+    //   binding: DeviceBinding(),
+    //   children: [
+    //     GetPage(
+    //       name: AppRoutes.CHART_DETAIL,
+    //       page: () => ChartDetailPage(),
+    //     ),
+    //   ],
+    // ),
+    // GetPage(
+    //   name: AppRoutes.SETTING_DEVICE,
+    //   page: () => DeviceSettingsPage(),
+    //   binding: DeviceBinding(),
+    // ),
+    // /*SERVICE*/
+    // GetPage(
+    //   name: AppRoutes.MANAGER_LIST_DEVICE,
+    //   page: () => ManagerListPage(),
+    //   binding: ManagerListBinding(),
+    // ),
+    // GetPage(
+    //   name: AppRoutes.MANAGER,
+    //   page: () => ManagerPage(),
+    //   binding: ManagerBinding(),
+    // ),
+    // GetPage(
+    //   name: AppRoutes.MANAGER_SEARCH_LOCATION,
+    //   page: () => ManagerSearchPage(),
+    //   binding: ManagerSearchBinding(),
+    // ),
+    // GetPage(
+    //   name: AppRoutes.MANAGER_SIZE,
+    //   page: () => ManagerSizePage(),
+    //   binding: ManagerBinding(),
+    // ),
+    // /*SETTING*/
+    // GetPage(
+    //   name: AppRoutes.SECURITY,
+    //   page: () => SecurityPage(),
+    //   binding: SecurityBinding(),
+    // ),
+    // GetPage(
+    //   name: AppRoutes.SECURITY_EMAIL,
+    //   page: () => SecurityEmailPage(),
+    //   binding: SecurityBinding(),
+    // ),
+    // GetPage(
+    //   name: AppRoutes.SECURITY_LINK,
+    //   page: () => SecurityLinkPage(),
+    //   binding: SecurityBinding(),
+    // ),
+    // GetPage(
+    //   name: AppRoutes.SETTING_NOTIFICATION,
+    //   page: () => SettingNotificationPage(),
+    //   binding: SecurityBinding(),
+    // ),
   ];
 }

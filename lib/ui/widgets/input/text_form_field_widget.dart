@@ -8,93 +8,84 @@ class DTextFromField extends StatelessWidget {
   final TextEditingController? controller;
   final String? Function(String?)? onValidated; // handle error here
   final Function(String?)? onSaved;
-  final Function(String?)? onChange;
-  final Function()? onComplete;
   final TextStyle? textStyle;
-  final TextStyle? textHintStyle;
-  final TextStyle? textLabelHintStyle;
   final TextStyle? errorStyle;
-  final TextStyle? rightTitleStyle;
   final String? hintText;
   final Color? strokeColor;
   final Widget? prefixIcon;
   final double? prefixPadding;
   final Widget? suffixIcon;
-  final Widget? rightIcon;
   final bool? obscureText;
   final TextInputType? keyboardType;
   final int? maxLines;
   final int? maxLength;
   final List<TextInputFormatter>? inputFormatters;
   final bool? enabled;
-  final bool? alignLabelWithHint;
   final String? leftTitle;
   final String? rightTitle;
   final String? errorText;
   final BoxConstraints? prefixConstraints;
+  final BoxConstraints? iconContraints;
   final bool autoFocus;
   final EdgeInsetsGeometry? contentPadding;
   final TextInputAction? textInputAction;
   final Function(String)? onFieldSubmitted;
-  final Function(PointerDownEvent)? onTapOutside;
   final bool? isHideCounterText;
   final bool? textCenter;
-  final bool isUnderBorder;
-  final FloatingLabelBehavior? floatingLabelBehavior;
-  final FocusNode? focusNode;
 
-  DTextFromField({
-    this.controller,
-    this.errorStyle,
-    this.onValidated,
-    this.onSaved,
-    this.onChange,
-    this.onComplete,
-    this.hintText,
-    this.textStyle,
-    this.textHintStyle,
-    this.textLabelHintStyle,
-    this.rightTitleStyle,
-    this.strokeColor,
-    this.obscureText,
-    this.prefixIcon,
-    this.rightIcon,
-    this.keyboardType,
-    this.suffixIcon,
-    this.inputFormatters,
-    this.maxLines = 1,
-    this.maxLength,
-    this.enabled = true,
-    this.alignLabelWithHint = false,
-    this.leftTitle,
-    this.rightTitle,
-    this.errorText,
-    this.autoFocus = false,
-    this.textInputAction,
-    this.onFieldSubmitted,
-    this.onTapOutside,
-    this.prefixPadding,
-    this.isHideCounterText,
-    this.textCenter,
-    this.floatingLabelBehavior,
-    this.focusNode,
-    this.isUnderBorder = true,
-    this.prefixConstraints = const BoxConstraints(minWidth: 26, maxWidth: 26, maxHeight: 26, minHeight: 26),
-    this.contentPadding,
-  });
+  DTextFromField(
+      {this.controller,
+      this.errorStyle,
+      this.onValidated,
+      this.onSaved,
+      this.hintText,
+      this.textStyle,
+      this.strokeColor,
+      this.obscureText,
+      this.prefixIcon,
+      this.keyboardType,
+      this.suffixIcon,
+      this.inputFormatters,
+      this.maxLines = 1,
+      this.maxLength,
+      this.enabled = true,
+      this.leftTitle,
+      this.rightTitle,
+      this.errorText,
+      this.autoFocus = false,
+      this.textInputAction,
+      this.onFieldSubmitted,
+      this.prefixPadding,
+      this.isHideCounterText,
+      this.textCenter,
+      this.prefixConstraints = const BoxConstraints(maxHeight: 36, minHeight: 36),
+      this.iconContraints = const BoxConstraints(maxWidth: 24, maxHeight: 24, minHeight: 24),
+      this.contentPadding = const EdgeInsets.symmetric(vertical: 17.0, horizontal: 0.0)});
 
-  InputBorder _inputBorder(Color? strokeColor, BuildContext context) {
-    return isUnderBorder
-        ? UnderlineInputBorder(borderSide: BorderSide(color: strokeColor ?? getColor().textColorTextGrey, width: 0.3))
-        : OutlineInputBorder(borderSide: BorderSide(color: strokeColor ?? getColor().textColorTextGrey, width: 1), borderRadius: const BorderRadius.all(Radius.circular(8.0)));
+  UnderlineInputBorder _underlineInputBorder(Color? strokeColor, BuildContext context) {
+    return UnderlineInputBorder(borderSide: BorderSide(color: strokeColor ?? getColor().textColorB2B2B2));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        if (leftTitle != null || rightTitle != null)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                leftTitle ?? "",
+                style: text13.bold.textColor777777,
+              ),
+              Text(
+                rightTitle ?? "",
+                style: text13.bold.textColor777777,
+              )
+            ],
+          ),
         TextFormField(
-          focusNode: focusNode,
           maxLength: maxLength,
           enabled: enabled,
           autofocus: autoFocus,
@@ -104,84 +95,37 @@ class DTextFromField extends StatelessWidget {
           keyboardType: keyboardType ?? TextInputType.text,
           validator: onValidated,
           onSaved: onSaved,
-          onChanged: onChange,
-          onEditingComplete: onComplete,
           textAlign: textCenter == true ? TextAlign.center : TextAlign.start,
           textAlignVertical: TextAlignVertical.center,
-          style: textStyle ?? text18.textColorTextGrey,
+          style: textStyle ?? text18.textColor777777,
           inputFormatters: inputFormatters,
           textInputAction: textInputAction,
           onFieldSubmitted: onFieldSubmitted,
-          onTapOutside: onTapOutside,
           decoration: InputDecoration(
-            alignLabelWithHint: alignLabelWithHint,
-            label: Text(alignLabelWithHint == true ? hintText ?? "" : '', style: textLabelHintStyle),
-            counterText: isHideCounterText == true ? "" : null,
-            errorText: errorText,
-            counterStyle: text12.textColorTextGrey,
-            hintText: hintText ?? "",
-            hintStyle: textHintStyle ?? textStyle?.copyWith(color: getColor().textColorTextGreyLight) ?? text18.textColorTextGrey,
-            prefixIconConstraints: prefixConstraints,
-            prefixIcon: prefixIcon != null
-                ? Padding(
-                    child: prefixIcon,
-                    padding: EdgeInsets.only(left: prefixPadding != null ? prefixPadding! : 0, right: prefixPadding != null ? prefixPadding! : 16.ws, top: 14),
-                  )
-                : null,
-            isDense: true,
-            errorStyle: errorStyle ?? text12.textErrorColor,
-            contentPadding: contentPadding ?? EdgeInsets.only(top: 6.ws, bottom: 18.ws),
-            enabledBorder: _inputBorder(strokeColor, context),
-            focusedBorder: _inputBorder(strokeColor, context),
-            border: _inputBorder(strokeColor, context),
-            disabledBorder: _inputBorder(strokeColor, context),
-            focusedErrorBorder: _inputBorder(getColor().error, context),
-            errorBorder: _inputBorder(getColor().error, context),
-            floatingLabelBehavior: floatingLabelBehavior ?? FloatingLabelBehavior.always,
-          ),
-        ),
-        if (leftTitle != null) ...[
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Text(
-              leftTitle ?? "",
-              style: text16.bold.textColorPrimary,
-            ),
-          ),
-        ],
-        if (rightTitle != null) ...[
-          Positioned(
-            bottom: 4,
-            right: 0,
-            child: Text(
-              rightTitle ?? "",
-              style: rightTitleStyle ?? text16.bold.textColorBlack,
-            ),
-          ),
-        ],
-        if (rightIcon != null) ...[
-          Positioned(
-            bottom: 14.ws,
-            right: 34.ws,
-            child: SizedBox(
-              width: 18.ws,
-              height: 18.ws,
-              child: rightIcon!,
-            ),
-          ),
-        ],
-        if (suffixIcon != null) ...[
-          Positioned(
-            bottom: prefixPadding ?? 16.ws,
-            right: 0,
-            child: SizedBox(
-              width: 26.ws,
-              height: 26.ws,
-              child: suffixIcon!,
-            ),
-          ),
-        ],
+              counterText: isHideCounterText == true ? "" : null,
+              errorText: errorText,
+              counterStyle: text12.textColor777777,
+              hintText: hintText ?? "",
+              hintStyle: textStyle?.copyWith(color: getColor().textColorB2B2B2) ?? text18.textColor777777,
+              prefixIconConstraints: prefixConstraints,
+              prefixIcon: prefixIcon != null
+                  ? Padding(
+                      child: prefixIcon,
+                      padding: EdgeInsets.only(left: prefixPadding != null ? prefixPadding! : 0, right: prefixPadding != null ? prefixPadding! : 16.ws),
+                    )
+                  : null,
+              suffixIconConstraints: iconContraints,
+              suffixIcon: suffixIcon,
+              isDense: true,
+              errorStyle: errorStyle ?? text12.textErrorColor,
+              contentPadding: contentPadding,
+              enabledBorder: _underlineInputBorder(strokeColor, context),
+              focusedBorder: _underlineInputBorder(strokeColor, context),
+              border: _underlineInputBorder(strokeColor, context),
+              disabledBorder: _underlineInputBorder(strokeColor, context),
+              focusedErrorBorder: _underlineInputBorder(getColor().error, context),
+              errorBorder: _underlineInputBorder(getColor().error, context)),
+        )
       ],
     );
   }
@@ -197,12 +141,10 @@ class ClearTextField extends StatefulWidget {
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
   final Color? underlineColor;
-  final bool? obscureText;
   final int? maxLength;
   final String? Function(String?)? onValidated;
   final String? errorText;
   final TextStyle? errorStyle;
-  final bool? isClear;
   final EdgeInsetsGeometry? contentPadding;
 
   ClearTextField(
@@ -217,10 +159,8 @@ class ClearTextField extends StatefulWidget {
       this.keyboardType,
       this.underlineColor,
       this.onValidated,
-      this.obscureText,
       this.errorText,
-      this.isClear = true,
-      this.contentPadding = const EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
+      this.contentPadding = const EdgeInsets.symmetric(vertical: 17.0, horizontal: 0.0),
       this.errorStyle});
 
   @override
@@ -234,6 +174,9 @@ class _ClearTextFieldState extends State<ClearTextField> {
   void initState() {
     super.initState();
     controller = widget.controller ?? TextEditingController();
+    controller?.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -242,11 +185,10 @@ class _ClearTextFieldState extends State<ClearTextField> {
       inputFormatters: widget.inputFormatters,
       keyboardType: widget.keyboardType,
       textStyle: widget.textStyle,
-      strokeColor: widget.underlineColor ?? getColor().themeColorGrey,
+      strokeColor: widget.underlineColor ?? getColor().themeColorEBEBEC,
       controller: controller,
       hintText: widget.hint,
       maxLength: widget.maxLength,
-      obscureText: widget.obscureText,
       prefixIcon: widget.prefixIcon,
       leftTitle: widget.leftTitle,
       rightTitle: widget.rightTitle,
@@ -254,14 +196,21 @@ class _ClearTextFieldState extends State<ClearTextField> {
       errorText: widget.errorText,
       errorStyle: widget.errorStyle,
       contentPadding: widget.contentPadding,
-      suffixIcon: MaterialButton(
-        height: 24,
-        minWidth: 24,
-        padding: EdgeInsets.all(0),
-        onPressed: () => controller?.clear(),
-        child: Icon(widget.isClear == true ? Icons.close : Icons.remove_red_eye, size: 25.ws),
-        shape: CircleBorder(),
-      ),
+      iconContraints: const BoxConstraints(maxWidth: 30, maxHeight: 30, minHeight: 30),
+      suffixIcon: controller?.text != ""
+          ? MaterialButton(
+              height: 24,
+              minWidth: 24,
+              padding: EdgeInsets.all(0),
+              onPressed: () => controller?.clear(),
+              child: Image.asset(
+                DImages.textClear,
+                width: 16.ws,
+                height: 16.ws,
+              ),
+              shape: CircleBorder(),
+            )
+          : null,
     );
   }
 }
@@ -320,7 +269,7 @@ class _CountryCodeTextFieldState extends State<CountryCodeTextField> {
       inputFormatters: widget.inputFormatters,
       keyboardType: widget.keyboardType,
       textStyle: widget.textStyle,
-      strokeColor: widget.underlineColor ?? getColor().themeColorGrey,
+      strokeColor: widget.underlineColor ?? getColor().themeColorEBEBEC,
       controller: controller,
       hintText: widget.hint,
       maxLength: widget.maxLength,
@@ -341,7 +290,7 @@ class _CountryCodeTextFieldState extends State<CountryCodeTextField> {
         onPressed: () => {},
         child: Text(
           "|",
-          style: text18.textColorBlack,
+          style: text18.textColor141414,
         ),
         shape: CircleBorder(),
       ),

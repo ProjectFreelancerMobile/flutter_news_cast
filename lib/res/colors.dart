@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
 
-const colorPrimary = Color(0xFF005993);
-const colorBackground = Color(0xFFdff1f9);
+const colorPrimary = Color(0xFF1974D2);
+const colorBackground = Color(0xFFF4F7FF);
+
+const colorB2B2B2 = Color(0xFFB0B0B0);
+const color00AC44 = Color(0xFF00AC44);
+const color141414 = Color(0xFF141414);
+const color777777 = Color(0xFF777777);
+const colorF20606 = Color(0xFFF20606);
+const colorFF6F15 = Color(0xFFFF6F15);
+const colorF5F6F8 = Color(0xFFF5F6F8);
 const colorWhite = Color(0xFFFFFFFF);
-const colorBlack = Color(0xFF000000);
-const colorMainDark = Color(0xFF153755);
-const colorMainDarkBlack = Color(0xFF062a46);
-const colorMainLight = Color(0xFF7ed3f7);
-const colorBgGrey = Color(0xffc5c7c9);
-const colorBlackLight = Color(0xff242526);
-const colorGrey20 = Color(0xfff8f8f8);
-const colorRed = Color(0xFFc71829);
-const colorRed20 = Color(0xfff46f7b);
-const colorGreen = Color(0xFF34c759);
-const colorEBEBEC = Color(0xFF688eb5);
-const colorTransparent80 = Colors.black26;
-
-const colorTextBlue = Color(0xFF4181d4);
-const colorTextMain = Color(0xFF58aed9);
-const colorTextMain2 = Color(0xFF6ca3c8);
-const colorTextGrey = Color(0xFF6d7e8e);
-
-const colorTextGreyLight = Color(0xFF8593a0);
-const colorHomeBgGrey = Color(0xFFf2f5f8);
-
-const colorAddMoney = Color(0xFF4cb944);
-const colorSubMoney = Color(0xFFd71249);
-const colorGradientLight = Color(0xFF4a94da);
-const colorGradientDark = Color(0xFF3172a9);
+const color0060E0 = Color(0xFF0060E0);
+const color00DDD4 = Color(0xFF00DDD4);
+const colorF2F9FE = Color(0xFFF2F9FE);
+const color929394 = Color(0xFF929394);
+const colorE5F2FF = Color(0xFFE5F2FF);
+const colorD3D3D4 = Color(0xFFD3D3D4);
+const colorBBDEFA = Color(0xFFBBDEFA);
+const colorEBEBEC = Color(0xFFEBEBEC);
+const color009CFD = Color(0xFF009CFD);
+const color00CCDD = Color(0xFF00CCDD);
+const color0EAC71 = Color(0xFF0EAC71);
+const color02F800 = Color(0xFF02F800);
+const colorD67402 = Color(0xFFFEC704);
+const colorB90D18 = Color(0xFFB90D18);
+const color0E66AC = Color(0xFF0E66AC);
+const color00B2FD = Color(0xFF00B2FD);
+const colorFFEFE5 = Color(0xFFFFEFE5);
+const color009CDF = Color(0xFF009cfd);
+const color0083ED = Color(0xFF0083ED);

@@ -45,10 +45,6 @@ class SearchBarWidgetState extends State<SearchBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final border = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(30),
-      borderSide: BorderSide(color: colorBgGrey, width: 0.5),
-    );
     return Material(
       elevation: 0,
       borderRadius: BorderRadius.circular(8),
@@ -59,14 +55,14 @@ class SearchBarWidgetState extends State<SearchBarWidget> {
         autofocus: widget.autoFocus,
         controller: _searchQuery,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 10.ws, horizontal: 0.0),
-          border: border,
-          focusedBorder: border,
-          enabledBorder: border,
-          errorBorder: border,
-          disabledBorder: border,
+          contentPadding: EdgeInsets.symmetric(vertical: 6.ws, horizontal: 0.0),
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,
           hintText: widget.hint ?? "",
-          hintStyle: widget.textStyle?.copyWith(color: getColor().themeColorGrey),
+          hintStyle: widget.textStyle?.copyWith(color: getColor().themeColorB2B2B2),
           prefixIconConstraints: const BoxConstraints(maxHeight: 24, minHeight: 24),
           prefixIcon: Padding(
             padding: EdgeInsets.only(left: 10, right: 10),

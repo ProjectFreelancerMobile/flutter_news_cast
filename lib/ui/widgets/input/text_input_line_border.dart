@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_news_cast/res/style.dart';
+import 'package:get/get.dart';
 
 import '../../../res/theme/theme_service.dart';
 
@@ -54,7 +54,7 @@ class _TextInputLineBorderState extends State<TextInputLineBorder> {
         decoration: BoxDecoration(
             color: widget.background ?? getColor().themeColorWhite,
             borderRadius: BorderRadius.all(Radius.circular(widget.radius!)),
-            border: Border.all(color: getColor().themeColorGrey, width: 1, style: BorderStyle.solid)),
+            border: Border.all(color: getColor().themeColorD3D3D4, width: 1, style: BorderStyle.solid)),
         alignment: Alignment.centerLeft,
         child: Row(
           crossAxisAlignment: widget.maxLine == 1 ? CrossAxisAlignment.center : CrossAxisAlignment.start,

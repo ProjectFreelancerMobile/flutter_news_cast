@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_news_cast/app/app_controller.dart';
 import 'package:flutter_news_cast/app/app_pages.dart';
+import 'package:get/get.dart';
 
 import '../../res/style.dart';
 
@@ -18,40 +18,43 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 1), () {
-      initNavigation();
+    Future.delayed(Duration(seconds: 3), () {
+      // if (kDebugMode) {
+      //   return Get.offNamed(AppRoutes.MAIN);
+      // }
+      switch (appController.authState.value) {
+        case AuthState.unauthorized:
+          return Get.offNamed(AppRoutes.INITIAL);
+        case AuthState.authorized:
+          return Get.offNamed(AppRoutes.MAIN);
+        case AuthState.new_install:
+          return Get.offNamed(AppRoutes.MAIN);
+        case AuthState.uncompleted:
+          return Get.offNamed(AppRoutes.MAIN);
+        default:
+          return Get.offNamed(AppRoutes.MAIN);
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: Get.width,
-        height: Get.height,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: Assets.images.imgSplash.image().image,
-            fit: BoxFit.fill,
-          ),
+      backgroundColor: colorPrimary,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Assets.icons.icLogoSplash.svg(width: 100.ws, height: 150.hs),
+            SizedBox(height: 20),
+            Text(
+              textLocalization('appName').toUpperCase(),
+              style: text34.bold.textColorWhite,
+            )
+          ],
         ),
       ),
     );
-  }
-
-  Future<dynamic>? initNavigation() {
-    switch (appController.authState.value) {
-      case AuthState.unauthorized:
-        return Get.offNamed(AppRoutes.INITIAL);
-      case AuthState.authorized:
-        return Get.offNamed(AppRoutes.MAIN);
-      case AuthState.new_install:
-        return Get.offNamed(AppRoutes.MAIN);
-      case AuthState.uncompleted:
-        return Get.offNamed(AppRoutes.MAIN);
-      default:
-        return Get.offNamed(AppRoutes.MAIN);
-    }
   }
 
   @override
