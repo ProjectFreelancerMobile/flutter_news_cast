@@ -1,0 +1,12 @@
+<svg height="32" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <clipPath id="wtygzaa9aa">
+            <path style="fill:#141414" d="M0 0h32v32H0z" />
+        </clipPath>
+    </defs>
+    <g style="clip-path:url(#wtygzaa9aa)" data-name="icon - back">
+        <path style="fill:#fff"
+            d="M18.408 3.053a1.465 1.465 0 0 0-2.075 0L6.59 12.8a1.168 1.168 0 0 0 0 1.653l9.743 9.743a1.467 1.467 0 1 0 2.075-2.075l-8.488-8.5 8.5-8.5a1.461 1.461 0 0 0-.012-2.068z"
+            data-name="Path 124779" transform="translate(3.753 2.377)" />
+    </g>
+</svg>

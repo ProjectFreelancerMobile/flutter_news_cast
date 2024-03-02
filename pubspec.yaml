@@ -54,48 +54,16 @@ flutter_gen:
 flutter:
   uses-material-design: true
   fonts:
-    - family: Muli
+    - family: Roboto
       fonts:
-        - asset: assets/fonts/Muli-Regular.ttf
+        - asset: assets/fonts/Roboto-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Muli-Medium.ttf
+        - asset: assets/fonts/Roboto-Medium.ttf
           weight: 500
-        - asset: assets/fonts/Muli-SemiBold.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Muli-Bold.ttf
-          weight: 800
-        - asset: assets/fonts/Muli-ExtraBold.ttf
-          weight: 900
-    - family: SfPro
-      fonts:
-        - asset: assets/fonts/SF-Pro-Display-Regular.otf
-          weight: 400
-        - asset: assets/fonts/SF-Pro-Display-Medium.otf
-          weight: 500
-        - asset: assets/fonts/SF-Pro-Display-Bold.otf
-          weight: 800
-    - family: Montserrat
-      fonts:
-        - asset: assets/fonts/Montserrat-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/Montserrat-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/Montserrat-SemiBold.ttf
-          weight: 700
-        - asset: assets/fonts/Montserrat-Bold.ttf
-          weight: 800
   assets:
-    - assets/json/
-    - assets/icons/
-    - assets/icons/login/
-    - assets/icons/menu/
-    - assets/icons/info/
-    - assets/icons/home/
-    - assets/icons/icon_bank/
-    - assets/icons/qrcode/
-    - assets/icons/notification/
-    - assets/icons/payment/
-    - assets/icons/logo/
     - assets/images/
-    - assets/images/home/
-    - assets/images/payment/
+    - assets/icons/
+    - assets/fonts/
+    - assets/json/
