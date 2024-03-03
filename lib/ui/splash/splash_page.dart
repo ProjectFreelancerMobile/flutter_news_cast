@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/app/app_controller.dart';
 import 'package:flutter_news_cast/app/app_pages.dart';
@@ -19,9 +20,9 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 3), () {
-      // if (kDebugMode) {
-      //   return Get.offNamed(AppRoutes.MAIN);
-      // }
+      if (kDebugMode) {
+        return Get.offNamed(AppRoutes.MAIN);
+      }
       switch (appController.authState.value) {
         case AuthState.unauthorized:
           return Get.offNamed(AppRoutes.INITIAL);

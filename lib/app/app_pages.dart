@@ -4,6 +4,7 @@ import '../../ui/main/main_binding.dart';
 import '../../ui/main/main_page.dart';
 import '../../ui/notification/list_notification_binding.dart';
 import '../../ui/notification/list_notification_page.dart';
+import '../ui/splash/splash_page.dart';
 
 part 'app_routes.dart';
 
@@ -14,10 +15,10 @@ class AppPages {
     //   page: () => LoginPage(),
     //   binding: LoginBinding(),
     // ),
-    // GetPage(
-    //   name: AppRoutes.SPLASH,
-    //   page: () => const SplashPage(),
-    // ),
+    GetPage(
+      name: AppRoutes.SPLASH,
+      page: () => const SplashPage(),
+    ),
     // GetPage(
     //   name: AppRoutes.OTP_REGISTER,
     //   page: () => OtpPage(),

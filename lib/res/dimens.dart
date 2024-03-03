@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 const guidelineBaseWidth = 390;
 const guidelineBaseHeight = 844;
 
-double get scaleWidth => Get.width / guidelineBaseWidth;
+double get scaleWidth => 1080 / guidelineBaseWidth;
 
-double get scaleHeight => Get.height / guidelineBaseHeight;
+double get scaleHeight => 1080 / guidelineBaseHeight;
 
 double get scaleText => min(scaleWidth, scaleHeight);
 

@@ -1,67 +1,26 @@
 {
   "project_info": {
-    "project_number": "850595046556",
-    "project_id": "urvega-app",
-    "storage_bucket": "urvega-app.appspot.com"
+    "project_number": "680668007268",
+    "project_id": "fedoapp-3d5f0",
+    "storage_bucket": "fedoapp-3d5f0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:850595046556:android:5dabb265af39092d8db959",
+        "mobilesdk_app_id": "1:680668007268:android:b33b89505c667668534871",
         "android_client_info": {
-          "package_name": "com.fedoapp.flutter_news_cast"
+          "package_name": "com.fedoapp.app"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "850595046556-djdi9loom3kvn6gf8qbhts6j932pnlfo.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.fedoapp.flutter_news_cast",
-            "certificate_hash": "ce1b9bf9e9c113060c1506b25bcb50a4af93e34b"
-          }
-        },
-        {
-          "client_id": "850595046556-mgdk74edtnc5r5ln0hmhp6ef21a4n870.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.fedoapp.flutter_news_cast",
-            "certificate_hash": "abef349416888c3f5551222063c6ff652c1d8270"
-          }
-        },
-        {
-          "client_id": "850595046556-urehnm5d9tg08g1ire3784rvm8ck30ip.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.fedoapp.flutter_news_cast",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "850595046556-q008g4pl3pr121u2f82dsgs41svgudnt.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA-FeqAgwSGUze6mgN-Kidms6H8irJQLWk"
+          "current_key": "AIzaSyBDbpX9gBv--CCdGF-2QcKoz3f2Q2HgrVA"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "850595046556-q008g4pl3pr121u2f82dsgs41svgudnt.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "850595046556-7ck8j64ibf4btcih471tojcu8vfucof1.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.fedoapp.flutter_news_cast"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

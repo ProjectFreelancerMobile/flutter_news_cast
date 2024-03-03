@@ -1,5 +1,4 @@
 import 'package:event_bus/event_bus.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/data/api/models/token_model.dart';
 import 'package:flutter_news_cast/data/storage/key_constant.dart';
@@ -13,8 +12,6 @@ import '../data/api/api_constants.dart';
 import '../data/api/models/TUser.dart';
 import '../data/api/rest_client.dart';
 import '../data/storage/my_storage.dart';
-import '../ui/main/home/home_controller.dart';
-import '../ui/widgets/dialogs/app_popup.dart';
 import 'base_app_config.dart';
 
 class AppController extends GetxController {
@@ -52,7 +49,7 @@ class AppController extends GetxController {
   }
 
   Future<void> initFirebase() async {
-    await Firebase.initializeApp();
+    //await Firebase.initializeApp();
   }
 
   Future<void> initStorage() async {
@@ -68,9 +65,6 @@ class AppController extends GetxController {
     user = null;
     locale = null;
     themeData = null;
-    AppPopup.pairDevice = false;
-    AppPopup.listFarm = null;
-    Get.find<HomeController>().periodicTimer?.cancel();
     await Get.find<MyStorage>().logout();
     Get.offAllNamed(AppRoutes.INITIAL);
   }

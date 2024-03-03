@@ -11,7 +11,7 @@ import '../models/device/device_item.dart';
 import '../models/token_model.dart';
 import 'base_service.dart';
 
-class DeviceService extends BaseService {
+class CastService extends BaseService {
   final _storage = Get.find<MyStorage>();
 
   Future<TokenModel?> tokenModel() async => await _storage.getDeviceToken();

@@ -9,7 +9,7 @@ import '../models/farm/farm_item.dart';
 import '../models/province/province_item.dart';
 import 'base_service.dart';
 
-class FarmService extends BaseService {
+class RSSService extends BaseService {
   final _storage = Get.find<MyStorage>();
 
   Future<TokenModel?> tokenModel() async => await _storage.getDeviceToken();

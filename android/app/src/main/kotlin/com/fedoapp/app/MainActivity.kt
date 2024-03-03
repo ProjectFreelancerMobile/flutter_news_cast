@@ -1,4 +1,4 @@
-package com.fedoapp.flutter_news_cast
+package com.fedoapp.app
 
 import io.flutter.embedding.android.FlutterActivity
 

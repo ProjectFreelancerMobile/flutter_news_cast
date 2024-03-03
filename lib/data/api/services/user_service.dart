@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter_news_cast/data/api/models/response/api_response.dart';
 import 'package:sprintf/sprintf.dart';
-
 import '../../storage/key_constant.dart';
 import '../api_constants.dart';
 import '../models/TUser.dart';

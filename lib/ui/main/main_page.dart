@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/res/style.dart';
-
 import '../../ui/base/base_page.dart';
 import '../../ui/main/main_controller.dart';
 import '../../ui/widgets/menu/custom_bottom_menu.dart';
-import '../widgets/dialogs/app_popup.dart';
 import 'home/home_page.dart';
 import 'settings/settings_page.dart';
 
@@ -15,18 +13,6 @@ class MainPage extends BasePage<MainController> {
 
   @override
   Widget buildContentView(BuildContext context, MainController controller) {
-    controller.appPopup = AppPopup(
-      context: context,
-      onAddFarmPressed: () {
-        controller.onGotoAddFarm();
-      },
-      onFarmDetailsPressed: (detail) {
-        controller.getFarmDetails(detail?.name, detail?.fkey);
-      },
-      onFarmEditPressed: (detail) {
-        controller.onGotoListFarm();
-      },
-    );
     initToast(context);
     final List<BottomNavigationBarItem> items = [
       BottomNavigationBarItem(
@@ -90,7 +76,6 @@ class MainPage extends BasePage<MainController> {
         index: controller.pageIndex.value,
         items: items,
         onTabChanged: (value) {
-          controller.appPopup?.removePopup();
           controller.onTabChanged(value);
         },
         selectedItemColor: colorPrimary,
@@ -100,7 +85,7 @@ class MainPage extends BasePage<MainController> {
   }
 
   buildPage(BuildContext context) {
-    if (!controller.checkConnect.value && !AppPopup.pairDevice) {
+    if (!controller.checkConnect.value) {
       Future.delayed(Duration(seconds: 1), () {
         showMessage(textLocalization('setting.error.connect'), second: 5);
       });
