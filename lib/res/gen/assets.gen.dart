@@ -3,13 +3,13 @@
 ///  FlutterGen
 /// *****************************************************
 
+import 'package:flutter/services.dart';
 // coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/services.dart';
 
 class $AssetsFontsGen {
   const $AssetsFontsGen();
@@ -30,20 +30,105 @@ class $AssetsFontsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/ic_add.svg
+  SvgGenImage get icAdd => const SvgGenImage('assets/icons/ic_add.svg');
+
+  /// File path: assets/icons/ic_airplay.svg
+  SvgGenImage get icAirplay => const SvgGenImage('assets/icons/ic_airplay.svg');
+
+  /// File path: assets/icons/ic_back.svg
+  SvgGenImage get icBack => const SvgGenImage('assets/icons/ic_back.svg');
+
+  /// File path: assets/icons/ic_bookmark.svg
+  SvgGenImage get icBookmark => const SvgGenImage('assets/icons/ic_bookmark.svg');
+
+  /// File path: assets/icons/ic_cancel.svg
+  SvgGenImage get icCancel => const SvgGenImage('assets/icons/ic_cancel.svg');
+
   /// File path: assets/icons/ic_cast.svg
   SvgGenImage get icCast => const SvgGenImage('assets/icons/ic_cast.svg');
 
-  /// File path: assets/icons/ic_home.svg
-  SvgGenImage get icHome => const SvgGenImage('assets/icons/ic_home.svg');
+  /// File path: assets/icons/ic_dailymotion.svg
+  SvgGenImage get icDailymotion => const SvgGenImage('assets/icons/ic_dailymotion.svg');
 
-  /// File path: assets/icons/ic_setting.svg
-  SvgGenImage get icSetting => const SvgGenImage('assets/icons/ic_setting.svg');
+  /// File path: assets/icons/ic_delete.svg
+  SvgGenImage get icDelete => const SvgGenImage('assets/icons/ic_delete.svg');
+
+  /// File path: assets/icons/ic_feed.svg
+  SvgGenImage get icFeed => const SvgGenImage('assets/icons/ic_feed.svg');
+
+  /// File path: assets/icons/ic_feed_big.svg
+  SvgGenImage get icFeedBig => const SvgGenImage('assets/icons/ic_feed_big.svg');
+
+  /// File path: assets/icons/ic_feed_url.svg
+  SvgGenImage get icFeedUrl => const SvgGenImage('assets/icons/ic_feed_url.svg');
+
+  /// File path: assets/icons/ic_home_bookmark.svg
+  SvgGenImage get icHomeBookmark => const SvgGenImage('assets/icons/ic_home_bookmark.svg');
+
+  /// File path: assets/icons/ic_learn_more.svg
+  SvgGenImage get icLearnMore => const SvgGenImage('assets/icons/ic_learn_more.svg');
+
+  /// File path: assets/icons/ic_local_phone.svg
+  SvgGenImage get icLocalPhone => const SvgGenImage('assets/icons/ic_local_phone.svg');
+
+  /// File path: assets/icons/ic_menu_cast.svg
+  SvgGenImage get icMenuCast => const SvgGenImage('assets/icons/ic_menu_cast.svg');
+
+  /// File path: assets/icons/ic_menu_home.svg
+  SvgGenImage get icMenuHome => const SvgGenImage('assets/icons/ic_menu_home.svg');
+
+  /// File path: assets/icons/ic_menu_setting.svg
+  SvgGenImage get icMenuSetting => const SvgGenImage('assets/icons/ic_menu_setting.svg');
+
+  /// File path: assets/icons/ic_no_image.svg
+  SvgGenImage get icNoImage => const SvgGenImage('assets/icons/ic_no_image.svg');
+
+  /// File path: assets/icons/ic_recent.svg
+  SvgGenImage get icRecent => const SvgGenImage('assets/icons/ic_recent.svg');
+
+  /// File path: assets/icons/ic_refresh.svg
+  SvgGenImage get icRefresh => const SvgGenImage('assets/icons/ic_refresh.svg');
+
+  /// File path: assets/icons/ic_remove.svg
+  SvgGenImage get icRemove => const SvgGenImage('assets/icons/ic_remove.svg');
 
   /// File path: assets/icons/ic_settings_next.svg
   SvgGenImage get icSettingsNext => const SvgGenImage('assets/icons/ic_settings_next.svg');
 
+  /// File path: assets/icons/ic_vimeo.svg
+  SvgGenImage get icVimeo => const SvgGenImage('assets/icons/ic_vimeo.svg');
+
+  /// File path: assets/icons/ic_youtube.svg
+  SvgGenImage get icYoutube => const SvgGenImage('assets/icons/ic_youtube.svg');
+
   /// List of all assets
-  List<SvgGenImage> get values => [icCast, icHome, icSetting, icSettingsNext];
+  List<SvgGenImage> get values => [
+        icAdd,
+        icAirplay,
+        icBack,
+        icBookmark,
+        icCancel,
+        icCast,
+        icDailymotion,
+        icDelete,
+        icFeed,
+        icFeedBig,
+        icFeedUrl,
+        icHomeBookmark,
+        icLearnMore,
+        icLocalPhone,
+        icMenuCast,
+        icMenuHome,
+        icMenuSetting,
+        icNoImage,
+        icRecent,
+        icRefresh,
+        icRemove,
+        icSettingsNext,
+        icVimeo,
+        icYoutube
+      ];
 }
 
 class $AssetsImagesGen {

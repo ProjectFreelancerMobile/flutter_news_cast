@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
@@ -42,9 +41,6 @@ class MyApp extends GetWidget<AppController> {
 
   String _getRoute(BuildContext context) {
     initScreen(context);
-    if (kDebugMode) {
-      return AppRoutes.SPLASH;
-    }
     switch (controller.authState.value) {
       case AuthState.unauthorized:
         return AppRoutes.MAIN;

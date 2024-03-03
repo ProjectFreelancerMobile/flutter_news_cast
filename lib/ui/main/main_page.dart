@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/res/style.dart';
 import 'package:flutter_news_cast/ui/main/cast/cast_page.dart';
+
 import '../../ui/base/base_page.dart';
 import '../../ui/main/main_controller.dart';
 import '../../ui/widgets/menu/custom_bottom_menu.dart';
@@ -17,35 +18,35 @@ class MainPage extends BasePage<MainController> {
     final List<BottomNavigationBarItem> items = [
       BottomNavigationBarItem(
         label: 'Menu',
-        icon: Assets.icons.icHome.svg(),
+        icon: Assets.icons.icMenuHome.svg(),
         activeIcon: Container(
           width: 50.ws,
           height: 35.ws,
-          padding: EdgeInsets.symmetric(vertical: 8.ws),
+          padding: EdgeInsets.symmetric(vertical: 9.ws),
           decoration: BoxDecoration(
             color: colorWhite,
             borderRadius: BorderRadius.circular(20.rs),
           ),
-          child: Assets.icons.icHome.svg(),
+          child: Assets.icons.icMenuHome.svg(),
         ),
       ),
       BottomNavigationBarItem(
         label: 'Menu',
-        icon: Assets.icons.icCast.svg(),
+        icon: Assets.icons.icMenuCast.svg(),
         activeIcon: Container(
           width: 50.ws,
           height: 35.ws,
-          padding: EdgeInsets.symmetric(vertical: 8.ws),
+          padding: EdgeInsets.symmetric(vertical: 10.ws),
           decoration: BoxDecoration(
             color: colorWhite,
             borderRadius: BorderRadius.circular(20.rs),
           ),
-          child: Assets.icons.icCast.svg(),
+          child: Assets.icons.icMenuCast.svg(),
         ),
       ),
       BottomNavigationBarItem(
         label: 'Menu',
-        icon: Assets.icons.icSetting.svg(),
+        icon: Assets.icons.icMenuSetting.svg(),
         activeIcon: Container(
           width: 50.ws,
           height: 35.ws,
@@ -54,7 +55,7 @@ class MainPage extends BasePage<MainController> {
             color: colorWhite,
             borderRadius: BorderRadius.circular(20.rs),
           ),
-          child: Assets.icons.icSetting.svg(),
+          child: Assets.icons.icMenuSetting.svg(),
         ),
       ),
     ];

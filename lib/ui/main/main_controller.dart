@@ -2,13 +2,9 @@ import 'dart:async';
 
 import 'package:connecteo/connecteo.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_news_cast/ui/main/home/home_controller.dart';
 import 'package:get/get.dart';
 
-import '../../app/app_pages.dart';
 import '../../data/api/api_constants.dart';
-import '../../data/api/repositories/cast_repository.dart';
-import '../../data/api/repositories/rss_repository.dart';
 import '../../ui/base/base_controller.dart';
 
 class MainController extends BaseController {

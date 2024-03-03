@@ -1,9 +1,11 @@
 import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
+
 import '../app/app_controller.dart';
 import '../app/base_app_config.dart';
 import '../app/my_app.dart';

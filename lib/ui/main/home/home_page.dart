@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_news_cast/res/style.dart';
+
 import '../../base/base_page.dart';
 import 'home_controller.dart';
 
@@ -7,7 +9,17 @@ class HomePage extends BasePage<HomeController> {
   @override
   Widget buildContentView(BuildContext context, HomeController controller) {
     return Scaffold(
-      body: Placeholder(),
+      body: Column(
+        children: [
+          Row(
+            children: [
+              Text(textLocalization('settings_title'), style: text14.textColorB2B2B2),
+              Text(textLocalization('settings_title'), style: text14.textColorB2B2B2),
+              Text(textLocalization('settings_title'), style: text14.textColorB2B2B2)
+            ],
+          ),
+        ],
+      ),
     );
   }
 
