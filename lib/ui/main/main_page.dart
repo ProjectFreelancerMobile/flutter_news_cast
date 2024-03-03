@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/res/style.dart';
+import 'package:flutter_news_cast/ui/main/cast/cast_page.dart';
 import '../../ui/base/base_page.dart';
 import '../../ui/main/main_controller.dart';
 import '../../ui/widgets/menu/custom_bottom_menu.dart';
@@ -8,8 +9,7 @@ import 'settings/settings_page.dart';
 
 //ignore: must_be_immutable
 class MainPage extends BasePage<MainController> {
-  //final List<Widget> pages = [HomePage(), ServicePage(), SettingsPage()];
-  final List<Widget> pages = [HomePage(), SettingsPage()];
+  final List<Widget> pages = [HomePage(), CastPage(), SettingsPage()];
 
   @override
   Widget buildContentView(BuildContext context, MainController controller) {
@@ -17,56 +17,44 @@ class MainPage extends BasePage<MainController> {
     final List<BottomNavigationBarItem> items = [
       BottomNavigationBarItem(
         label: 'Menu',
-        icon: Assets.icons.icTabHome.svg(),
-        activeIcon: Column(
-          children: [
-            Assets.icons.icTabHomeActive.svg(),
-            SizedBox(height: 6.hs),
-            Container(
-              width: 5.ws,
-              height: 5.ws,
-              decoration: BoxDecoration(
-                color: colorPrimary,
-                shape: BoxShape.circle,
-              ),
-            ),
-          ],
+        icon: Assets.icons.icHome.svg(),
+        activeIcon: Container(
+          width: 50.ws,
+          height: 35.ws,
+          padding: EdgeInsets.symmetric(vertical: 8.ws),
+          decoration: BoxDecoration(
+            color: colorWhite,
+            borderRadius: BorderRadius.circular(20.rs),
+          ),
+          child: Assets.icons.icHome.svg(),
         ),
       ),
-      /* BottomNavigationBarItem(
-        label: 'Menu',
-        icon: Assets.icons.icTabService.svg(),
-        activeIcon: Column(
-          children: [
-            Assets.icons.icTabServiceActive.svg(),
-            SizedBox(height: 6.hs),
-            Container(
-              width: 5.ws,
-              height: 5.ws,
-              decoration: BoxDecoration(
-                color: colorPrimary,
-                shape: BoxShape.circle,
-              ),
-            ),
-          ],
-        ),
-      ),*/
       BottomNavigationBarItem(
         label: 'Menu',
-        icon: Assets.icons.icTabRooms.svg(),
-        activeIcon: Column(
-          children: [
-            Assets.icons.icTabRoomsActive.svg(),
-            SizedBox(height: 6.hs),
-            Container(
-              width: 5.ws,
-              height: 5.ws,
-              decoration: BoxDecoration(
-                color: colorPrimary,
-                shape: BoxShape.circle,
-              ),
-            ),
-          ],
+        icon: Assets.icons.icCast.svg(),
+        activeIcon: Container(
+          width: 50.ws,
+          height: 35.ws,
+          padding: EdgeInsets.symmetric(vertical: 8.ws),
+          decoration: BoxDecoration(
+            color: colorWhite,
+            borderRadius: BorderRadius.circular(20.rs),
+          ),
+          child: Assets.icons.icCast.svg(),
+        ),
+      ),
+      BottomNavigationBarItem(
+        label: 'Menu',
+        icon: Assets.icons.icSetting.svg(),
+        activeIcon: Container(
+          width: 50.ws,
+          height: 35.ws,
+          padding: EdgeInsets.symmetric(vertical: 8.ws),
+          decoration: BoxDecoration(
+            color: colorWhite,
+            borderRadius: BorderRadius.circular(20.rs),
+          ),
+          child: Assets.icons.icSetting.svg(),
         ),
       ),
     ];
@@ -75,6 +63,7 @@ class MainPage extends BasePage<MainController> {
       bottomNavigationBar: CustomBottomNenu(
         index: controller.pageIndex.value,
         items: items,
+        backgroundColor: colorBackground,
         onTabChanged: (value) {
           controller.onTabChanged(value);
         },

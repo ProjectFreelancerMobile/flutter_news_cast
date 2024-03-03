@@ -1,16 +1,22 @@
 import 'dart:math';
 
-import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
 
 // Default guideline sizes are based on standard ~5" screen mobile device
-const guidelineBaseWidth = 390;
-const guidelineBaseHeight = 844;
+const guidelineBaseWidth = 428.0;
+const guidelineBaseHeight = 926.0;
 
-double get scaleWidth => 1080 / guidelineBaseWidth;
+double scaleWidth = guidelineBaseWidth;
+double scaleHeight = guidelineBaseWidth;
+double scaleText = guidelineBaseWidth;
 
-double get scaleHeight => 1080 / guidelineBaseHeight;
+void initScreen(BuildContext context) {
+  scaleWidth = MediaQuery.of(context).size.width / guidelineBaseWidth;
 
-double get scaleText => min(scaleWidth, scaleHeight);
+  scaleHeight = MediaQuery.of(context).size.height / guidelineBaseHeight;
+
+  scaleText = min(scaleWidth, scaleHeight);
+}
 
 extension ScreenExtension on num {
   double get ws => this * scaleWidth; // Width Scale

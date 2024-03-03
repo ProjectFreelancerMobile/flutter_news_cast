@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../base/base_page.dart';
-import 'home_controller.dart';
+import 'cast_controller.dart';
 
 //ignore: must_be_immutable
-class HomePage extends BasePage<HomeController> {
+class CastPage extends BasePage<CastController> {
   @override
-  Widget buildContentView(BuildContext context, HomeController controller) {
+  Widget buildContentView(BuildContext context, CastController controller) {
     return Scaffold(
       body: Placeholder(),
     );

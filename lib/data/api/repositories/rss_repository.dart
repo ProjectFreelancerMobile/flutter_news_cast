@@ -1,8 +1,4 @@
-import 'package:flutter_news_cast/data/api/models/province/province_item.dart';
 import 'package:get/get.dart';
-
-import '../models/farm/farm_item.dart';
-import '../models/response/api_response.dart';
 import '../services/rss_service.dart';
 import 'base_repository.dart';
 

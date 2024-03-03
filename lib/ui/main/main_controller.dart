@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:connecteo/connecteo.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_news_cast/data/api/models/device/device_new.dart';
 import 'package:flutter_news_cast/ui/main/home/home_controller.dart';
 import 'package:get/get.dart';
 

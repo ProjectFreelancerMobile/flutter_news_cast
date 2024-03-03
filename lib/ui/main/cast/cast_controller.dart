@@ -1,7 +1,7 @@
 // ignore_for_file: invalid_use_of_protected_member
 import '../../base/base_controller.dart';
 
-class HomeController extends BaseController {
+class CastController extends BaseController {
   // final _mainController = Get.find<MainController>();
   // final _deviceRepository = Get.find<DeviceRepository>();
   // final _appController = Get.find<AppController>();

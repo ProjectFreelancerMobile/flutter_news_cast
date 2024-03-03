@@ -46,7 +46,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Assets.icons.icLogoSplash.svg(width: 100.ws, height: 150.hs),
+            //Assets.icons.icLogoSplash.svg(width: 100.ws, height: 150.hs),
             SizedBox(height: 20),
             Text(
               textLocalization('appName').toUpperCase(),

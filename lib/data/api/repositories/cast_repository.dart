@@ -1,11 +1,4 @@
-import 'package:flutter_news_cast/data/api/models/device/device_push.dart';
 import 'package:get/get.dart';
-
-import '../models/device/chart_device.dart';
-import '../models/device/device_detail_item.dart';
-import '../models/device/device_item.dart';
-import '../models/device/device_new.dart';
-import '../models/response/api_response.dart';
 import '../services/cast_service.dart';
 import 'base_repository.dart';
 

@@ -20,8 +20,8 @@ class MyApp extends GetWidget<AppController> {
           title: textLocalization('appName'),
           translations: LocalizationService(),
           locale: controller.locale?.value,
-          //theme: controller.themeData?.value,
-          initialRoute: _getRoute(),
+          theme: controller.themeData?.value,
+          initialRoute: _getRoute(context),
           getPages: AppPages.pages,
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,
@@ -40,7 +40,8 @@ class MyApp extends GetWidget<AppController> {
     );
   }
 
-  String _getRoute() {
+  String _getRoute(BuildContext context) {
+    initScreen(context);
     if (kDebugMode) {
       return AppRoutes.SPLASH;
     }
