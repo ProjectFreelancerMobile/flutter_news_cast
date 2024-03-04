@@ -1,6 +1,6 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_news_cast/data/api/models/token_model.dart';
+import 'package:flutter_news_cast/data/api/models/feed_model.dart';
 import 'package:flutter_news_cast/data/storage/key_constant.dart';
 import 'package:get/get.dart';
 
@@ -31,21 +31,22 @@ class AppController extends GetxController {
   }
 
   Future<void> initAuth() async {
-    final storage = Get.find<MyStorage>();
-    user = await storage.getUserInfo();
-    final tokenModel = await storage.getDeviceToken();
-
-    if (tokenModel != null) {
-      await initApi();
-      if (user?.name != null && user!.name!.isNotEmpty) {
-        authState.value = AuthState.authorized;
-      } else {
-        authState.value = AuthState.uncompleted;
-      }
-    } else {
-      await initApi();
-      authState.value = AuthState.unauthorized;
-    }
+    authState.value = AuthState.authorized;
+    // final storage = Get.find<MyStorage>();
+    // user = await storage.getUserInfo();
+    // final tokenModel = await storage.getDeviceToken();
+    //
+    // if (tokenModel != null) {
+    //   await initApi();
+    //   if (user?.name != null && user!.name!.isNotEmpty) {
+    //     authState.value = AuthState.authorized;
+    //   } else {
+    //     authState.value = AuthState.uncompleted;
+    //   }
+    // } else {
+    //   await initApi();
+    //   authState.value = AuthState.unauthorized;
+    // }
   }
 
   Future<void> initFirebase() async {
@@ -56,9 +57,9 @@ class AppController extends GetxController {
     final storage = Get.put(MyStorage());
     await storage.init();
     //TODO Test
-    if (fkTest.isNotEmpty && ukTest.isNotEmpty) {
-      storage.saveDeviceToken(TokenModel(ukTest, fkTest));
-    }
+    // if (fkTest.isNotEmpty && ukTest.isNotEmpty) {
+    //   storage.saveDeviceToken(TokenModel(ukTest, fkTest));
+    // }
   }
 
   logout() async {
@@ -101,7 +102,7 @@ class AppController extends GetxController {
         baseUrl = BASE_URL_DEV;
         break;
       case Environment.prod:
-        baseUrl = BASE_URL_PROD;
+        baseUrl = BASE_URL_DEV;
         break;
     }
     RestClient.instance.init(

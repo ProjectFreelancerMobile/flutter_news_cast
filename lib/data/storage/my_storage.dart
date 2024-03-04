@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_news_cast/data/api/models/token_model.dart';
+import 'package:flutter_news_cast/data/api/models/feed_model.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../../res/languages/localization_service.dart';
@@ -19,16 +19,6 @@ class MyStorage {
   init() async {
     await GetStorage.init(STORAGE_NAME);
     box = GetStorage(STORAGE_NAME);
-  }
-
-  Future<void> saveDeviceToken(TokenModel tokenModel) async {
-    String json = jsonEncode(tokenModel.toJson());
-    box.write(DEVICE_TOKEN, json);
-  }
-
-  Future<TokenModel?> getDeviceToken() async {
-    final tokenJson = await box.read(DEVICE_TOKEN);
-    return tokenJson != null ? TokenModel.fromJson(json.decode(tokenJson)) : null;
   }
 
   Future<void> saveUserInfo(TUser user) async {

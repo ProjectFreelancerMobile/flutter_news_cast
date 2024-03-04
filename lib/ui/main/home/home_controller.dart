@@ -1,4 +1,7 @@
 // ignore_for_file: invalid_use_of_protected_member
+import 'package:flutter_news_cast/data/api/models/feed_model.dart';
+import 'package:get/get.dart';
+
 import '../../base/base_controller.dart';
 
 class HomeController extends BaseController {
@@ -10,9 +13,11 @@ class HomeController extends BaseController {
   // TUser get user => _user.value;
   // final GlobalKey widgetKey = GlobalKey();
   //
-  // List<DeviceItem> get listDevice => _listDevice$.value;
-  // final _listDevice$ = <DeviceItem>[].obs;
-  // Timer? periodicTimer = null;
+  List<FeedModel> get listRecentFeed => _listFeed$.value;
+  final _listRecentFeed$ = <FeedModel>[].obs;
+
+  List<FeedModel> get listFeed => _listFeed$.value;
+  final _listFeed$ = <FeedModel>[].obs;
 
   bool get isShowScreenError => false;
 
@@ -27,6 +32,17 @@ class HomeController extends BaseController {
     super.onInit();
     // _user.value = _appController.user ?? TUser(name: '', gender: SEX_TYPE.MEN.name, phone: '');
     // autoRefreshList();
+    initFakeData();
+  }
+
+  void initFakeData(){
+    for (var i = 0; i < 20; i++) {
+      _listRecentFeed$.add(FeedModel('https://photo.znews.vn/w660/Uploaded/oqivovbt/2019_01_05/jisoo_06.jpg', 'Recent $i'));
+    }
+
+    for (var i = 0; i < 20; i++) {
+      _listFeed$.add(FeedModel('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWwlnjwnD3wQU6dq54xfcvN_h01gwBYpyOJQ&usqp=CAU', 'Feed $i'));
+    }
   }
   //
   // void autoRefreshList({bool isFore = false}) async {

@@ -10,15 +10,8 @@ final maxDate = DateTime(3000, 1, 1, 0, 0, 0);
 const MIN_YEAR_OLD_USED_APP = 18;
 const PAGE_SIZE = 30;
 const BASE_URL_DEV = "https://12121.urvega.com/";
-const UPLOAD_PHOTO_URL_DEV = "https://api.urvega.com/";
-const DOWNLOAD_PHOTO_URL_DEV = "https://api.urvega.com/";
-const URL_PAIR = "http://192.168.1.86:8686/";
-const BASE_URL_PROD = "https://api.urvega.com/"; // production
-const UPLOAD_PHOTO_URL_PROD = "https://api.urvega.com/"; //production
-const DOWNLOAD_PHOTO_URL_PROD = "https://api.urvega.com/"; // production
 var isConnection = true;
 
-String PHOTO_URL_CDN = BASE_URL_DEV;
 //Login
 const LOGIN_BY_EMAIL = "auth/login";
 const LOGIN_BY_SOCIAL = "auth/slogin";

@@ -28,7 +28,7 @@ class RoundNetworkImage extends StatelessWidget {
         cacheManager: CustomCacheManager.instance,
         fadeInDuration: Duration(milliseconds: 300),
         fadeOutDuration: Duration(milliseconds: 500),
-        imageUrl: (url != null && url!.contains("http")) ? url! : "$PHOTO_URL_CDN$url",
+        imageUrl: url ?? '',
         imageBuilder: (context, imageProvider) => Container(
           height: height,
           width: width,
@@ -81,7 +81,7 @@ class RoundNetworkImageTopRadius extends StatelessWidget {
         cacheManager: CustomCacheManager.instance,
         fadeInDuration: Duration(milliseconds: 300),
         fadeOutDuration: Duration(milliseconds: 500),
-        imageUrl: (url != null && url!.contains("http")) ? url! : "$PHOTO_URL_CDN$url",
+        imageUrl: url ?? '',
         imageBuilder: (context, imageProvider) => Container(
           height: height,
           width: width,
@@ -141,7 +141,7 @@ class PhotoViewNetworkImage extends StatelessWidget {
           filterQuality: FilterQuality.high,
           initialScale: PhotoViewComputedScale.covered,
           imageProvider: CachedNetworkImageProvider(
-            (url != null && url!.contains("http")) ? url! : "$PHOTO_URL_CDN$url",
+            url ?? '',
           ),
           loadingBuilder: (context, event) => ImageShimmer(width: width, height: height),
         ),
@@ -192,7 +192,7 @@ class _AvatarNetworkImageState extends State<AvatarNetworkImage> {
         cacheManager: CustomCacheManager.instance,
         fadeInDuration: Duration(milliseconds: 300),
         fadeOutDuration: Duration(milliseconds: 500),
-        imageUrl: (url != null && url!.contains("http")) ? url! : "$PHOTO_URL_CDN$url",
+        imageUrl: url ?? '',
         imageBuilder: (context, imageProvider) => Container(
           height: widget.height,
           width: widget.width,

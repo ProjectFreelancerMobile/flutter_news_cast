@@ -3,13 +3,13 @@
 ///  FlutterGen
 /// *****************************************************
 
-import 'package:flutter/services.dart';
 // coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/services.dart';
 
 class $AssetsFontsGen {
   const $AssetsFontsGen();
@@ -63,6 +63,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_feed_url.svg
   SvgGenImage get icFeedUrl => const SvgGenImage('assets/icons/ic_feed_url.svg');
 
+  /// File path: assets/icons/ic_google.svg
+  SvgGenImage get icGoogle => const SvgGenImage('assets/icons/ic_google.svg');
+
   /// File path: assets/icons/ic_home_bookmark.svg
   SvgGenImage get icHomeBookmark => const SvgGenImage('assets/icons/ic_home_bookmark.svg');
 
@@ -115,6 +118,7 @@ class $AssetsIconsGen {
         icFeed,
         icFeedBig,
         icFeedUrl,
+        icGoogle,
         icHomeBookmark,
         icLearnMore,
         icLocalPhone,
