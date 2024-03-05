@@ -1,8 +1,9 @@
-import 'package:flutter_news_cast/utils/dart_rss/dart_rss.dart';
 import 'package:flutter_news_cast/app/app_controller.dart';
+import 'package:flutter_news_cast/utils/dart_rss/dart_rss.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:isar/isar.dart';
+
 import '../../storage/my_storage.dart';
 import '../api_constants.dart';
 import '../models/rss/feed_model.dart';
@@ -272,5 +273,15 @@ class RSSService extends BaseService {
     post.readDate = readTime ?? post.readDate;
     post.favorite = bookMark ?? post.favorite;
     await savePost(post);
+  }
+
+  Future<List<PostModel>> getListBookmark() async {
+    final List<PostModel> posts = await _isar.postModels.where().filter().favoriteEqualTo(true).findAll();
+    return posts;
+  }
+
+  Future<List<PostModel>> getListRecent() async {
+    final List<PostModel> posts = await _isar.postModels.where().sortByReadDate().findAll();
+    return posts;
   }
 }

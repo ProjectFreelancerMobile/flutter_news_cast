@@ -27,4 +27,12 @@ class RssRepository extends BaseRepository {
   Future<void> updatePostStatus(PostModel post, {DateTime? readTime, bool? bookMark}) async {
     await _rssService.updatePostStatus(post, readTime: readTime, bookMark: bookMark);
   }
+
+  Future<List<PostModel>> getListBookmark() async {
+    return await _rssService.getListBookmark();
+  }
+
+  Future<List<PostModel>> getListRecent() async {
+    return await _rssService.getListRecent();
+  }
 }

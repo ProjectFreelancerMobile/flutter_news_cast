@@ -24,7 +24,12 @@ class HomePage extends BasePage<HomeController> {
             children: [
               SizedBox(),
               Text(textLocalization('home.title').toUpperCase(), style: text24.bold.textColor141414),
-              Assets.icons.icRecent.svg(),
+              TouchableOpacity(
+                child: Assets.icons.icRecent.svg(),
+                onPressed: () {
+                  Get.toNamed(AppRoutes.LIST_BOOKMARK, arguments: false);
+                },
+              ),
             ],
           ),
           SizedBox(height: 12.ws),
@@ -54,7 +59,9 @@ class HomePage extends BasePage<HomeController> {
     return Column(
       children: [
         TouchableOpacity(
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(AppRoutes.LIST_BOOKMARK, arguments: true);
+          },
           child: Row(
             children: [
               Assets.icons.icHomeBookmark.svg(),
