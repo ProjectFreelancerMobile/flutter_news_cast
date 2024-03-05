@@ -21,4 +21,10 @@ class FeedModel {
     required this.fullText,
     required this.openType,
   });
+
+  @override
+  String toString() {
+    return 'FeedModel{id: $id, title: $title, url: $url, description: $description, category: $category, fullText: $fullText, openType: $openType}';
+  }
+
 }

@@ -7,6 +7,11 @@ import 'base_repository.dart';
 class RssRepository extends BaseRepository {
   final _rssService = Get.find<RSSService>();
 
+  Future<List<FeedModel?>> getInitRss() async {
+    final listFeed = await _rssService.getInitRss();
+    return listFeed;
+  }
+
   Future<FeedModel?> getFeed(String url) async {
     final feed = await _rssService.parseRss(url);
     return feed;

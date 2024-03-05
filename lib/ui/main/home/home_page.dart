@@ -26,14 +26,15 @@ class HomePage extends BasePage<HomeController> {
             ],
           ),
           SizedBox(height: 12.ws),
-          Row(
-            children: [
-              Text(
-                controller.feedModel.toString(),
-                style: text18.bold.textColor141414,
-              ),
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     Text(
+          //       controller.feedModel.toString(),
+          //       style: text18.bold.textColor141414,
+          //       maxLines: 10,
+          //     ),
+          //   ],
+          // ),
           Expanded(
             flex: 1,
             child: buildListFeedRecent(),
@@ -100,8 +101,8 @@ class HomePage extends BasePage<HomeController> {
         itemBuilder: (context, index) {
           final item = controller.listFeed[index];
           return FeedItemView(
-            url: item.url ?? '',
-            content: item.title ?? '',
+            url: item?.title ?? '',
+            content: item?.description ?? '',
             onPressed: () {},
           );
         },

@@ -25,4 +25,10 @@ class PostModel {
     required this.favorite,
     required this.fullText,
   });
+
+  @override
+  String toString() {
+    return 'PostModel{id: $id, feed: $feed, title: $title, link: $link, content: $content, pubDate: $pubDate, read: $read, favorite: $favorite, fullText: $fullText}';
+  }
+
 }

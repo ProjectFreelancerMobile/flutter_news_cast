@@ -9,11 +9,10 @@ import '../api/models/TUser.dart';
 class MyStorage {
   late GetStorage box;
   static const STORAGE_NAME = "my_storage";
-  static const APP_USER_INFO = "telemed_user_info";
+  static const APP_USER_INFO = "app_user_info";
   static const APP_NEW_INSTALL = "app_new_install";
   static const APP_THEME = "app_theme";
   static const APP_LANGUAGE = "app_language";
-  static const DEVICE_TOKEN = "device_token";
 
   init() async {
     await GetStorage.init(STORAGE_NAME);
@@ -60,7 +59,7 @@ class MyStorage {
   Future<void> logout() async {
     if (box.hasData(APP_LANGUAGE)) await box.remove(APP_LANGUAGE);
     if (box.hasData(APP_THEME)) await box.remove(APP_THEME);
+    if (box.hasData(APP_NEW_INSTALL)) await box.remove(APP_NEW_INSTALL);
     if (box.hasData(APP_USER_INFO)) await box.remove(APP_USER_INFO);
-    if (box.hasData(DEVICE_TOKEN)) await box.remove(DEVICE_TOKEN);
   }
 }

@@ -24,6 +24,7 @@ class AppController extends GetxController {
   Rx<ThemeData?>? themeData;
   Rx<AuthState> authState = AuthState.unauthorized.obs;
   TUser? user;
+  late Isar isar;
 
   init(Environment environment) async {
     this.env = environment;
@@ -61,7 +62,7 @@ class AppController extends GetxController {
     final storage = Get.put(MyStorage());
     await storage.init();
     final Directory dir = Platform.isAndroid ? await getApplicationDocumentsDirectory() : await getApplicationSupportDirectory();
-    final isar = await Isar.open(
+    isar = await Isar.open(
       [FeedModelSchema, PostModelSchema],
       directory: dir.path,
     );

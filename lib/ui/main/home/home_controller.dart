@@ -4,6 +4,7 @@ import 'package:flutter_news_cast/data/api/repositories/rss_repository.dart';
 import 'package:get/get.dart';
 
 import '../../../app/app_controller.dart';
+import '../../../data/api/api_constants.dart';
 import '../../base/base_controller.dart';
 import '../main_controller.dart';
 
@@ -17,14 +18,11 @@ class HomeController extends BaseController {
   // TUser get user => _user.value;
   // final GlobalKey widgetKey = GlobalKey();
   //
-  List<FeedModel> get listRecentFeed => _listFeed$.value;
+  List<FeedModel> get listRecentFeed => _listRecentFeed$.value;
   final _listRecentFeed$ = <FeedModel>[].obs;
 
-  List<FeedModel> get listFeed => _listFeed$.value;
-  final _listFeed$ = <FeedModel>[].obs;
-
-  FeedModel? get feedModel => _feedModel$.value;
-  Rx<FeedModel?> _feedModel$ = Rx<FeedModel?>(null);
+  List<FeedModel?> get listFeed => _listFeed$.value;
+  final _listFeed$ = <FeedModel?>[].obs;
 
   bool get isShowScreenError => false;
 
@@ -39,11 +37,12 @@ class HomeController extends BaseController {
     super.onInit();
     // _user.value = _appController.user ?? TUser(name: '', gender: SEX_TYPE.MEN.name, phone: '');
     // autoRefreshList();
-    initFakeData();
+    initRssData();
   }
 
-  void initFakeData() async {
-    _feedModel$.value = await _rssRepository.getFeed('https://tuoitre.vn/rss/tin-moi-nhat.rss');
+  void initRssData() async {
+   // _feedModel$.value = await _rssRepository.getFeed(RSS_1);
+    _listFeed$.value = await _rssRepository.getInitRss();
   }
 //
 // void autoRefreshList({bool isFore = false}) async {
