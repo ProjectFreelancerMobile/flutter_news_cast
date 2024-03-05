@@ -1,7 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+
+import '../../../res/style.dart';
 import '../../base/base_page.dart';
+import '../../widgets/default_appbar.dart';
 import 'rss_controller.dart';
 
 //ignore: must_be_immutable
@@ -9,6 +12,18 @@ class RssPage extends BasePage<RssController> {
   @override
   Widget buildContentView(BuildContext context, RssController controller) {
     return Scaffold(
+      appBar: DefaultAppbar(
+        title: controller.postTitle,
+        appBarStyle: AppBarStyle.BACK,
+        actions: [
+          IconButton(
+            onPressed: () {
+              controller.saveBookMark();
+            },
+            icon: Assets.icons.icHomeBookmark.svg(),
+          ),
+        ],
+      ),
       body: InAppWebView(
         key: controller.webViewKey,
         initialSettings: controller.settings,

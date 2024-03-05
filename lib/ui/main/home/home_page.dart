@@ -106,7 +106,7 @@ class HomePage extends BasePage<HomeController> {
             url: item?.image ?? '',
             content: item?.title ?? '',
             onPressed: () {
-              Get.toNamed(AppRoutes.READ_RSS, arguments: item?.link ?? '');
+              Get.toNamed(AppRoutes.READ_RSS, arguments: item);
             },
           );
         },

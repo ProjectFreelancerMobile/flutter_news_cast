@@ -3,17 +3,13 @@ import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_pic
 import 'package:flutter_news_cast/data/api/models/TUser.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-
 import '../../../app/app_controller.dart';
-import '../../../app/app_pages.dart';
-import '../../../data/api/repositories/user_repository.dart';
 import '../../../data/storage/key_constant.dart';
 import '../../../data/storage/my_storage.dart';
 import '../../base/base_controller.dart';
 
 class SettingsController extends BaseController {
   final appController = Get.find<AppController>();
-  final _bookmarkRepository = Get.find<BookmarkRepository>();
   final storage = Get.find<MyStorage>();
   final txtNameController = TextEditingController();
   final txtPhoneController = TextEditingController();
