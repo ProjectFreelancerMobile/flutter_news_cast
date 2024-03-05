@@ -4,7 +4,6 @@ import 'package:flutter_news_cast/res/style.dart';
 import 'package:photo_view/photo_view.dart';
 
 import '../../../res/theme/theme_service.dart';
-import '../../data/api/api_constants.dart';
 import '../../utils/image_cache_manager.dart';
 import 'shimmers/image_shimmer.dart';
 

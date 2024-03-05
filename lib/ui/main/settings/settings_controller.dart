@@ -13,7 +13,7 @@ import '../../base/base_controller.dart';
 
 class SettingsController extends BaseController {
   final appController = Get.find<AppController>();
-  final _useRepository = Get.find<UserRepository>();
+  final _bookmarkRepository = Get.find<BookmarkRepository>();
   final storage = Get.find<MyStorage>();
   final txtNameController = TextEditingController();
   final txtPhoneController = TextEditingController();
@@ -28,9 +28,9 @@ class SettingsController extends BaseController {
   @override
   void onInit() async {
     super.onInit();
-    try {
-      await _useRepository.getUserInfo();
-    } catch (e) {}
+    // try {
+    //   await _useRepository.getUserInfo();
+    // } catch (e) {}
     _user.value = appController.user ?? TUser(name: '', gender: SEX_TYPE.MEN.name, phone: '');
     if (user.gender == null) {
       _user.update((_user) {
@@ -46,74 +46,74 @@ class SettingsController extends BaseController {
   }
 
   void updateProfile(Function(String) errorMessage, {String? userName, DateTime? birthday, SEX_TYPE? sexType, String? phone}) async {
-    showLoading();
-    try {
-      if (userName != null) {
-        try {
-          await _useRepository.updateProfile(name: userName);
-          _user.update((_user) {
-            user.updateUser(name: userName);
-          });
-          txtNameController.text = userName;
-        } catch (e) {
-          txtNameController.text = user.name ?? '';
-          errorMessage(getErrors(e));
-        }
-      }
-      if (birthday != null) {
-        try {
-          await _useRepository.updateProfile(birthday: birthday);
-          dateTime = birthday;
-          _user.update((_user) {
-            user.updateUser(birthday: birthday);
-          });
-        } catch (e) {
-          dateTime = user.birthday ?? DateTime.parse(INIT_DATETIME);
-          errorMessage(getErrors(e));
-        }
-      }
-      if (sexType != null) {
-        try {
-          Get.back();
-          var gender = SEX_TYPE.MEN.name;
-          switch (sexType) {
-            case SEX_TYPE.MEN:
-              gender = SEX_TYPE.MEN.name;
-            case SEX_TYPE.WOMAN:
-              gender = SEX_TYPE.WOMAN.name;
-            case SEX_TYPE.OTHER:
-              gender = SEX_TYPE.OTHER.name;
-          }
-          await _useRepository.updateProfile(gender: gender);
-          this.sexType.value = sexType;
-          _user.update((_user) {
-            user.updateUser(gender: gender);
-          });
-        } catch (e) {
-          this.sexType.value = user.gender == 1 ? SEX_TYPE.MEN : (user.gender == 0 ? SEX_TYPE.WOMAN : SEX_TYPE.OTHER);
-          errorMessage(getErrors(e));
-        }
-      }
-      if (phone != null) {
-        try {
-          await _useRepository.updateProfile(phone: phone);
-          _user.update((_user) {
-            user.updateUser(phone: phone);
-          });
-          txtPhoneController.text = phone;
-        } catch (e) {
-          txtPhoneController.text = user.phone ?? '';
-          errorMessage(getErrors(e));
-        }
-      }
-      print('_user:::${txtNameController.text}');
-      storage.saveUserInfo(user);
-      hideLoading();
-    } catch (e) {
-      print("errorMessage::" + getErrors(e));
-      hideLoading();
-      errorMessage(getErrors(e));
-    }
+    // showLoading();
+    // try {
+    //   if (userName != null) {
+    //     try {
+    //       await _useRepository.updateProfile(name: userName);
+    //       _user.update((_user) {
+    //         user.updateUser(name: userName);
+    //       });
+    //       txtNameController.text = userName;
+    //     } catch (e) {
+    //       txtNameController.text = user.name ?? '';
+    //       errorMessage(getErrors(e));
+    //     }
+    //   }
+    //   if (birthday != null) {
+    //     try {
+    //       await _useRepository.updateProfile(birthday: birthday);
+    //       dateTime = birthday;
+    //       _user.update((_user) {
+    //         user.updateUser(birthday: birthday);
+    //       });
+    //     } catch (e) {
+    //       dateTime = user.birthday ?? DateTime.parse(INIT_DATETIME);
+    //       errorMessage(getErrors(e));
+    //     }
+    //   }
+    //   if (sexType != null) {
+    //     try {
+    //       Get.back();
+    //       var gender = SEX_TYPE.MEN.name;
+    //       switch (sexType) {
+    //         case SEX_TYPE.MEN:
+    //           gender = SEX_TYPE.MEN.name;
+    //         case SEX_TYPE.WOMAN:
+    //           gender = SEX_TYPE.WOMAN.name;
+    //         case SEX_TYPE.OTHER:
+    //           gender = SEX_TYPE.OTHER.name;
+    //       }
+    //       await _useRepository.updateProfile(gender: gender);
+    //       this.sexType.value = sexType;
+    //       _user.update((_user) {
+    //         user.updateUser(gender: gender);
+    //       });
+    //     } catch (e) {
+    //       this.sexType.value = user.gender == 1 ? SEX_TYPE.MEN : (user.gender == 0 ? SEX_TYPE.WOMAN : SEX_TYPE.OTHER);
+    //       errorMessage(getErrors(e));
+    //     }
+    //   }
+    //   if (phone != null) {
+    //     try {
+    //       await _useRepository.updateProfile(phone: phone);
+    //       _user.update((_user) {
+    //         user.updateUser(phone: phone);
+    //       });
+    //       txtPhoneController.text = phone;
+    //     } catch (e) {
+    //       txtPhoneController.text = user.phone ?? '';
+    //       errorMessage(getErrors(e));
+    //     }
+    //   }
+    //   print('_user:::${txtNameController.text}');
+    //   storage.saveUserInfo(user);
+    //   hideLoading();
+    // } catch (e) {
+    //   print("errorMessage::" + getErrors(e));
+    //   hideLoading();
+    //   errorMessage(getErrors(e));
+    // }
   }
 
   onGotoNotificationsPage() {

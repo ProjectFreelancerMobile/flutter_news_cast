@@ -1,16 +1,17 @@
 import 'package:get/get.dart';
 
+import '../models/rss/feed_model.dart';
 import '../services/rss_service.dart';
 import 'base_repository.dart';
 
 class RssRepository extends BaseRepository {
   final _rssService = Get.find<RSSService>();
-  //
-  // Future<FarmItem?> getFarmDetail(String? fk) async {
-  //   final farm = await _farmService.getFarmDetail(fk);
-  //   return farm;
-  // }
-  //
+
+  Future<FeedModel?> getFeed(String url) async {
+    final feed = await _rssService.parseRss(url);
+    return feed;
+  }
+
   // Future<String> getNameFarm(List<FarmItem>? listFarm) async => _farmService.getNameFarm(listFarm);
   //
   // Future<List<FarmItem>?> getListFarm() async => _farmService.getListFarm();

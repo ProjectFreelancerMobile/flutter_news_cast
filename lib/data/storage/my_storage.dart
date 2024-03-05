@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter_news_cast/data/api/models/feed_model.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../../res/languages/localization_service.dart';

@@ -1,23 +1,13 @@
-import 'package:flutter_news_cast/data/api/models/response/api_response.dart';
-import 'package:flutter_news_cast/data/api/models/feed_model.dart';
-import 'package:flutter_news_cast/utils/date_time_utils.dart';
 import 'package:get/get.dart';
 
-import '../../../app/app_controller.dart';
 import '../../storage/my_storage.dart';
-import '../api_constants.dart';
 import '../models/TUser.dart';
-import '../services/user_service.dart';
+import '../services/bookmark_service.dart';
 import 'base_repository.dart';
 
-class UserRepository extends BaseRepository {
-  final _userService = Get.find<UserService>();
+class BookmarkRepository extends BaseRepository {
+  final _bookmarkService = Get.find<BookmarkService>();
   final _storage = Get.find<MyStorage>();
-
-  Future<ApiResponse> loginByEmail(String email) async {
-    final response = await _userService.loginByEmail(email);
-    return response;
-  }
 
   // Future<ApiResponse> loginBySocial(
   //   String email,
@@ -86,9 +76,5 @@ class UserRepository extends BaseRepository {
     // await Get.find<AppController>().updateOnlyUserInfo(user);
     // return user;
     return TUser();
-  }
-
-  updateFirebaseToken({required String token, required String deviceId, String? verName, String? verCode}) async {
-    await _userService.updateFirebaseToken(token: token, deviceId: deviceId, verCode: verCode, verName: verName);
   }
 }

@@ -7,6 +7,7 @@ import 'package:flutter_news_cast/ui/main/widget/feed_recent_item_view.dart';
 import 'package:flutter_news_cast/ui/widgets/base_scaffold_widget.dart';
 
 import '../../base/base_page.dart';
+import '../../widgets/button/touchable_opacity.dart';
 import 'home_controller.dart';
 
 //ignore: must_be_immutable
@@ -24,6 +25,15 @@ class HomePage extends BasePage<HomeController> {
               Assets.icons.icRecent.svg(),
             ],
           ),
+          SizedBox(height: 12.ws),
+          Row(
+            children: [
+              Text(
+                controller.feedModel.toString(),
+                style: text18.bold.textColor141414,
+              ),
+            ],
+          ),
           Expanded(
             flex: 1,
             child: buildListFeedRecent(),
@@ -38,17 +48,40 @@ class HomePage extends BasePage<HomeController> {
   }
 
   Widget buildListFeedRecent() {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        final item = controller.listRecentFeed[index];
-        return FeedRecentItemView(
-          url: item.url ?? '',
-          content: item.content ?? '',
+    return Column(
+      children: [
+        TouchableOpacity(
           onPressed: () {},
-        );
-      },
-      itemCount: controller.listRecentFeed.length,
+          child: Row(
+            children: [
+              Assets.icons.icHomeBookmark.svg(),
+              SizedBox(width: 16.ws),
+              Expanded(
+                child: Text(
+                  textLocalization('home.bookmarks'),
+                  style: text16.bold.textColor141414,
+                ),
+              ),
+              Assets.icons.icSettingsNext.svg(),
+            ],
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final item = controller.listRecentFeed[index];
+              return FeedRecentItemView(
+                url: item.url ?? '',
+                content: item.title ?? '',
+                onPressed: () {},
+              );
+            },
+            itemCount: controller.listRecentFeed.length,
+          ),
+        ),
+      ],
     );
   }
 
@@ -57,6 +90,7 @@ class HomePage extends BasePage<HomeController> {
       padding: EdgeInsets.symmetric(horizontal: 10.ws, vertical: 10.ws),
       child: GridView.builder(
         padding: EdgeInsets.zero,
+        scrollDirection: Axis.horizontal,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisExtent: 120.ws,
@@ -67,7 +101,7 @@ class HomePage extends BasePage<HomeController> {
           final item = controller.listFeed[index];
           return FeedItemView(
             url: item.url ?? '',
-            content: item.content ?? '',
+            content: item.title ?? '',
             onPressed: () {},
           );
         },

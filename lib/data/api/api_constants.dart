@@ -12,36 +12,16 @@ const PAGE_SIZE = 30;
 const BASE_URL_DEV = "https://12121.urvega.com/";
 var isConnection = true;
 
-//Login
-const LOGIN_BY_EMAIL = "auth/login";
-const LOGIN_BY_SOCIAL = "auth/slogin";
-//Register
-const REGISTER = "auth/register";
-//OTP
-const VERIFY_OTP = "code/check";
-const REQUEST_OTP = "code/generate";
-//Profile
-const GET_PROFILE = "profile/fetch";
-const UPDATE_PROFILE = "profile/update";
+//RSS
+const RSS_1 = "https://tuoitre.vn/rss/tin-moi-nhat.rss";
+const RSS_2 = "https://www.youtube.com/feeds/videos.xml?channel_id=UCXuqSBlHAE6Xw-yeJA0Tunw";
+const RSS_3 = "https://vimeo.com/georgiafootball/videos/rss";
+const RSS_4 = "https://api.dailymotion.com/channel/music/videos?limit=100&sort=recent";
+const RSS_5 = "https://api.dailymotion.com/videos?limit=100&sort=recent";
+const RSS_6 = "https://lfm.xiffy.nl/thexiffy";
 
-// firebase
-const PUSH_DEVICE_TOKEN = "/v1/app/device/%s";
+const BOOKMARK_1 = "https://soundcloud.com/";
+const BOOKMARK_2 = "https://mixcloud.com";
+const BOOKMARK_3 = "https://audiomack.com/";
 
-//Farm
-const GET_ALL_FARM = "farm/all";
-const GET_FARM = "farm/one";
-const CREATE_FARM = "farm/add";
-const UPDATE_FARM = "farm/update";
-const REGION_PROVINCE = "region/province";
-const REGION_DISTRICT = "region/district";
-const REGION_WARD = "region/ward";
-
-//Device
-const GET_ALL_DEVICE = "device/all";
-const GET_DEVICE = "device/one";
-const UPDATE_DEVICE = "device/update";
-const PAIR_DEVICE = "pair";
-const VERIFY_DEVICE = "device/verify";
-const PUSH_DEVICE = "device/push";
-const DELETE_DEVICE = "device/remove";
-const CHART_DEVICE = "device/chart";
+const LEARN_MORE_URL = "https://support.google.com/chromecast/answer/10063094?visit_id=638436053820274830-2324657006&p=lna_casting&rd=1";

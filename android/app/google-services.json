@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "680668007268",
-    "project_id": "fedoapp-3d5f0",
-    "storage_bucket": "fedoapp-3d5f0.appspot.com"
+    "project_number": "1012885884431",
+    "project_id": "fedoapp-97443",
+    "storage_bucket": "fedoapp-97443.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:680668007268:android:b33b89505c667668534871",
+        "mobilesdk_app_id": "1:1012885884431:android:f4ab220857e212eeb09d7a",
         "android_client_info": {
           "package_name": "com.fedoapp.app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBDbpX9gBv--CCdGF-2QcKoz3f2Q2HgrVA"
+          "current_key": "AIzaSyAABrFu5H_v_V7s6IKiASkacnf7EhvjV2g"
         }
       ],
       "services": {

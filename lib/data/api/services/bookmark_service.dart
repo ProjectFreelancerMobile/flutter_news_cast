@@ -1,16 +1,7 @@
-import 'dart:async';
-import 'dart:io';
-
-import 'package:flutter_news_cast/data/api/models/response/api_response.dart';
-import 'package:sprintf/sprintf.dart';
-
-import '../../storage/key_constant.dart';
-import '../api_constants.dart';
-import '../models/TUser.dart';
 import 'base_service.dart';
 
-class UserService extends BaseService {
-  Future<ApiResponse> loginByEmail(String email) async {
+class BookmarkService extends BaseService {
+ /* Future<ApiResponse> loginByEmail(String email) async {
     final params = {"email": email};
     return await post(LOGIN_BY_EMAIL, data: params);
   }
@@ -97,5 +88,5 @@ class UserService extends BaseService {
   updateFirebaseToken({required String token, required String deviceId, String? verName, String? verCode}) async {
     final url = sprintf(PUSH_DEVICE_TOKEN, [deviceId]);
     await post(url, data: {"token": token, "os": Platform.isAndroid ? "android" : "ios", "verName": verName, "verCode": verCode});
-  }
+  }*/
 }

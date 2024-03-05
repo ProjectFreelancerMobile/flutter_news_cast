@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_news_cast/data/api/models/feed_model.dart';
-import 'package:flutter_news_cast/data/storage/key_constant.dart';
 import 'package:get/get.dart';
+import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../res/languages/localization_service.dart';
 import '../../res/theme/app_theme.dart';
@@ -10,6 +12,8 @@ import '../../res/theme/theme_service.dart';
 import '../app/app_pages.dart';
 import '../data/api/api_constants.dart';
 import '../data/api/models/TUser.dart';
+import '../data/api/models/rss/feed_model.dart';
+import '../data/api/models/rss/post_model.dart';
 import '../data/api/rest_client.dart';
 import '../data/storage/my_storage.dart';
 import 'base_app_config.dart';
@@ -56,10 +60,11 @@ class AppController extends GetxController {
   Future<void> initStorage() async {
     final storage = Get.put(MyStorage());
     await storage.init();
-    //TODO Test
-    // if (fkTest.isNotEmpty && ukTest.isNotEmpty) {
-    //   storage.saveDeviceToken(TokenModel(ukTest, fkTest));
-    // }
+    final Directory dir = Platform.isAndroid ? await getApplicationDocumentsDirectory() : await getApplicationSupportDirectory();
+    final isar = await Isar.open(
+      [FeedModelSchema, PostModelSchema],
+      directory: dir.path,
+    );
   }
 
   logout() async {
