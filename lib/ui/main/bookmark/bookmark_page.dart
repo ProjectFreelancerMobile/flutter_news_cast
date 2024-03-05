@@ -13,7 +13,7 @@ class ListBookmarkPage extends BasePage<BookmarkController> {
   Widget buildContentView(BuildContext context, BookmarkController controller) {
     return Scaffold(
       appBar: DefaultAppbar(
-        title: textLocalization('home.bookmarks'),
+        title: controller.isBookmark ? textLocalization('home.bookmarks') : textLocalization('home.recents'),
         appBarStyle: AppBarStyle.BACK,
       ),
       body: buildListBookmark(),
@@ -21,21 +21,19 @@ class ListBookmarkPage extends BasePage<BookmarkController> {
   }
 
   Widget buildListBookmark() {
-    return Expanded(
-      child: controller.listPost.length > 0
-          ? ListView.builder(
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                final item = controller.listPost[index];
-                return FeedRecentItemView(
-                  url: item?.image ?? '',
-                  content: item?.content ?? '',
-                  onPressed: () {},
-                );
-              },
-              itemCount: controller.listPost.length,
-            )
-          : DataEmptyWidget(),
-    );
+    return controller.listPost.length > 0
+        ? ListView.builder(
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              final item = controller.listPost[index];
+              return FeedRecentItemView(
+                url: item?.image ?? '',
+                content: item?.title ?? '',
+                onPressed: () {},
+              );
+            },
+            itemCount: controller.listPost.length,
+          )
+        : DataEmptyWidget();
   }
 }

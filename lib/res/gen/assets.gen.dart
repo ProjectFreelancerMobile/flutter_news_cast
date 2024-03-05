@@ -63,8 +63,8 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_feed_url.svg
   SvgGenImage get icFeedUrl => const SvgGenImage('assets/icons/ic_feed_url.svg');
 
-  /// File path: assets/icons/ic_google.svg
-  SvgGenImage get icGoogle => const SvgGenImage('assets/icons/ic_google.svg');
+  /// File path: assets/icons/ic_google.png
+  AssetGenImage get icGoogle => const AssetGenImage('assets/icons/ic_google.png');
 
   /// File path: assets/icons/ic_home_bookmark.svg
   SvgGenImage get icHomeBookmark => const SvgGenImage('assets/icons/ic_home_bookmark.svg');
@@ -106,7 +106,7 @@ class $AssetsIconsGen {
   SvgGenImage get icYoutube => const SvgGenImage('assets/icons/ic_youtube.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [
+  List<dynamic> get values => [
         icAdd,
         icAirplay,
         icBack,

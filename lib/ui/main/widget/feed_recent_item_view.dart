@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_news_cast/res/style.dart';
 import 'package:flutter_news_cast/ui/widgets/button/touchable_opacity.dart';
@@ -16,7 +17,7 @@ class FeedRecentItemView extends StatelessWidget {
       onPressed: onPressed,
       child: Row(
         children: [
-          Assets.icons.icGoogle.svg(),
+          Assets.icons.icGoogle.image(),
           SizedBox(width: 16.ws),
           Expanded(
             child: Text(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
 import 'package:flutter_news_cast/data/api/repositories/rss_repository.dart';
+import 'package:flutter_news_cast/ui/main/home/home_controller.dart';
 import 'package:get/get.dart';
 
 import '../../../app/app_controller.dart';
@@ -16,7 +17,6 @@ class RssController extends BaseController {
   final _appController = Get.find<AppController>();
   final postRss = Get.arguments as PostModel?;
   final GlobalKey webViewKey = GlobalKey();
-
   InAppWebViewController? webViewController;
   InAppWebViewSettings settings = InAppWebViewSettings(isInspectable: false, mediaPlaybackRequiresUserGesture: false, allowsInlineMediaPlayback: true, iframeAllowFullscreen: true);
   PullToRefreshController? pullToRefreshController;
@@ -25,7 +25,8 @@ class RssController extends BaseController {
 
   String get postTitle => postRss?.title ?? '';
 
-  bool get isHasBookmark => postRss?.favorite ?? false;
+  bool get isHasBookmark => _isHasBookmark$.value;
+  var _isHasBookmark$ = false.obs;
 
   @override
   void onClose() {
@@ -36,6 +37,7 @@ class RssController extends BaseController {
   @override
   void onInit() async {
     super.onInit();
+    _isHasBookmark$.value = postRss?.favorite ?? false;
     pullToRefreshController = kIsWeb
         ? null
         : PullToRefreshController(
@@ -56,9 +58,15 @@ class RssController extends BaseController {
     });
   }
 
+  void updateStateBookmark() {
+    _isHasBookmark$.value = !isHasBookmark;
+  }
+
   void saveBookMark() {
     if (postRss == null) return;
-    _rssRepository.updatePostStatus(postRss!, bookMark: true);
+    updateStateBookmark();
+    _rssRepository.updatePostStatus(postRss!, bookMark: isHasBookmark);
+    Get.find<HomeController>().getListBookMark();
   }
 
   void updatePost() {
