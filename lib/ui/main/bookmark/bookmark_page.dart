@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/ui/widgets/data_empty_widget.dart';
 
+import '../../../res/style.dart';
 import '../../base/base_page.dart';
+import '../../widgets/default_appbar.dart';
 import '../widget/feed_recent_item_view.dart';
 import 'bookmark_controller.dart';
 
@@ -10,6 +12,10 @@ class ListBookmarkPage extends BasePage<BookmarkController> {
   @override
   Widget buildContentView(BuildContext context, BookmarkController controller) {
     return Scaffold(
+      appBar: DefaultAppbar(
+        title: textLocalization('home.bookmarks'),
+        appBarStyle: AppBarStyle.BACK,
+      ),
       body: buildListBookmark(),
     );
   }

@@ -32,21 +32,12 @@ class HomePage extends BasePage<HomeController> {
             ],
           ),
           SizedBox(height: 12.ws),
-          // Row(
-          //   children: [
-          //     Text(
-          //       controller.feedModel.toString(),
-          //       style: text18.bold.textColor141414,
-          //       maxLines: 10,
-          //     ),
-          //   ],
-          // ),
           Expanded(
             flex: 1,
             child: buildListFeedRecent(),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: buildListFeed(),
           ),
         ],
