@@ -101,8 +101,8 @@ class HomePage extends BasePage<HomeController> {
         itemBuilder: (context, index) {
           final item = controller.listPost[index];
           return FeedItemView(
-            url: item?.title ?? '',
-            content: item?.content ?? '',
+            url: item?.image ?? '',
+            content: item?.title ?? '',
             onPressed: () {},
           );
         },

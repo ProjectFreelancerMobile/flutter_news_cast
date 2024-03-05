@@ -15,8 +15,8 @@ class RssItem {
     var imagePost = '';
     if (description.contains('<img src="')) {
       imagePost = description.substring(description.indexOf('<img src="') + 10, description.indexOf('" /></a>'));
+      print('imagePost:::' + imagePost.toString());
     }
-    print('description:::' + imagePost.toString());
     return RssItem(
       title: findElementOrNull(element, 'title')?.innerText,
       description: description,
