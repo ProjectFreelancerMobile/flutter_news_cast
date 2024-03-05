@@ -20,11 +20,7 @@ class DataErrorWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(
-            DImages.dataError,
-            width: 90,
-            height: 90,
-          ),
+          Assets.images.imgError.image(),
           SizedBox(
             height: 20,
           ),

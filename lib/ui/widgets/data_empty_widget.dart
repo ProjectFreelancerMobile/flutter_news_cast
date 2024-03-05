@@ -16,11 +16,7 @@ class DataEmptyWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(
-            DImages.icEmpty,
-            width: 120,
-            height: 120,
-          ),
+          Assets.images.imgIcEmpty.image(),
           SizedBox(
             height: 10,
           ),

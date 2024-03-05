@@ -141,8 +141,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/avatar_default.jpeg
   AssetGenImage get avatarDefault => const AssetGenImage('assets/images/avatar_default.jpeg');
 
+  /// File path: assets/images/img_error.jpg
+  AssetGenImage get imgError => const AssetGenImage('assets/images/img_error.jpg');
+
+  /// File path: assets/images/img_ic_empty.png
+  AssetGenImage get imgIcEmpty => const AssetGenImage('assets/images/img_ic_empty.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [avatarDefault];
+  List<AssetGenImage> get values => [avatarDefault, imgError, imgIcEmpty];
 }
 
 class $AssetsJsonGen {

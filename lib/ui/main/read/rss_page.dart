@@ -20,7 +20,7 @@ class RssPage extends BasePage<RssController> {
             onPressed: () {
               controller.saveBookMark();
             },
-            icon: Assets.icons.icHomeBookmark.svg(),
+            icon: controller.isHasBookmark ? Icon(Icons.bookmark) : Assets.icons.icBookmark.svg(),
           ),
         ],
       ),

@@ -281,7 +281,7 @@ class RSSService extends BaseService {
   }
 
   Future<List<PostModel>> getListRecent() async {
-    final List<PostModel> posts = await _isar.postModels.where().sortByReadDate().findAll();
+    final List<PostModel> posts = await _isar.postModels.where().filter().readDateIsNotNull().sortByReadDate().findAll();
     return posts;
   }
 }

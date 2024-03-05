@@ -25,6 +25,8 @@ class RssController extends BaseController {
 
   String get postTitle => postRss?.title ?? '';
 
+  bool get isHasBookmark => postRss?.favorite ?? false;
+
   @override
   void onClose() {
     print('HomeController:onClose');
