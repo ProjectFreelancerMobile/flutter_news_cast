@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_news_cast/res/style.dart';
 import 'package:flutter_news_cast/ui/widgets/button/touchable_opacity.dart';
@@ -15,21 +16,27 @@ class FeedItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return TouchableOpacity(
       onPressed: onPressed,
-      child: Column(
-        children: [
-          PhotoViewNetworkImage(
-            url: url,
-            width: 180.ws,
-            height: 100.ws,
-          ),
-          Text(
-            content,
-            style: text12.textColor141414,
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
+      child: Container(
+        width: 180.ws,
+        height: 100.ws,
+        margin: EdgeInsets.only(right: 10.ws),
+        child: Column(
+          children: [
+            PhotoViewNetworkImage(
+              url: url,
+              width: 180.ws,
+              height: 76.ws,
+            ),
+            SizedBox(height: 6.ws),
+            Text(
+              content,
+              style: text12.textColor141414,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }

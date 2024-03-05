@@ -19,14 +19,15 @@ class RssRepository extends BaseRepository {
   }
 
   Future<List<PostModel?>> getPostsByListFeeds(List<FeedModel> feeds) async {
-    await _rssService.getPostsByListFeeds(feeds);
+    await _rssService.fetchPostFromListFeed(feeds);
     final listPost = await _rssService.getPostsByListFeeds(feeds);
     return listPost;
   }
 
   Future<List<PostModel?>> getPostsByFeeds(FeedModel feedModel) async {
-    await _rssService.getPostsByFeeds(feedModel);
+    await _rssService.fetchPostFromFeed(feedModel);
     final listPost = await _rssService.getPostsByFeeds(feedModel);
+    print('getPostsByFeeds:${listPost.length}');
     return listPost;
   }
 

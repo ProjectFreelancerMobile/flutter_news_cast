@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 
 import '../../../app/app_controller.dart';
 import '../../../data/api/api_constants.dart';
+import '../../../data/api/models/rss/list_feed_model.dart';
 import '../../base/base_controller.dart';
 import '../main_controller.dart';
 
@@ -23,11 +24,8 @@ class HomeController extends BaseController {
   List<PostModel> get listBookmark => _listBookmark$.value;
   final _listBookmark$ = <PostModel>[].obs;
 
-  List<FeedModel> get listFeed => _listFeed$.value;
-  final _listFeed$ = <FeedModel>[].obs;
-
-  List<PostModel?> get listPost => _listPost$.value;
-  final _listPost$ = <PostModel?>[].obs;
+  List<ListFeedModel> get listFeed => _listFeed$.value;
+  final _listFeed$ = <ListFeedModel>[].obs;
 
   bool get isShowScreenError => false;
 
@@ -40,17 +38,27 @@ class HomeController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    initRssData();
     getListBookMark();
+    initRssData();
   }
 
   void initRssData() async {
-    // _feedModel$.value = await _rssRepository.getFeed(RSS_1);
-    _listFeed$.value = await _rssRepository.getInitRss();
+     await _rssRepository.getInitRss().then((value) async {
+       var listFeed = <ListFeedModel>[];
+       await Future.forEach(value, (element) async {
+         print('111111111');
+         var feed = ListFeedModel();
+         feed.feedModel = element;
+         feed.listPost = await getListPostFromFeed(element);
+         listFeed.add(feed);
+       });
+       print('2222222'+ listFeed.length.toString());
+       _listFeed$.value = listFeed;
+     });
   }
 
-  void getListPostFromFeed(FeedModel feedModel) async {
-    _listPost$.value =  await _rssRepository.getPostsByFeeds(feedModel);
+  Future<List<PostModel?>> getListPostFromFeed(FeedModel feedModel) async {
+    return await _rssRepository.getPostsByFeeds(feedModel);
   }
 
   void getListBookMark() async {
