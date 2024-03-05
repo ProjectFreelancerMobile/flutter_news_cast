@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_news_cast/app/app_pages.dart';
+import 'package:flutter_news_cast/data/api/models/rss/feed_model.dart';
 import 'package:flutter_news_cast/res/style.dart';
 import 'package:flutter_news_cast/ui/main/widget/feed_item_view.dart';
 import 'package:flutter_news_cast/ui/main/widget/feed_recent_item_view.dart';
@@ -81,14 +82,16 @@ class HomePage extends BasePage<HomeController> {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              final item = controller.listRecentFeed[index];
+              final item = controller.listBookmark[index];
               return FeedRecentItemView(
-                url: item.url ?? '',
+                url: item.image ?? '',
                 content: item.title ?? '',
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(AppRoutes.READ_RSS, arguments: item);
+                },
               );
             },
-            itemCount: controller.listRecentFeed.length,
+            itemCount: controller.listBookmark.length > 5 ? 5 : controller.listBookmark.length,
           ),
         ),
       ],
@@ -96,17 +99,22 @@ class HomePage extends BasePage<HomeController> {
   }
 
   Widget buildListFeed() {
+    return Column(
+      children: [
+        for(var item in controller.listFeed)
+          buildListPostFromFeed(item)
+      ],
+    );
+  }
+
+  Widget buildListPostFromFeed(FeedModel feedModel) {
+    controller.getListPostFromFeed(feedModel);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.ws, vertical: 10.ws),
-      child: GridView.builder(
+      child: ListView.builder(
         padding: EdgeInsets.zero,
         scrollDirection: Axis.horizontal,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisExtent: 120.ws,
-          mainAxisSpacing: 10.ws,
-          crossAxisSpacing: 10.ws,
-        ),
+        shrinkWrap: true,
         itemBuilder: (context, index) {
           final item = controller.listPost[index];
           return FeedItemView(
@@ -117,7 +125,7 @@ class HomePage extends BasePage<HomeController> {
             },
           );
         },
-        itemCount: controller.listFeed.length,
+        itemCount: controller.listPost.length,
       ),
     );
   }

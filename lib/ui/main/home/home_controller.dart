@@ -3,6 +3,7 @@ import 'package:flutter_news_cast/data/api/models/rss/feed_model.dart';
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
 import 'package:flutter_news_cast/data/api/repositories/rss_repository.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../../app/app_controller.dart';
 import '../../../data/api/api_constants.dart';
@@ -19,8 +20,8 @@ class HomeController extends BaseController {
   // TUser get user => _user.value;
   // final GlobalKey widgetKey = GlobalKey();
   //
-  List<FeedModel> get listRecentFeed => _listRecentFeed$.value;
-  final _listRecentFeed$ = <FeedModel>[].obs;
+  List<PostModel> get listBookmark => _listBookmark$.value;
+  final _listBookmark$ = <PostModel>[].obs;
 
   List<FeedModel> get listFeed => _listFeed$.value;
   final _listFeed$ = <FeedModel>[].obs;
@@ -37,129 +38,22 @@ class HomeController extends BaseController {
   }
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
-    // _user.value = _appController.user ?? TUser(name: '', gender: SEX_TYPE.MEN.name, phone: '');
-    // autoRefreshList();
     initRssData();
+    getListBookMark();
   }
 
   void initRssData() async {
     // _feedModel$.value = await _rssRepository.getFeed(RSS_1);
     _listFeed$.value = await _rssRepository.getInitRss();
-    if (listFeed.isNotEmpty) {
-      _listPost$.value = await _rssRepository.getPostsByFeeds(listFeed);
-    }
   }
 
-//
-// void autoRefreshList({bool isFore = false}) async {
-//   print('HomeController:autoRefreshList:' + _mainController.pageIndex.value.toString());
-//   if (_mainController.pageIndex.value == 0 || isFore) {
-//     await getListDevice();
-//     periodicTimer?.cancel();
-//     periodicTimer = Timer.periodic(Duration(seconds: 5), (timer) async {
-//       periodicTimer = timer;
-//       await getListDevice(isShowLoading: false);
-//     });
-//   }
-// }
-//
-// MainController get getMainController => _mainController;
-//
-// Future<void> getListDevice({bool? isShowLoading = true}) async {
-//   try {
-//     if (AppPopup.pairDevice) return;
-//     if (isShowLoading == true) {
-//       showLoading();
-//     }
-//     await _deviceRepository.getListDevice(_mainController.farmPick).then((value) {
-//       if (value != null) {
-//         _listDevice$.value = value;
-//         Logger(
-//                 printer: PrettyPrinter(
-//                     methodCount: 2,
-//                     // Number of method calls to be displayed
-//                     errorMethodCount: 8,
-//                     // Number of method calls if stacktrace is provided
-//                     lineLength: 120,
-//                     // Width of the output
-//                     colors: true,
-//                     // Colorful log messages
-//                     printEmojis: true,
-//                     // Print an emoji for each log message
-//                     printTime: true // Should each log print contain a timestamp
-//                     ))
-//             .i("getListDevice::");
-//       }
-//     });
-//     if (isShowLoading == true) {
-//       hideLoading();
-//     }
-//   } catch (e) {
-//     if (isShowLoading == true) {
-//       hideLoading();
-//     }
-//     showMessage(getErrors(e), isForeShow: isShowLoading == true);
-//   }
-// }
-//
-// Future<void> pushDevice(DeviceItem? deviceItem, String? sn, {Function(bool)? isState}) async {
-//   try {
-//     if (sn == null || deviceItem == null) return isState != null ? isState(false) : null;
-//     showLoading();
-//     await _deviceRepository.pushDevice(sn: sn).then((value) {
-//       if (value != null) {
-//         if (value.state == true) {
-//           isState != null ? isState(true) : null;
-//           final deviceUpdate = deviceItem.copyWith(data: CONTROL_TYPE.ON.name);
-//           listDevice[listDevice.indexWhere((element) => element.serialNo == sn)] = deviceUpdate;
-//         } else if (value.state == false) {
-//           isState != null ? isState(false) : null;
-//           final deviceUpdate = deviceItem.copyWith(data: CONTROL_TYPE.OFF.name);
-//           listDevice[listDevice.indexWhere((element) => element.serialNo == sn)] = deviceUpdate;
-//         }
-//         _listDevice$.value = listDevice;
-//       } else {
-//         isState != null ? isState(false) : null;
-//         showMessage(textLocalization('data.error'));
-//       }
-//     });
-//     hideLoading();
-//   } catch (e) {
-//     isState != null ? isState(false) : null;
-//     hideLoading();
-//     showMessage(getErrors(e));
-//   }
-// }
-//
-// void updateName(String nameUpdate) {
-//   _user.update((_user) {
-//     user.updateUser(name: nameUpdate);
-//   });
-//   print('updateName:::' + user.name.toString());
-// }
-//
-// onGotoAddDevice() {
-//   periodicTimer?.cancel();
-//   Get.toNamed(AppRoutes.ADD_DEVICE);
-// }
-//
-// onGotoManagerDevice(DeviceItem deviceItem) {
-//   periodicTimer?.cancel();
-//   removePopUp();
-//   Get.toNamed(AppRoutes.MANAGER_DEVICE, arguments: deviceItem);
-// }
-//
-// removePopUp() {
-//   _mainController.appPopup?.removePopup();
-// }
-//
-// getPopup() => _mainController.appPopup;
-//
-// @override
-// void dispose() {
-//   periodicTimer?.cancel();
-//   super.dispose();
-// }
+  void getListPostFromFeed(FeedModel feedModel) async {
+    _listPost$.value =  await _rssRepository.getPostsByFeeds(feedModel);
+  }
+
+  void getListBookMark() async {
+    _listBookmark$.value = await _rssRepository.getListBookmark();
+  }
 }

@@ -129,10 +129,10 @@ class RSSService extends BaseService {
   }
 
   //POST
-  Future<int> reslovePosts(List<FeedModel> feeds) async {
+  Future<int> fetchPostFromListFeed(List<FeedModel> feeds) async {
     int result = 0;
     for (final FeedModel feed in feeds) {
-      bool res = await _reslovePost(feed);
+      bool res = await fetchPostFromFeed(feed);
       if (!res) {
         result++;
       }
@@ -140,7 +140,7 @@ class RSSService extends BaseService {
     return result;
   }
 
-  Future<bool> _reslovePost(FeedModel feedModel) async {
+  Future<bool> fetchPostFromFeed(FeedModel feedModel) async {
     try {
       final response = await getWithCustomUrl(feedModel.url, '');
       final DateTime? feedLastUpdated = await getLatesPubDate(feedModel);
@@ -253,7 +253,7 @@ class RSSService extends BaseService {
     return await _isar.postModels.where().findAll();
   }
 
-  Future<List<PostModel>> getPostsByFeeds(List<FeedModel> feeds) async {
+  Future<List<PostModel>> getPostsByListFeeds(List<FeedModel> feeds) async {
     final List<PostModel> result = [];
     for (final FeedModel feed in feeds) {
       final List<PostModel> posts = await _isar.postModels.where().filter().feed((f) => f.idEqualTo(feed.id)).findAll();
@@ -262,8 +262,13 @@ class RSSService extends BaseService {
     return result;
   }
 
+  Future<List<PostModel>> getPostsByFeeds(FeedModel feedModel) async {
+    final List<PostModel> posts = await _isar.postModels.where().filter().feed((f) => f.idEqualTo(feedModel.id)).findAll();
+    return posts;
+  }
+
   Future<void> deletePostsByFeed(FeedModel feed) async {
-    final List<PostModel> posts = await getPostsByFeeds([feed]);
+    final List<PostModel> posts = await getPostsByFeeds(feed);
     await _isar.writeTxn(() async {
       await _isar.postModels.deleteAll(posts.map((e) => e.id!).toList());
     });
