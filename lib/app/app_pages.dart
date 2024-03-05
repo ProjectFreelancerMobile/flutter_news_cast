@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 
 import '../../ui/main/main_binding.dart';
 import '../../ui/main/main_page.dart';
-import '../../ui/notification/list_notification_binding.dart';
-import '../../ui/notification/list_notification_page.dart';
+import '../ui/main/read/rss_binding.dart';
+import '../ui/main/read/rss_page.dart';
 
 part 'app_routes.dart';
 
@@ -15,9 +15,9 @@ class AppPages {
       binding: MainBinding(),
     ),
     GetPage(
-      name: AppRoutes.LIST_NOTIFICATION,
-      page: () => ListNotificationPage(),
-      binding: ListNotificationBinding(),
+      name: AppRoutes.READ_RSS,
+      page: () => RssPage(),
+      binding: RssBinding(),
     ),
     /*HOME*/
     // GetPage(

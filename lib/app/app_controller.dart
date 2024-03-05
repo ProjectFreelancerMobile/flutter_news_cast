@@ -125,7 +125,7 @@ class AppController extends GetxController {
       Get.offAllNamed(AppRoutes.MAIN);
     } else {
       authState.value = AuthState.uncompleted;
-      Get.offAllNamed(AppRoutes.UPDATE_PROFILE);
+      //Get.offAllNamed(AppRoutes.UPDATE_PROFILE);
     }
   }
 

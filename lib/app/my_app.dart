@@ -49,7 +49,7 @@ class MyApp extends GetWidget<AppController> {
       case AuthState.new_install:
         return AppRoutes.MAIN;
       case AuthState.uncompleted:
-        return AppRoutes.UPDATE_PROFILE;
+        return AppRoutes.MAIN;
       default:
         return AppRoutes.MAIN;
     }

@@ -23,21 +23,8 @@ class RssRepository extends BaseRepository {
     final listPost = await _rssService.getPostsByFeeds(feeds);
     return listPost;
   }
-  // Future<String> getNameFarm(List<FarmItem>? listFarm) async => _farmService.getNameFarm(listFarm);
-  //
-  // Future<List<FarmItem>?> getListFarm() async => _farmService.getListFarm();
-  //
-  // Future<ApiResponse> updateFarm({required String fk, required String name, required String acreage, required String unit, required String address}) async {
-  //   return await _farmService.updateFarm(fk: fk, name: name, acreage: acreage, unit: unit, address: address);
-  // }
-  //
-  // Future<ApiResponse> createFarm({required String name, required String acreage, required String unit, required String address}) async {
-  //   return await _farmService.createFarm(name: name, acreage: acreage, unit: unit, address: address);
-  // }
-  //
-  // Future<List<ProvinceItem>?> getListProvince() async => await _farmService.getListProvince();
-  //
-  // Future<List<ProvinceItem>?> getListDistrict(String code) async => await _farmService.getListDistrict(code);
-  //
-  // Future<List<ProvinceItem>?> getListWard(String code) async => await _farmService.getListWard(code);
+
+  Future<void> updatePostStatus(PostModel post, {DateTime? readTime, bool? bookMark}) async {
+    await _rssService.updatePostStatus(post, readTime: readTime, bookMark: bookMark);
+  }
 }

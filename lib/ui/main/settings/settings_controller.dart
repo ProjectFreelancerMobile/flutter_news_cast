@@ -117,14 +117,14 @@ class SettingsController extends BaseController {
   }
 
   onGotoNotificationsPage() {
-    Get.toNamed(AppRoutes.LIST_NOTIFICATION);
+    //Get.toNamed(AppRoutes.LIST_NOTIFICATION);
   }
 
   onGotoSecurityPage() {
-    Get.toNamed(AppRoutes.SECURITY);
+    //Get.toNamed(AppRoutes.SECURITY);
   }
 
   onGotoNotificationsSettingPage() {
-    Get.toNamed(AppRoutes.SETTING_NOTIFICATION);
+    //Get.toNamed(AppRoutes.SETTING_NOTIFICATION);
   }
 }

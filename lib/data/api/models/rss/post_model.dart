@@ -12,25 +12,25 @@ class PostModel {
   String image;
   String content;
   DateTime pubDate;
-  bool read;
+  DateTime? readDate;
   bool favorite;
   bool fullText;
 
   PostModel({
     this.id,
+    this.readDate,
     required this.title,
     required this.link,
     required this.image,
     required this.content,
     required this.pubDate,
-    required this.read,
     required this.favorite,
     required this.fullText,
   });
 
   @override
   String toString() {
-    return 'PostModel{id: $id, feed: $feed, title: $title, link: $link, image:$image, content: $content, pubDate: $pubDate, read: $read, favorite: $favorite, fullText: $fullText}';
+    return 'PostModel{id: $id, feed: $feed, title: $title, link: $link, image:$image, content: $content, pubDate: $pubDate, readDate: $readDate, favorite: $favorite, fullText: $fullText}';
   }
 
 }

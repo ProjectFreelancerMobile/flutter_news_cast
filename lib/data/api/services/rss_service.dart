@@ -121,7 +121,7 @@ class RSSService extends BaseService {
   }
 
   Future<void> deleteFeed(FeedModel feed) async {
-    //await PostHelper.deletePostsByFeed(feed);
+    await deletePostsByFeed(feed);
     await _isar.writeTxn(() async {
       await _isar.feedModels.delete(feed.id!);
     });
@@ -183,7 +183,6 @@ class RSSService extends BaseService {
       image: item.image!,
       content: item.description ?? '',
       pubDate: _parsePubDate(item.pubDate),
-      read: false,
       favorite: false,
       fullText: feedModel.fullText,
     );
@@ -203,7 +202,6 @@ class RSSService extends BaseService {
       image: item.content!,
       content: item.content!,
       pubDate: _parsePubDate(item.updated),
-      read: false,
       favorite: false,
       fullText: feedModel.fullText,
     );
@@ -261,5 +259,18 @@ class RSSService extends BaseService {
       result.addAll(posts);
     }
     return result;
+  }
+
+  Future<void> deletePostsByFeed(FeedModel feed) async {
+    final List<PostModel> posts = await getPostsByFeeds([feed]);
+    await _isar.writeTxn(() async {
+      await _isar.postModels.deleteAll(posts.map((e) => e.id!).toList());
+    });
+  }
+
+  Future<void> updatePostStatus(PostModel post, {DateTime? readTime, bool? bookMark}) async {
+    post.readDate = readTime ?? post.readDate;
+    post.favorite = bookMark ?? post.favorite;
+    await savePost(post);
   }
 }

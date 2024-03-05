@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_news_cast/app/app_pages.dart';
 import 'package:flutter_news_cast/res/style.dart';
 import 'package:flutter_news_cast/ui/main/widget/feed_item_view.dart';
 import 'package:flutter_news_cast/ui/main/widget/feed_recent_item_view.dart';
 import 'package:flutter_news_cast/ui/widgets/base_scaffold_widget.dart';
+import 'package:get/get.dart';
 
 import '../../base/base_page.dart';
 import '../../widgets/button/touchable_opacity.dart';
@@ -103,120 +105,13 @@ class HomePage extends BasePage<HomeController> {
           return FeedItemView(
             url: item?.image ?? '',
             content: item?.title ?? '',
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(AppRoutes.READ_RSS, arguments: item?.link ?? '');
+            },
           );
         },
         itemCount: controller.listFeed.length,
       ),
     );
   }
-
-// buildWidgetUserInfo(BuildContext context) => Container(
-//       width: double.infinity,
-//       height: 130.ws,
-//       decoration: BoxDecoration(
-//         color: getColor().bgThemeColorWhite,
-//         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(14), bottomRight: Radius.circular(14)),
-//         boxShadow: [
-//           BoxShadow(
-//             color: Colors.grey.withOpacity(0.3),
-//             spreadRadius: 1,
-//             blurRadius: 1,
-//             offset: Offset(0, 0.5),
-//           ),
-//         ],
-//       ),
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           SizedBox(height: 30.ws),
-//           Container(
-//             height: 50.ws,
-//             width: double.infinity,
-//             padding: EdgeInsets.only(left: 24.ws),
-//             child: Align(
-//               alignment: Alignment.bottomLeft,
-//               child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 crossAxisAlignment: CrossAxisAlignment.center,
-//                 children: [
-//                   Expanded(
-//                     child: Text(
-//                       "${textLocalization("home.user.title")}${controller.user.name != null ? controller.user.name : ""}",
-//                       style: text26.medium.textColor141414.height14Per,
-//                       maxLines: 1,
-//                       overflow: TextOverflow.ellipsis,
-//                     ),
-//                   ),
-//                   Visibility(
-//                     visible: false,
-//                     child: TouchableOpacity(
-//                       child: Padding(
-//                         padding: EdgeInsets.symmetric(horizontal: 30.ws),
-//                         child: Assets.icons.icNotification.svg(),
-//                       ),
-//                       onPressed: () {
-//                         showMessage(textLocalization('feature'));
-//                       },
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//           Container(
-//             height: 50.ws,
-//             width: double.infinity,
-//             padding: EdgeInsets.only(left: 24.ws),
-//             child: Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Padding(
-//                   padding: EdgeInsets.symmetric(vertical: 8.ws),
-//                   child: Text(controller.getMainController.nameFarmPick.value.isNotEmpty ? controller.getMainController.nameFarmPick.value : 'Farm của tôi',
-//                       style: text14.textColor141414),
-//                 ),
-//                 TouchableOpacity(
-//                   child: Padding(
-//                     key: controller.widgetKey,
-//                     padding: EdgeInsets.symmetric(horizontal: 24.ws, vertical: 4.ws),
-//                     child: Assets.icons.icMenu.svg(height: 24.ws, width: 20.ws),
-//                   ),
-//                   onPressed: () {
-//                     final RenderBox renderBox = controller.widgetKey.currentContext?.findRenderObject() as RenderBox;
-//                     final Offset offset = renderBox.localToGlobal(Offset.zero);
-//                     controller.getPopup()?.showPopupDialog(context, offset);
-//                   },
-//                 ),
-//               ],
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//
-// buildWidgetDevice(BuildContext context) {
-//   return Padding(
-//     padding: EdgeInsets.only(left: 16.ws, right: 16.ws, top: 22.hs),
-//     child: Row(
-//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//       children: [
-//         Padding(
-//           padding: const EdgeInsets.symmetric(vertical: 8),
-//           child: Text(textLocalization('home_list_device').toUpperCase(), style: text14.height20Per.textColor141414),
-//         ),
-//         TouchableOpacity(
-//           child: Padding(
-//             padding: const EdgeInsets.all(8.0),
-//             child: Assets.icons.icDeviceAdd.svg(width: 14.ws, height: 14.ws),
-//           ),
-//           onPressed: () => controller.onGotoAddDevice(),
-//         )
-//       ],
-//     ),
-//   );
-// }
-//
 }

@@ -47,10 +47,10 @@ const PostModelSchema = CollectionSchema(
       name: r'pubDate',
       type: IsarType.dateTime,
     ),
-    r'read': PropertySchema(
+    r'readDate': PropertySchema(
       id: 6,
-      name: r'read',
-      type: IsarType.bool,
+      name: r'readDate',
+      type: IsarType.dateTime,
     ),
     r'title': PropertySchema(
       id: 7,
@@ -104,7 +104,7 @@ void _postModelSerialize(
   writer.writeString(offsets[3], object.image);
   writer.writeString(offsets[4], object.link);
   writer.writeDateTime(offsets[5], object.pubDate);
-  writer.writeBool(offsets[6], object.read);
+  writer.writeDateTime(offsets[6], object.readDate);
   writer.writeString(offsets[7], object.title);
 }
 
@@ -122,7 +122,7 @@ PostModel _postModelDeserialize(
     image: reader.readString(offsets[3]),
     link: reader.readString(offsets[4]),
     pubDate: reader.readDateTime(offsets[5]),
-    read: reader.readBool(offsets[6]),
+    readDate: reader.readDateTimeOrNull(offsets[6]),
     title: reader.readString(offsets[7]),
   );
   return object;
@@ -148,7 +148,7 @@ P _postModelDeserializeProp<P>(
     case 5:
       return (reader.readDateTime(offset)) as P;
     case 6:
-      return (reader.readBool(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 7:
       return (reader.readString(offset)) as P;
     default:
@@ -781,12 +781,72 @@ extension PostModelQueryFilter
     });
   }
 
-  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> readEqualTo(
-      bool value) {
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> readDateIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'readDate',
+      ));
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition>
+      readDateIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'readDate',
+      ));
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> readDateEqualTo(
+      DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'read',
+        property: r'readDate',
         value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> readDateGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'readDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> readDateLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'readDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> readDateBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'readDate',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
@@ -1014,15 +1074,15 @@ extension PostModelQuerySortBy on QueryBuilder<PostModel, PostModel, QSortBy> {
     });
   }
 
-  QueryBuilder<PostModel, PostModel, QAfterSortBy> sortByRead() {
+  QueryBuilder<PostModel, PostModel, QAfterSortBy> sortByReadDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'read', Sort.asc);
+      return query.addSortBy(r'readDate', Sort.asc);
     });
   }
 
-  QueryBuilder<PostModel, PostModel, QAfterSortBy> sortByReadDesc() {
+  QueryBuilder<PostModel, PostModel, QAfterSortBy> sortByReadDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'read', Sort.desc);
+      return query.addSortBy(r'readDate', Sort.desc);
     });
   }
 
@@ -1125,15 +1185,15 @@ extension PostModelQuerySortThenBy
     });
   }
 
-  QueryBuilder<PostModel, PostModel, QAfterSortBy> thenByRead() {
+  QueryBuilder<PostModel, PostModel, QAfterSortBy> thenByReadDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'read', Sort.asc);
+      return query.addSortBy(r'readDate', Sort.asc);
     });
   }
 
-  QueryBuilder<PostModel, PostModel, QAfterSortBy> thenByReadDesc() {
+  QueryBuilder<PostModel, PostModel, QAfterSortBy> thenByReadDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'read', Sort.desc);
+      return query.addSortBy(r'readDate', Sort.desc);
     });
   }
 
@@ -1191,9 +1251,9 @@ extension PostModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<PostModel, PostModel, QDistinct> distinctByRead() {
+  QueryBuilder<PostModel, PostModel, QDistinct> distinctByReadDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'read');
+      return query.addDistinctBy(r'readDate');
     });
   }
 
@@ -1249,9 +1309,9 @@ extension PostModelQueryProperty
     });
   }
 
-  QueryBuilder<PostModel, bool, QQueryOperations> readProperty() {
+  QueryBuilder<PostModel, DateTime?, QQueryOperations> readDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'read');
+      return query.addPropertyName(r'readDate');
     });
   }
 
