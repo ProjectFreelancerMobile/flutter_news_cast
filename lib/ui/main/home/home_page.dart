@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_news_cast/app/app_pages.dart';
 import 'package:flutter_news_cast/data/api/models/rss/feed_model.dart';
 import 'package:flutter_news_cast/res/style.dart';
@@ -101,15 +99,40 @@ class HomePage extends BasePage<HomeController> {
   Widget buildListFeed() {
     return Column(
       children: [
-        for(var item in controller.listFeed)
-          buildListPostFromFeed(item)
+        Row(
+          children: [
+            Assets.icons.icFeed.svg(),
+            SizedBox(width: 16.ws),
+            Expanded(
+              child: Text(
+                textLocalization('home.feeds'),
+                style: text16.bold.textColor141414,
+              ),
+            ),
+            Assets.icons.icAdd.svg(),
+          ],
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                for (var item in controller.listFeed) buildListPostFromFeed(item),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
 
   Widget buildListPostFromFeed(FeedModel feedModel) {
-    controller.getListPostFromFeed(feedModel);
+    print('buildListPostFromFeed:::' + feedModel.toString());
+    //controller.getListPostFromFeed(feedModel);
     return Container(
+      width: Get.width,
+      height: 150.ws,
+      color: Colors.amber,
+      margin: EdgeInsets.only(top: 12.ws),
       padding: EdgeInsets.symmetric(horizontal: 10.ws, vertical: 10.ws),
       child: ListView.builder(
         padding: EdgeInsets.zero,

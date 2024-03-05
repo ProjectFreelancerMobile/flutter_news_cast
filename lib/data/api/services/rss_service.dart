@@ -21,7 +21,7 @@ class RSSService extends BaseService {
       final listRssDefault = [RSS_1, RSS_2, RSS_3]; //, RSS_4, RSS_5
       await Future.forEach(listRssDefault, (element) async {
         await parseRss(element).then((value) {
-          if (value != null) {
+          if (value.url.isNotEmpty) {
             listFeed.add(value);
           }
         });
@@ -36,7 +36,7 @@ class RSSService extends BaseService {
           getInitRss(isForceReload: true);
         }
       });
-      print('listRssDefault111::${listFeed.toString()}');
+      print('listRssDefault111::${listFeed.length}');
     }
     return listFeed;
   }
