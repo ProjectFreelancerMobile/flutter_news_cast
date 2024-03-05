@@ -1,3 +1,4 @@
+import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
 import 'package:get/get.dart';
 
 import '../models/rss/feed_model.dart';
@@ -7,16 +8,21 @@ import 'base_repository.dart';
 class RssRepository extends BaseRepository {
   final _rssService = Get.find<RSSService>();
 
-  Future<List<FeedModel?>> getInitRss() async {
+  Future<List<FeedModel>> getInitRss() async {
     final listFeed = await _rssService.getInitRss();
     return listFeed;
   }
 
-  Future<FeedModel?> getFeed(String url) async {
+  Future<FeedModel> getFeed(String url) async {
     final feed = await _rssService.parseRss(url);
     return feed;
   }
 
+  Future<List<PostModel?>> getPostsByFeeds(List<FeedModel> feeds) async {
+    await _rssService.reslovePosts(feeds);
+    final listPost = await _rssService.getPostsByFeeds(feeds);
+    return listPost;
+  }
   // Future<String> getNameFarm(List<FarmItem>? listFarm) async => _farmService.getNameFarm(listFarm);
   //
   // Future<List<FarmItem>?> getListFarm() async => _farmService.getListFarm();

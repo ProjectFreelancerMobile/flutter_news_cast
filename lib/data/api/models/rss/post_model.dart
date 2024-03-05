@@ -9,6 +9,7 @@ class PostModel {
   final feed = IsarLink<FeedModel>();
   String title;
   String link;
+  String image;
   String content;
   DateTime pubDate;
   bool read;
@@ -19,6 +20,7 @@ class PostModel {
     this.id,
     required this.title,
     required this.link,
+    required this.image,
     required this.content,
     required this.pubDate,
     required this.read,
@@ -28,7 +30,7 @@ class PostModel {
 
   @override
   String toString() {
-    return 'PostModel{id: $id, feed: $feed, title: $title, link: $link, content: $content, pubDate: $pubDate, read: $read, favorite: $favorite, fullText: $fullText}';
+    return 'PostModel{id: $id, feed: $feed, title: $title, link: $link, image:$image, content: $content, pubDate: $pubDate, read: $read, favorite: $favorite, fullText: $fullText}';
   }
 
 }

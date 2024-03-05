@@ -99,10 +99,10 @@ class HomePage extends BasePage<HomeController> {
           crossAxisSpacing: 10.ws,
         ),
         itemBuilder: (context, index) {
-          final item = controller.listFeed[index];
+          final item = controller.listPost[index];
           return FeedItemView(
             url: item?.title ?? '',
-            content: item?.description ?? '',
+            content: item?.content ?? '',
             onPressed: () {},
           );
         },

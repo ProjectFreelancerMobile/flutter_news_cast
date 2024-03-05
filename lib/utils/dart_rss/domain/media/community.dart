@@ -1,0 +1,29 @@
+import 'package:flutter_news_cast/utils/dart_rss/domain/media/star_rating.dart';
+import 'package:flutter_news_cast/utils/dart_rss/domain/media/statistics.dart';
+import 'package:flutter_news_cast/utils/dart_rss/domain/media/tags.dart';
+import 'package:flutter_news_cast/utils/dart_rss/util/helpers.dart';
+import 'package:xml/xml.dart';
+
+class Community {
+  static Community? parse(XmlElement? element) {
+    if (element == null) {
+      return null;
+    }
+
+    return Community(
+      starRating: StarRating.parse(findElementOrNull(element, 'media:starRating')),
+      statistics: Statistics.parse(findElementOrNull(element, 'media:statistics')),
+      tags: Tags.parse(findElementOrNull(element, 'media:tags')),
+    );
+  }
+
+  const Community({
+    this.starRating,
+    this.statistics,
+    this.tags,
+  });
+
+  final StarRating? starRating;
+  final Statistics? statistics;
+  final Tags? tags;
+}

@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member
 import 'package:flutter_news_cast/data/api/models/rss/feed_model.dart';
+import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
 import 'package:flutter_news_cast/data/api/repositories/rss_repository.dart';
 import 'package:get/get.dart';
 
@@ -21,8 +22,11 @@ class HomeController extends BaseController {
   List<FeedModel> get listRecentFeed => _listRecentFeed$.value;
   final _listRecentFeed$ = <FeedModel>[].obs;
 
-  List<FeedModel?> get listFeed => _listFeed$.value;
-  final _listFeed$ = <FeedModel?>[].obs;
+  List<FeedModel> get listFeed => _listFeed$.value;
+  final _listFeed$ = <FeedModel>[].obs;
+
+  List<PostModel?> get listPost => _listPost$.value;
+  final _listPost$ = <PostModel?>[].obs;
 
   bool get isShowScreenError => false;
 
@@ -41,9 +45,13 @@ class HomeController extends BaseController {
   }
 
   void initRssData() async {
-   // _feedModel$.value = await _rssRepository.getFeed(RSS_1);
+    // _feedModel$.value = await _rssRepository.getFeed(RSS_1);
     _listFeed$.value = await _rssRepository.getInitRss();
+    if (listFeed.isNotEmpty) {
+      _listPost$.value = await _rssRepository.getPostsByFeeds(listFeed);
+    }
   }
+
 //
 // void autoRefreshList({bool isFore = false}) async {
 //   print('HomeController:autoRefreshList:' + _mainController.pageIndex.value.toString());
