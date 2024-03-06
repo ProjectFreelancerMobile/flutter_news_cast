@@ -12,10 +12,9 @@ import 'package:xml/xml.dart';
 class RssItem {
   factory RssItem.parse(XmlElement element) {
     final description = findElementOrNull(element, 'description')?.innerText ?? '';
-    var imagePost = '';
+    var imagePost = null;
     if (description.contains('<img src="')) {
       imagePost = description.substring(description.indexOf('<img src="') + 10, description.indexOf('" /></a>'));
-      print('imagePost:::' + imagePost.toString());
     }
     return RssItem(
       title: findElementOrNull(element, 'title')?.innerText,

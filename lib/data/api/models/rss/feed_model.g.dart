@@ -32,9 +32,9 @@ const FeedModelSchema = CollectionSchema(
       name: r'fullText',
       type: IsarType.bool,
     ),
-    r'openType': PropertySchema(
+    r'rssType': PropertySchema(
       id: 3,
-      name: r'openType',
+      name: r'rssType',
       type: IsarType.long,
     ),
     r'title': PropertySchema(
@@ -84,7 +84,7 @@ void _feedModelSerialize(
   writer.writeString(offsets[0], object.category);
   writer.writeString(offsets[1], object.description);
   writer.writeBool(offsets[2], object.fullText);
-  writer.writeLong(offsets[3], object.openType);
+  writer.writeLong(offsets[3], object.rssType);
   writer.writeString(offsets[4], object.title);
   writer.writeString(offsets[5], object.url);
 }
@@ -100,7 +100,7 @@ FeedModel _feedModelDeserialize(
     description: reader.readString(offsets[1]),
     fullText: reader.readBool(offsets[2]),
     id: id,
-    openType: reader.readLong(offsets[3]),
+    rssType: reader.readLong(offsets[3]),
     title: reader.readString(offsets[4]),
     url: reader.readString(offsets[5]),
   );
@@ -566,43 +566,43 @@ extension FeedModelQueryFilter
     });
   }
 
-  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> openTypeEqualTo(
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> rssTypeEqualTo(
       int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'openType',
+        property: r'rssType',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> openTypeGreaterThan(
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> rssTypeGreaterThan(
     int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'openType',
+        property: r'rssType',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> openTypeLessThan(
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> rssTypeLessThan(
     int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'openType',
+        property: r'rssType',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> openTypeBetween(
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> rssTypeBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -610,7 +610,7 @@ extension FeedModelQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'openType',
+        property: r'rssType',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -923,15 +923,15 @@ extension FeedModelQuerySortBy on QueryBuilder<FeedModel, FeedModel, QSortBy> {
     });
   }
 
-  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> sortByOpenType() {
+  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> sortByRssType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'openType', Sort.asc);
+      return query.addSortBy(r'rssType', Sort.asc);
     });
   }
 
-  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> sortByOpenTypeDesc() {
+  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> sortByRssTypeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'openType', Sort.desc);
+      return query.addSortBy(r'rssType', Sort.desc);
     });
   }
 
@@ -1010,15 +1010,15 @@ extension FeedModelQuerySortThenBy
     });
   }
 
-  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> thenByOpenType() {
+  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> thenByRssType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'openType', Sort.asc);
+      return query.addSortBy(r'rssType', Sort.asc);
     });
   }
 
-  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> thenByOpenTypeDesc() {
+  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> thenByRssTypeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'openType', Sort.desc);
+      return query.addSortBy(r'rssType', Sort.desc);
     });
   }
 
@@ -1069,9 +1069,9 @@ extension FeedModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<FeedModel, FeedModel, QDistinct> distinctByOpenType() {
+  QueryBuilder<FeedModel, FeedModel, QDistinct> distinctByRssType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'openType');
+      return query.addDistinctBy(r'rssType');
     });
   }
 
@@ -1116,9 +1116,9 @@ extension FeedModelQueryProperty
     });
   }
 
-  QueryBuilder<FeedModel, int, QQueryOperations> openTypeProperty() {
+  QueryBuilder<FeedModel, int, QQueryOperations> rssTypeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'openType');
+      return query.addPropertyName(r'rssType');
     });
   }
 

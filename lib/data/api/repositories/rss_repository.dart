@@ -1,6 +1,7 @@
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
 import 'package:get/get.dart';
 
+import '../../storage/key_constant.dart';
 import '../models/rss/feed_model.dart';
 import '../services/rss_service.dart';
 import 'base_repository.dart';
@@ -14,7 +15,7 @@ class RssRepository extends BaseRepository {
   }
 
   Future<FeedModel> getFeed(String url) async {
-    final feed = await _rssService.parseRss(url);
+    final feed = await _rssService.parseRss(url, RSS_TYPE.RSS.index);
     return feed;
   }
 

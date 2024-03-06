@@ -1,3 +1,4 @@
+import 'package:flutter_news_cast/data/storage/key_constant.dart';
 import 'package:isar/isar.dart';
 
 part 'feed_model.g.dart';
@@ -10,7 +11,7 @@ class FeedModel {
   String description;
   String category;
   bool fullText;
-  int openType; //Open method: 0-Reader 1-Built-in tab 2-System browser
+  int rssType;
 
   FeedModel({
     this.id,
@@ -19,12 +20,12 @@ class FeedModel {
     required this.description,
     required this.category,
     required this.fullText,
-    required this.openType,
+    required this.rssType,
   });
 
   @override
   String toString() {
-    return 'FeedModel{id: $id, title: $title, url: $url, description: $description, category: $category, fullText: $fullText, openType: $openType}';
+    return 'FeedModel{id: $id, title: $title, url: $url, description: $description, category: $category, fullText: $fullText, rssType: $rssType}';
   }
 
 }

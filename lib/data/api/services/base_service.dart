@@ -9,6 +9,11 @@ import '../models/response/api_response.dart';
 import '../rest_client.dart';
 
 abstract class BaseService {
+  Future<dynamic> getWithUrlRss(String customUrl) async {
+    final response = await RestClient.getDio(customUrl: customUrl).get('');
+    return response.data;
+  }
+
   Future<dynamic> getWithCustomUrl(String customUrl, String path, {Map<String, dynamic>? params}) async {
     final response = await RestClient.getDio(customUrl: customUrl).get(path, queryParameters: params);
     return response.data;

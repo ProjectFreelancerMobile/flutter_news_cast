@@ -97,14 +97,14 @@ class SettingsPage extends BasePage<SettingsController> {
             onPressed: () => buildOpenUserName(context),
           ),
           Divider(height: 1, thickness: 0.5, color: color929394),
-          AccountItemView(
-            title: textLocalization('settings_sex'),
-            titleRight: controller.user.gender == SEX_TYPE.MEN.name
-                ? textLocalization('common_men')
-                : (controller.user.gender == SEX_TYPE.WOMAN.name ? textLocalization('common_women') : textLocalization('common_other')),
-            isIconNext: true,
-            onPressed: () => openSexBottomSheet(context),
-          ),
+          // AccountItemView(
+          //   title: textLocalization('settings_sex'),
+          //   titleRight: controller.user.gender == SEX_TYPE.MEN.name
+          //       ? textLocalization('common_men')
+          //       : (controller.user.gender == SEX_TYPE.WOMAN.name ? textLocalization('common_women') : textLocalization('common_other')),
+          //   isIconNext: true,
+          //   onPressed: () => openSexBottomSheet(context),
+          // ),
           Divider(height: 1, thickness: 0.5, color: color929394),
           AccountItemView(
             title: textLocalization('settings_birthday'),
