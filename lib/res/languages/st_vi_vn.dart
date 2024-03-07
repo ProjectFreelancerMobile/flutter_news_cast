@@ -70,7 +70,10 @@ final Map<String, String> viVN = {
   'home.recents': 'Recents',
   //Feed
   'feed.title': 'Add to Feeds',
-  'feed.content': 'Add RSS Feeds allow you to stay updated on websites like videos channel, music channel, online newspapers and magazines, and help you not use the typical methods of searching or browsing for information.',
+  'feed.content1': 'Add ',
+  'feed.content2': 'RSS Feeds ',
+  'feed.content3':
+      'allow you to stay updated on websites like videos channel, music channel, online newspapers and magazines, and help you not use the typical methods of searching or browsing for information.',
   'feed.url': 'Enter URL',
   'feed.add': 'Add to Feeds',
   'feed.popular.feeds': 'Popular Feeds',

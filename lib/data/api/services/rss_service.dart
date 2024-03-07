@@ -129,10 +129,11 @@ class RSSService extends BaseService {
     });
   }
 
-  Future<void> bookmarkFeed(FeedModel feedModel) async {
-    await _isar.writeTxn(() async {
-      await _isar.feedModels.put(feedModel);
-    });
+  Future<void> bookmarkFeed(String url) async {
+    //TODO
+    // await _isar.writeTxn(() async {
+    //   await _isar.feedModels.put(feedModel);
+    // });
   }
 
   Future<FeedModel?> isExists(String url) async {

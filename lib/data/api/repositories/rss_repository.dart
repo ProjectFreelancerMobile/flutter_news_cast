@@ -47,4 +47,8 @@ class RssRepository extends BaseRepository {
   Future<void> deleteBookmark(FeedModel feedModel) async {
     return await _rssService.deleteBookmark(feedModel);
   }
+
+  Future<void> bookmarkFeed(String url) async {
+    return await _rssService.bookmarkFeed(url);
+  }
 }

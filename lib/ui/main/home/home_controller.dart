@@ -65,6 +65,11 @@ class HomeController extends BaseController {
     _listBookmark$.value = await _rssRepository.getListBookmark();
   }
 
+  void addBookMark() async {
+    if (textAddRssCl.text.isEmpty) return;
+    await _rssRepository.bookmarkFeed(textAddRssCl.text);
+  }
+
   void removeBookMark(FeedModel? feedModel) async {
     if (feedModel == null) return;
     await _rssRepository.deleteBookmark(feedModel);

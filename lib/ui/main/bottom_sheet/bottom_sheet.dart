@@ -44,9 +44,15 @@ Future<void> openAddRss(HomeController controller) {
                         style: text16.bold.textColor141414,
                       ),
                       SizedBox(height: 16.ws),
-                      Text(
-                        textLocalization('feed.content'),
-                        style: text12.textColorB2B2B2,
+                      RichText(
+                        text: TextSpan(
+                          text: textLocalization('feed.content1'),
+                          style: text12.textColorB2B2B2,
+                          children: <TextSpan>[
+                            TextSpan(text: textLocalization('feed.content2'), style: text12.bold.textColor141414),
+                            TextSpan(text: textLocalization('feed.content3'))
+                          ],
+                        ),
                       ),
                       SizedBox(height: 16.ws),
                       DTextFromField(
@@ -64,7 +70,10 @@ Future<void> openAddRss(HomeController controller) {
                       SizedBox(height: 16.ws),
                       CustomButton(
                         text: textLocalization('feed.add'),
-                        onPressed: () => {},
+                        onPressed: () {
+                          controller.addBookMark();
+                          Get.back();
+                        },
                         isEnable: true,
                         width: 150.ws,
                         background: colorFF6F15,
