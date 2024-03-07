@@ -43,4 +43,8 @@ class RssRepository extends BaseRepository {
   Future<List<PostModel>> getListRecent() async {
     return await _rssService.getListRecent();
   }
+
+  Future<void> deleteBookmark(FeedModel feedModel) async {
+    return await _rssService.deleteBookmark(feedModel);
+  }
 }

@@ -1,12 +1,11 @@
 // ignore_for_file: invalid_use_of_protected_member
+import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/data/api/models/rss/feed_model.dart';
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
 import 'package:flutter_news_cast/data/api/repositories/rss_repository.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 import '../../../app/app_controller.dart';
-import '../../../data/api/api_constants.dart';
 import '../../../data/api/models/rss/list_feed_model.dart';
 import '../../base/base_controller.dart';
 import '../main_controller.dart';
@@ -20,7 +19,8 @@ class HomeController extends BaseController {
   //
   // TUser get user => _user.value;
   // final GlobalKey widgetKey = GlobalKey();
-  //
+  TextEditingController textAddRssCl = TextEditingController();
+
   List<PostModel> get listBookmark => _listBookmark$.value;
   final _listBookmark$ = <PostModel>[].obs;
 
@@ -43,18 +43,18 @@ class HomeController extends BaseController {
   }
 
   void initRssData() async {
-     await _rssRepository.getInitRss().then((value) async {
-       var listFeed = <ListFeedModel>[];
-       await Future.forEach(value, (element) async {
-         print('111111111');
-         var feed = ListFeedModel();
-         feed.feedModel = element;
-         feed.listPost = await getListPostFromFeed(element);
-         listFeed.add(feed);
-       });
-       print('2222222'+ listFeed.length.toString());
-       _listFeed$.value = listFeed;
-     });
+    await _rssRepository.getInitRss().then((value) async {
+      var listFeed = <ListFeedModel>[];
+      await Future.forEach(value, (element) async {
+        print('111111111');
+        var feed = ListFeedModel();
+        feed.feedModel = element;
+        feed.listPost = await getListPostFromFeed(element);
+        listFeed.add(feed);
+      });
+      print('2222222' + listFeed.length.toString());
+      _listFeed$.value = listFeed;
+    });
   }
 
   Future<List<PostModel?>> getListPostFromFeed(FeedModel feedModel) async {
@@ -63,5 +63,26 @@ class HomeController extends BaseController {
 
   void getListBookMark() async {
     _listBookmark$.value = await _rssRepository.getListBookmark();
+  }
+
+  void removeBookMark(FeedModel? feedModel) async {
+    if (feedModel == null) return;
+    await _rssRepository.deleteBookmark(feedModel);
+  }
+
+  String? validatorRss(String fieldName) {
+    return (GetUtils.isNullOrBlank(textAddRssCl.text) == true)
+        ? 'sign_up_msg_is_required'.trParams(
+            {
+              'field': fieldName,
+            },
+          )
+        : GetUtils.isLengthLessThan(textAddRssCl.text, 3)
+            ? 'sign_up_msg_is_at_least_3_characters'.trParams(
+                {
+                  'field': fieldName,
+                },
+              )
+            : null;
   }
 }

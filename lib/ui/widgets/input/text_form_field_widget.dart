@@ -12,6 +12,7 @@ class DTextFromField extends StatelessWidget {
   final TextStyle? errorStyle;
   final String? hintText;
   final Color? strokeColor;
+  final Color? background;
   final Widget? prefixIcon;
   final double? prefixPadding;
   final Widget? suffixIcon;
@@ -41,6 +42,7 @@ class DTextFromField extends StatelessWidget {
       this.hintText,
       this.textStyle,
       this.strokeColor,
+      this.background,
       this.obscureText,
       this.prefixIcon,
       this.keyboardType,
@@ -64,6 +66,10 @@ class DTextFromField extends StatelessWidget {
 
   UnderlineInputBorder _underlineInputBorder(Color? strokeColor, BuildContext context) {
     return UnderlineInputBorder(borderSide: BorderSide(color: strokeColor ?? getColor().textColorB2B2B2));
+  }
+
+  OutlineInputBorder _outlineInputBorder(Color? strokeColor, BuildContext context) {
+    return OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: strokeColor ?? getColor().textColorB2B2B2));
   }
 
   @override
@@ -102,6 +108,8 @@ class DTextFromField extends StatelessWidget {
           textInputAction: textInputAction,
           onFieldSubmitted: onFieldSubmitted,
           decoration: InputDecoration(
+              filled: true,
+              fillColor: background ?? Colors.transparent,
               counterText: isHideCounterText == true ? "" : null,
               errorText: errorText,
               counterStyle: text12.textColor777777,
@@ -119,12 +127,12 @@ class DTextFromField extends StatelessWidget {
               isDense: true,
               errorStyle: errorStyle ?? text12.textErrorColor,
               contentPadding: contentPadding,
-              enabledBorder: _underlineInputBorder(strokeColor, context),
-              focusedBorder: _underlineInputBorder(strokeColor, context),
-              border: _underlineInputBorder(strokeColor, context),
-              disabledBorder: _underlineInputBorder(strokeColor, context),
-              focusedErrorBorder: _underlineInputBorder(getColor().error, context),
-              errorBorder: _underlineInputBorder(getColor().error, context)),
+              enabledBorder: _outlineInputBorder(strokeColor, context),
+              focusedBorder: _outlineInputBorder(strokeColor, context),
+              border: _outlineInputBorder(strokeColor, context),
+              disabledBorder: _outlineInputBorder(strokeColor, context),
+              focusedErrorBorder: _outlineInputBorder(getColor().error, context),
+              errorBorder: _outlineInputBorder(getColor().error, context)),
         )
       ],
     );

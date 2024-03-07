@@ -154,7 +154,7 @@ class RSSService extends BaseService {
     }
   }
 
-  Future<void> deleteFeed(FeedModel feed) async {
+  Future<void> deleteBookmark(FeedModel feed) async {
     await deletePostsByFeed(feed);
     await _isar.writeTxn(() async {
       await _isar.feedModels.delete(feed.id!);

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_news_cast/app/app_pages.dart';
+import 'package:flutter_news_cast/data/api/models/rss/feed_model.dart';
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
 import 'package:flutter_news_cast/res/style.dart';
 import 'package:flutter_news_cast/ui/main/home/widget/feed_item_view.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 
 import '../../base/base_page.dart';
 import '../../widgets/button/touchable_opacity.dart';
+import '../bottom_sheet/bottom_sheet.dart';
 import 'home_controller.dart';
 
 //ignore: must_be_immutable
@@ -68,6 +70,7 @@ class HomePage extends BasePage<HomeController> {
             ],
           ),
         ),
+        SizedBox(height: 10.ws),
         Expanded(
           child: ListView.builder(
             shrinkWrap: true,
@@ -102,14 +105,14 @@ class HomePage extends BasePage<HomeController> {
                 style: text16.bold.textColor141414,
               ),
             ),
-            Assets.icons.icAdd.svg(),
+            TouchableOpacity(child: Assets.icons.icAdd.svg(), onPressed: () => openAddRss(controller)),
           ],
         ),
         Expanded(
           child: SingleChildScrollView(
             child: Column(
               children: [
-                for (var item in controller.listFeed) buildListPostFromFeed(item.feedModel?.title, item.listPost),
+                for (var item in controller.listFeed) buildListPostFromFeed(item.feedModel, item.listPost),
               ],
             ),
           ),
@@ -118,26 +121,25 @@ class HomePage extends BasePage<HomeController> {
     );
   }
 
-  Widget buildListPostFromFeed(String? title, List<PostModel?>? listPost) {
+  Widget buildListPostFromFeed(FeedModel? feedModel, List<PostModel?>? listPost) {
     print('buildListPostFromFeed::${listPost?.length}');
     return Container(
       width: Get.width,
       height: 170.ws,
       margin: EdgeInsets.only(top: 12.ws),
-      padding: EdgeInsets.symmetric(horizontal: 10.ws, vertical: 10.ws),
+      padding: EdgeInsets.symmetric(vertical: 10.ws),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TouchableOpacity(
-                onPressed: () {},
-                child: Expanded(
+              Expanded(
+                child: TouchableOpacity(
                   child: Row(
                     children: [
                       Flexible(
                         child: Text(
-                          title ?? '',
+                          feedModel?.title ?? '',
                           style: text14.bold.textColor141414,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -147,12 +149,15 @@ class HomePage extends BasePage<HomeController> {
                       Assets.icons.icFeedUrl.svg(),
                     ],
                   ),
+                  onPressed: () {},
                 ),
               ),
               SizedBox(width: 16.ws),
               TouchableOpacity(
                 child: Assets.icons.icDelete.svg(),
-                onPressed: () {},
+                onPressed: () {
+                  controller.removeBookMark(feedModel);
+                },
               ),
             ],
           ),
