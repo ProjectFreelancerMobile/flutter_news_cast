@@ -15,7 +15,7 @@ class RssRepository extends BaseRepository {
   }
 
   Future<FeedModel> getFeed(String url) async {
-    final feed = await _rssService.parseRss(url, RSS_TYPE.RSS.index);
+    final feed = await _rssService.parseRss(url, RSS_TYPE.RSS.indexValue);
     return feed;
   }
 

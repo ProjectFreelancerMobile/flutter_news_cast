@@ -22,7 +22,7 @@ extension StatusTypeExt on STATUS_TYPE {
 }
 
 extension RssNameExt on RSS_TYPE {
-  num get index {
+  int get indexValue {
     switch (this) {
       case RSS_TYPE.ATOM:
         return 0;

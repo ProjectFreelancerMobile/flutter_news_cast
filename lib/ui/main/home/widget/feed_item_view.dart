@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_news_cast/res/style.dart';
 import 'package:flutter_news_cast/ui/widgets/button/touchable_opacity.dart';
 
-import '../../widgets/image_widget.dart';
+import '../../../widgets/image_widget.dart';
 
 class FeedItemView extends StatelessWidget {
   final String url;

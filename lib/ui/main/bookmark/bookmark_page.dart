@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/ui/widgets/data_empty_widget.dart';
-
 import '../../../res/style.dart';
 import '../../base/base_page.dart';
 import '../../widgets/default_appbar.dart';
-import '../widget/feed_recent_item_view.dart';
+import '../home/widget/feed_recent_item_view.dart';
 import 'bookmark_controller.dart';
 
 //ignore: must_be_immutable

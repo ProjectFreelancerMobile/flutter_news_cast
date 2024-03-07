@@ -48,20 +48,19 @@ class RSSService extends BaseService {
       print('listRssDefault111::${listFeed.length}');
     }*/
     final listRssDefault = [
-      ListFeedBookmarkModel(RSS_1, RSS_TYPE.RSS.index),
-      ListFeedBookmarkModel(RSS_2, RSS_TYPE.ATOM.index),
-      ListFeedBookmarkModel(RSS_3, RSS_TYPE.ATOM.index),
-      ListFeedBookmarkModel(RSS_4, RSS_TYPE.JSON.index),
-      ListFeedBookmarkModel(RSS_5, RSS_TYPE.JSON.index),
-      ListFeedBookmarkModel(RSS_6, RSS_TYPE.RSS.index),
+      ListFeedBookmarkModel(RSS_1, RSS_TYPE.RSS.indexValue),
+      // ListFeedBookmarkModel(RSS_2, RSS_TYPE.ATOM.indexValue),
+      // ListFeedBookmarkModel(RSS_3, RSS_TYPE.ATOM.indexValue),
+      // ListFeedBookmarkModel(RSS_4, RSS_TYPE.JSON.indexValue),
+      // ListFeedBookmarkModel(RSS_5, RSS_TYPE.JSON.indexValue),
+      // ListFeedBookmarkModel(RSS_6, RSS_TYPE.RSS.indexValue),
     ];
     await Future.forEach(listRssDefault, (element) async {
       await parseRss(element.url, element.rssType).then((value) {
-        print('value.url::'+ value.url.toString());
         listFeed.add(value);
       });
     });
-    print('listFeed::'+ listFeed.length.toString());
+    print('listFeed::' + listFeed.length.toString());
     return listFeed;
   }
 
@@ -73,6 +72,7 @@ class RSSService extends BaseService {
     final categoryName = 'defaultCategory';
     try {
       final response = await getWithUrlRss(url);
+      print('rssType.type::' + rssType.type.toString());
       switch (rssType.type) {
         case RSS_TYPE.RSS:
           final RssFeed rssFeed = RssFeed.parse(response);
@@ -177,7 +177,7 @@ class RSSService extends BaseService {
     try {
       final response = await getWithUrlRss(feedModel.url);
       final DateTime? feedLastUpdated = await getLatesPubDate(feedModel);
-      print('feedModel.rssType::'+ feedModel.toString());
+      print('feedModel.rssType::' + feedModel.toString());
       switch (feedModel.rssType.type) {
         case RSS_TYPE.RSS:
           RssFeed rssFeed = RssFeed.parse(response);

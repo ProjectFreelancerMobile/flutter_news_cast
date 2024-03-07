@@ -1,10 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_news_cast/app/app_pages.dart';
-import 'package:flutter_news_cast/data/api/models/rss/feed_model.dart';
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
 import 'package:flutter_news_cast/res/style.dart';
-import 'package:flutter_news_cast/ui/main/widget/feed_item_view.dart';
-import 'package:flutter_news_cast/ui/main/widget/feed_recent_item_view.dart';
+import 'package:flutter_news_cast/ui/main/home/widget/feed_item_view.dart';
+import 'package:flutter_news_cast/ui/main/home/widget/feed_recent_item_view.dart';
 import 'package:flutter_news_cast/ui/widgets/base_scaffold_widget.dart';
 import 'package:get/get.dart';
 
@@ -108,7 +109,7 @@ class HomePage extends BasePage<HomeController> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                for (var item in controller.listFeed) buildListPostFromFeed(item.listPost),
+                for (var item in controller.listFeed) buildListPostFromFeed(item.feedModel?.title, item.listPost),
               ],
             ),
           ),
@@ -117,28 +118,64 @@ class HomePage extends BasePage<HomeController> {
     );
   }
 
-  Widget buildListPostFromFeed(List<PostModel?>? listPost) {
+  Widget buildListPostFromFeed(String? title, List<PostModel?>? listPost) {
     print('buildListPostFromFeed::${listPost?.length}');
     return Container(
       width: Get.width,
-      height: 150.ws,
+      height: 170.ws,
       margin: EdgeInsets.only(top: 12.ws),
       padding: EdgeInsets.symmetric(horizontal: 10.ws, vertical: 10.ws),
-      child: ListView.builder(
-        padding: EdgeInsets.zero,
-        scrollDirection: Axis.horizontal,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          final item = listPost?[index];
-          return FeedItemView(
-            url: item?.image ?? '',
-            content: item?.title ?? '',
-            onPressed: () {
-              Get.toNamed(AppRoutes.READ_RSS, arguments: item);
-            },
-          );
-        },
-        itemCount: listPost?.length,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TouchableOpacity(
+                onPressed: () {},
+                child: Expanded(
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          title ?? '',
+                          style: text14.bold.textColor141414,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      SizedBox(width: 6.ws),
+                      Assets.icons.icFeedUrl.svg(),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(width: 16.ws),
+              TouchableOpacity(
+                child: Assets.icons.icDelete.svg(),
+                onPressed: () {},
+              ),
+            ],
+          ),
+          SizedBox(height: 10.ws),
+          Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                final item = listPost?[index];
+                return FeedItemView(
+                  url: item?.image ?? '',
+                  content: item?.title ?? '',
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.READ_RSS, arguments: item);
+                  },
+                );
+              },
+              itemCount: listPost?.length,
+            ),
+          ),
+        ],
       ),
     );
   }
