@@ -19,6 +19,7 @@ class AppDialog {
   final VoidCallback? onMidPressed;
   final bool dismissible;
   final VoidCallback? onDismissed;
+  final TextStyle? cancelStyle;
 
   AppDialog({
     required this.context,
@@ -32,6 +33,7 @@ class AppDialog {
     this.midText = '',
     this.onMidPressed,
     this.onDismissed,
+    this.cancelStyle,
     this.dismissible = false,
   });
 
@@ -185,7 +187,7 @@ class AppDialog {
         },
         child: Text(
           cancelText,
-          style: text14.bold.height16Per.textColorPrimary,
+          style: cancelStyle ?? text14.bold.height16Per.textColorPrimary,
         ),
       );
 
