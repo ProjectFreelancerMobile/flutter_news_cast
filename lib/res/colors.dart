@@ -30,3 +30,4 @@ const color00B2FD = Color(0xFF00B2FD);
 const colorFFEFE5 = Color(0xFFFFEFE5);
 const color009CDF = Color(0xFF009cfd);
 const color0083ED = Color(0xFF0083ED);
+const colorDivider = Color(0xFFCFCFCF);

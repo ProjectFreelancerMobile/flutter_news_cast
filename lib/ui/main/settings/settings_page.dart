@@ -15,7 +15,6 @@ import '../../base/base_page.dart';
 import '../../widgets/button/touchable_opacity.dart';
 import '../../widgets/default_appbar.dart';
 import '../../widgets/dialogs/app_dialog.dart';
-import '../../widgets/input/text_input_line_border.dart';
 import 'settings_controller.dart';
 import 'widget/settings_item_view.dart';
 
@@ -181,17 +180,17 @@ class SettingsPage extends BasePage<SettingsController> {
         context: context,
         title: '',
         description: textLocalization('settings_edit_name'),
-        type: DialogType.INPUT,
+        type: DialogType.TWO_ACTION,
         cancelText: textLocalization('dialog.ignore'),
         okText: textLocalization('dialog.save'),
-        input: TextInputLineBorder(
+        /* input: TextInputLineBorder(
           width: double.infinity,
           hint: 'Nguyễn Văn An',
           hintTextStyle: text12.textColorB2B2B2,
           textTextStyle: text14.textColor141414,
           height: 36.hs,
           textEditingController: controller.txtNameController,
-        ),
+        ),*/
         onOkPressed: () => controller.updateProfile((error) {
           showMessage(error);
         }, userName: controller.txtNameController.text),
@@ -201,10 +200,10 @@ class SettingsPage extends BasePage<SettingsController> {
         context: context,
         title: '',
         description: textLocalization('setting.phone.title'),
-        type: DialogType.INPUT,
+        type: DialogType.TWO_ACTION,
         cancelText: textLocalization('dialog.ignore'),
         okText: textLocalization('dialog.save'),
-        input: TextInputLineBorder(
+        /*input: TextInputLineBorder(
           width: double.infinity,
           hint: '0333332093',
           keyboardType: TextInputType.phone,
@@ -212,7 +211,7 @@ class SettingsPage extends BasePage<SettingsController> {
           textTextStyle: text14.textColor141414,
           height: 36.hs,
           textEditingController: controller.txtPhoneController,
-        ),
+        ),*/
         onOkPressed: () => controller.updateProfile((error) {
           showMessage(error);
         }, phone: controller.txtPhoneController.text),

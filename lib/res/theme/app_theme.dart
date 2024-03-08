@@ -32,6 +32,7 @@ final appThemeData = {
     bottomAppBarTheme: BottomAppBarTheme(
       color: colorBackground,
     ),
+    dialogBackgroundColor: Colors.white,
   ),
   AppTheme.DARK: ThemeData(
     brightness: Brightness.dark,
@@ -56,5 +57,6 @@ final appThemeData = {
     bottomAppBarTheme: BottomAppBarTheme(
       color: colorBackground,
     ),
+    dialogBackgroundColor: Colors.white,
   ),
 };

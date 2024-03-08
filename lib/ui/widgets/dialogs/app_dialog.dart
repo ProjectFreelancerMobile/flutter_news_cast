@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../res/style.dart';
 
-enum DialogType { TEXT, INPUT }
+enum DialogType { TWO_ACTION, THREE_ACTION }
 
 class AppDialog {
   final BuildContext context;
@@ -15,21 +15,23 @@ class AppDialog {
   final VoidCallback? onOkPressed;
   final String cancelText;
   final VoidCallback? onCancelPressed;
+  final String midText;
+  final VoidCallback? onMidPressed;
   final bool dismissible;
-  final Widget? input;
   final VoidCallback? onDismissed;
 
   AppDialog({
     required this.context,
-    this.type = DialogType.TEXT,
+    this.type = DialogType.TWO_ACTION,
     this.title = '',
     this.description = '',
     this.okText = '',
     this.onOkPressed,
     this.cancelText = '',
     this.onCancelPressed,
+    this.midText = '',
+    this.onMidPressed,
     this.onDismissed,
-    this.input,
     this.dismissible = false,
   });
 
@@ -58,40 +60,30 @@ class AppDialog {
             color: Colors.transparent,
             height: double.infinity,
             width: double.infinity,
-            child: Stack(
-              children: [
-                Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Stack(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                            ),
-                            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                            child: Column(
-                              children: [
-                                _buildTitleText,
-                                _buildDescriptionText,
-                                if (type == DialogType.INPUT && input != null) ...[
-                                  SizedBox(height: 10),
-                                  input!,
-                                ],
-                                SizedBox(height: 10),
-                                _buildActions,
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 30),
+                        _buildTitleText,
+                        SizedBox(height: 8),
+                        _buildDescriptionText,
+                        SizedBox(height: 16),
+                        Divider(height: 1, thickness: 1, color: colorDivider),
+                        _buildActions,
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -106,7 +98,7 @@ class AppDialog {
       child: Text(
         title,
         textAlign: TextAlign.center,
-        style: text16.bold.textColor141414,
+        style: text14.bold.textColor141414,
       ),
     );
   }
@@ -118,38 +110,46 @@ class AppDialog {
       child: Text(
         description,
         textAlign: TextAlign.center,
-        style: text14.textColor141414,
+        style: text12.textColor141414,
       ),
     );
   }
 
   Widget get _buildActions {
-    bool showOkButton = (okText).isNotEmpty;
-    bool showCancelButton = (cancelText).isNotEmpty;
-    List<Widget> buttons = [];
-    if (showCancelButton) {
-      buttons.add(_buildCancelButton);
+    if (type == DialogType.THREE_ACTION) {
+      return Container(
+        width: double.infinity,
+        height: 160.hs,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildOkButton,
+            Divider(height: 1, thickness: 1, color: colorDivider),
+            _buildMidButton,
+            Divider(height: 1, thickness: 1, color: colorDivider),
+            _buildCancelButton,
+          ],
+        ),
+      );
+    } else {
+      return Container(
+        height: 56.hs,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            _buildCancelButton,
+            VerticalDivider(width: 1, thickness: 1, color: colorDivider),
+            _buildOkButton,
+          ],
+        ),
+      );
     }
-    if (showOkButton) {
-      buttons.add(_buildOkButton);
-    }
-    return Container(
-      // color: Colors.red,
-      height: 48.hs,
-      child: buttons.length == 2
-          ? Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: buttons,
-            )
-          : Center(child: buttons.first),
-    );
   }
 
-  Widget get _buildOkButton => ElevatedButton(
+  Widget get _buildOkButton => TextButton(
         style: ElevatedButton.styleFrom(
           minimumSize: Size(113.ws, 48.hs),
-          backgroundColor: colorPrimary,
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
         ),
         onPressed: () {
           dismiss();
@@ -157,15 +157,27 @@ class AppDialog {
         },
         child: Text(
           okText,
-          style: text14.medium.height16Per.textColorWhite,
+          style: type == DialogType.THREE_ACTION ? text14.height16Per.textColorPrimary : text14.bold.height16Per.textColorF20606,
         ),
       );
 
-  Widget get _buildCancelButton => OutlinedButton(
+  Widget get _buildMidButton => TextButton(
+        style: ElevatedButton.styleFrom(
+          minimumSize: Size(113.ws, 48.hs),
+        ),
+        onPressed: () {
+          dismiss();
+          onOkPressed?.call();
+        },
+        child: Text(
+          midText,
+          style: text14.height16Per.textColorPrimary,
+        ),
+      );
+
+  Widget get _buildCancelButton => TextButton(
         style: OutlinedButton.styleFrom(
           minimumSize: Size(113.ws, 48.hs),
-          side: BorderSide(color: colorPrimary, width: 1),
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
         ),
         onPressed: () {
           dismiss();
@@ -173,7 +185,7 @@ class AppDialog {
         },
         child: Text(
           cancelText,
-          style: text14.medium.height16Per.textColorPrimary,
+          style: text14.bold.height16Per.textColorPrimary,
         ),
       );
 

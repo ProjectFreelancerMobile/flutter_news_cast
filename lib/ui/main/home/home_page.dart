@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_news_cast/app/app_pages.dart';
 import 'package:flutter_news_cast/data/api/models/rss/feed_model.dart';
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
@@ -12,6 +10,7 @@ import 'package:get/get.dart';
 
 import '../../base/base_page.dart';
 import '../../widgets/button/touchable_opacity.dart';
+import '../../widgets/dialogs/app_dialog.dart';
 import '../bottom_sheet/bottom_sheet.dart';
 import 'home_controller.dart';
 
@@ -42,7 +41,7 @@ class HomePage extends BasePage<HomeController> {
           ),
           Expanded(
             flex: 3,
-            child: buildListFeed(),
+            child: buildListFeed(context),
           ),
         ],
       ),
@@ -92,7 +91,7 @@ class HomePage extends BasePage<HomeController> {
     );
   }
 
-  Widget buildListFeed() {
+  Widget buildListFeed(BuildContext context) {
     return Column(
       children: [
         Row(
@@ -112,7 +111,7 @@ class HomePage extends BasePage<HomeController> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                for (var item in controller.listFeed) buildListPostFromFeed(item.feedModel, item.listPost),
+                for (var item in controller.listFeed) buildListPostFromFeed(context, item.feedModel, item.listPost),
               ],
             ),
           ),
@@ -121,7 +120,7 @@ class HomePage extends BasePage<HomeController> {
     );
   }
 
-  Widget buildListPostFromFeed(FeedModel? feedModel, List<PostModel?>? listPost) {
+  Widget buildListPostFromFeed(BuildContext context, FeedModel? feedModel, List<PostModel?>? listPost) {
     print('buildListPostFromFeed::${listPost?.length}');
     return Container(
       width: Get.width,
@@ -156,6 +155,18 @@ class HomePage extends BasePage<HomeController> {
               TouchableOpacity(
                 child: Assets.icons.icDelete.svg(),
                 onPressed: () {
+                  AppDialog(
+                    context: context,
+                    title: textLocalization('dialog.delete.learn'),
+                    description: textLocalization('dialog.undone.action'),
+                    type: DialogType.THREE_ACTION,
+                    cancelText: textLocalization('dialog.cancel'),
+                    okText: textLocalization('dialog.delete'),
+                    midText: textLocalization('dialog.learn.more'),
+                    onOkPressed: () {},
+                    onCancelPressed: () {},
+                    onMidPressed: () {},
+                  ).show();
                   controller.removeBookMark(feedModel);
                 },
               ),
@@ -182,6 +193,43 @@ class HomePage extends BasePage<HomeController> {
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Basic dialog title'),
+          content: const Text(
+            'A dialog is a type of modal window that\n'
+            'appears in front of app content to\n'
+            'provide critical information, or prompt\n'
+            'for a decision to be made.',
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Disable'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Enable'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
