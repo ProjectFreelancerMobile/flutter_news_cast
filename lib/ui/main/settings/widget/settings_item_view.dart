@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/res/style.dart';
 
 import '../../../widgets/button/touchable_opacity.dart';
@@ -15,7 +15,7 @@ class AccountItemView extends StatelessWidget {
   AccountItemView({
     this.icon,
     this.titleRight,
-    this.isIconNext = false,
+    this.isIconNext = true,
     required this.title,
     this.isActionTitleRight = false,
     this.isHighlightTitleRight = false,
@@ -26,7 +26,7 @@ class AccountItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return TouchableOpacity(
       child: Container(
-        height: 46.ws,
+        height: 36.ws,
         padding: EdgeInsets.only(right: 10.ws, top: 8.ws, bottom: 8.ws),
         child: Row(
           children: [
@@ -34,10 +34,10 @@ class AccountItemView extends StatelessWidget {
               icon!,
               SizedBox(width: 10.ws),
             ],
-            Expanded(child: Text(title, style: text14.textColor141414, overflow: TextOverflow.ellipsis, maxLines: 1)),
+            Expanded(child: Text(title, style: text12.textColor141414, overflow: TextOverflow.ellipsis, maxLines: 1)),
             if (titleRight != null) ...[
-              Text(titleRight ?? '', style: isActionTitleRight ? text14.textColorPrimary : (isHighlightTitleRight ? text14.textColorD3D3D4 : text14.textColor141414)),
-              SizedBox(width: 6.ws),
+              Text(titleRight ?? '', style: isActionTitleRight ? text12.textColorPrimary : (isHighlightTitleRight ? text12.textColorD3D3D4 : text12.textColor141414)),
+              SizedBox(width: 10.ws),
             ],
             if (isIconNext) ...[
               Assets.icons.icSettingsNext.svg(width: 8.ws),

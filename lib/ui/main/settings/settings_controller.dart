@@ -3,6 +3,7 @@ import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_pic
 import 'package:flutter_news_cast/data/api/models/TUser.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+
 import '../../../app/app_controller.dart';
 import '../../../data/storage/key_constant.dart';
 import '../../../data/storage/my_storage.dart';
@@ -16,6 +17,10 @@ class SettingsController extends BaseController {
   final sexType = SEX_TYPE.MEN.obs;
   var _user = TUser().obs;
   var appVersion = ''.obs;
+
+  var switchBlockAds = true.obs;
+  var switchPlugin = false.obs;
+  var switchNotification = false.obs;
 
   TUser get user => _user.value;
   DateTimePickerLocale? locale = DateTimePickerLocale.en_us;
@@ -39,6 +44,35 @@ class SettingsController extends BaseController {
     // txtPhoneController.text = user.phone ?? '';
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     appVersion.value = packageInfo.version;
+  }
+
+  void updateStateSwitch(SWITCH_TYPE switch_type, bool value) {
+    switch (switch_type) {
+      case SWITCH_TYPE.BLOCK_ADS:
+        switchBlockAds.value = value;
+        break;
+      case SWITCH_TYPE.PLUGIN:
+        switchPlugin.value = value;
+        break;
+      case SWITCH_TYPE.NOTI:
+        switchNotification.value = value;
+        break;
+      default:
+        break;
+    }
+  }
+
+  bool getStateSwitch(SWITCH_TYPE switch_type) {
+    switch (switch_type) {
+      case SWITCH_TYPE.BLOCK_ADS:
+        return switchBlockAds.value;
+      case SWITCH_TYPE.PLUGIN:
+        return switchPlugin.value;
+      case SWITCH_TYPE.NOTI:
+        return switchNotification.value;
+      default:
+        return false;
+    }
   }
 
   void updateProfile(Function(String) errorMessage, {String? userName, DateTime? birthday, SEX_TYPE? sexType, String? phone}) async {

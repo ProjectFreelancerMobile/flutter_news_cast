@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter_news_cast/data/api/api_constants.dart';
 import 'package:flutter_news_cast/res/style.dart';
+import 'package:flutter_news_cast/ui/widgets/base_scaffold_widget.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../app/app_controller.dart';
 import '../../../data/storage/key_constant.dart';
 import '../../../res/theme/theme_service.dart';
 import '../../../utils/date_time_utils.dart';
 import '../../base/base_page.dart';
+import '../../widgets/button/custom_button.dart';
 import '../../widgets/button/touchable_opacity.dart';
 import '../../widgets/default_appbar.dart';
 import '../../widgets/dialogs/app_dialog.dart';
@@ -22,14 +23,35 @@ import 'widget/settings_item_view.dart';
 class SettingsPage extends BasePage<SettingsController> {
   @override
   Widget buildContentView(BuildContext context, SettingsController controller) {
-    return Scaffold(
-      appBar: DefaultAppbar(title: textLocalization('settings_title'), appBarStyle: AppBarStyle.NONE),
+    return ScaffoldBase(
+      appBar: DefaultAppbar(title: textLocalization('settings.title'), appBarStyle: AppBarStyle.NONE),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
+            Text(textLocalization('settings.general'), style: text14.medium.textColor141414),
+            buildSettingsGeneral(context),
+            SizedBox(height: 24.ws),
+            Text(textLocalization('settings.social'), style: text14.medium.textColor141414),
+            buildSettingsSocial(),
+            SizedBox(height: 24.ws),
+            Text(textLocalization('settings.help'), style: text14.medium.textColor141414),
+            buildSettingsHelp(),
+            SizedBox(height: 24.ws),
+            CustomButton(
+              text: textLocalization('settings.remove.ads'),
+              textStyle: text12.medium.textColorWhite,
+              onPressed: () => {},
+              width: double.infinity,
+              height: 42.ws,
+              background: colorFF6F15,
+              radius: 16.rs,
+              isEnable: true,
+            ),
+            SizedBox(height: 8.ws),
+            buildSettingsRestorePurchases(),
+            /*Padding(
               padding: EdgeInsets.symmetric(horizontal: 26.ws, vertical: 15.hs),
               child: Text(textLocalization('settings_account'), style: text14.textColorB2B2B2),
             ),
@@ -63,14 +85,168 @@ class SettingsPage extends BasePage<SettingsController> {
                   },
                 ),
               ),
-            ),
+            ),*/
           ],
         ),
       ),
     );
   }
 
-  Widget buildSettingsAccount(BuildContext context) {
+  final MaterialStateProperty<Color?> trackColor = MaterialStateProperty.resolveWith(
+    (final Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
+        return colorSwitch;
+      }
+      if (states.contains(MaterialState.disabled)) {
+        return colorWhite;
+      }
+      return colorWhite;
+    },
+  );
+
+  final MaterialStateProperty<Color?> thumbColor = MaterialStateProperty.resolveWith<Color?>(
+    (Set<MaterialState> states) {
+      // Material color when switch is selected.
+      if (states.contains(MaterialState.selected)) {
+        return colorFF6F15;
+      }
+      // Material color when switch is disabled.
+      if (states.contains(MaterialState.disabled)) {
+        return colorWhite;
+      }
+      // Otherwise return null to set default material color
+      // for remaining states such as when the switch is
+      // hovered, or focused.
+      return colorWhite;
+    },
+  );
+
+  Widget buildSettingsGeneral(BuildContext context) => Column(
+        children: [
+          SizedBox(height: 8.ws),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(textLocalization('settings.block.ads'), style: text12.textColor141414),
+                    Text(
+                      textLocalization('settings.ads.name'),
+                      style: text12.textColorB2B2B2,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+              buildSwitch(context, SWITCH_TYPE.BLOCK_ADS),
+            ],
+          ),
+          SizedBox(height: 8.ws),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(textLocalization('settings.plugin.title'), style: text12.textColor141414),
+                    Text(
+                      textLocalization('settings.plugin.content'),
+                      style: text12.textColorB2B2B2,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+              buildSwitch(context, SWITCH_TYPE.PLUGIN),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(child: Text(textLocalization('settings.notification'), style: text12.textColor141414)),
+              buildSwitch(context, SWITCH_TYPE.NOTI),
+            ],
+          ),
+          AccountItemView(
+            title: textLocalization('settings.rate'),
+            onPressed: () => {},
+          ),
+        ],
+      );
+
+  Widget buildSettingsSocial() => Column(
+        children: [
+          AccountItemView(
+            title: textLocalization('settings.share'),
+            onPressed: () => {},
+          ),
+          AccountItemView(
+            title: textLocalization('settings.follow.facebook'),
+            onPressed: () => {},
+          ),
+          AccountItemView(
+            title: textLocalization('settings.follow.telegram'),
+            onPressed: () => {},
+          ),
+          AccountItemView(
+            title: textLocalization('settings.follow.tiktok'),
+            onPressed: () => {},
+          ),
+        ],
+      );
+
+  Widget buildSettingsHelp() => Column(
+        children: [
+          AccountItemView(
+            title: textLocalization('settings.update'),
+            titleRight: 'v2.3',
+            onPressed: () => {},
+          ),
+          AccountItemView(
+            title: textLocalization('settings.help.feedback'),
+            onPressed: () => {},
+          ),
+        ],
+      );
+
+  Widget buildSettingsRestorePurchases() => AccountItemView(
+        title: textLocalization('settings.restore.ads'),
+        onPressed: () => {},
+      );
+
+  Widget buildSwitch(BuildContext context, SWITCH_TYPE switch_type) {
+    return Theme(
+      data: ThemeData(
+        useMaterial3: true,
+      ).copyWith(
+        colorScheme: Theme.of(context).colorScheme.copyWith(outline: colorSwitch),
+      ),
+      child: Switch(
+        activeTrackColor: colorSwitch,
+        inactiveTrackColor: colorSwitch,
+        activeColor: colorFF6F15,
+        thumbColor: MaterialStateProperty.resolveWith<Color?>(
+          (Set<MaterialState> states) {
+            if (states.contains(MaterialState.selected)) {
+              return colorFF6F15;
+            }
+            if (states.contains(MaterialState.disabled)) {
+              return colorWhite;
+            }
+            return colorWhite;
+          },
+        ),
+        value: controller.getStateSwitch(switch_type),
+        onChanged: (bool value) {
+          controller.updateStateSwitch(switch_type, value);
+        },
+      ),
+    );
+  }
+
+  buildSettingsAccount(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 26.ws),
       color: getColor().themeColorWhite,
@@ -82,7 +258,6 @@ class SettingsPage extends BasePage<SettingsController> {
               children: [
                 AccountItemView(
                   title: textLocalization('settings_account_security'),
-                  isIconNext: true,
                   onPressed: () => controller.onGotoSecurityPage(),
                 ),
                 Divider(height: 1, thickness: 0.5, color: color929394),
@@ -92,7 +267,6 @@ class SettingsPage extends BasePage<SettingsController> {
           AccountItemView(
             title: textLocalization('settings_name'),
             titleRight: controller.user.name,
-            isIconNext: true,
             onPressed: () => buildOpenUserName(context),
           ),
           Divider(height: 1, thickness: 0.5, color: color929394),
@@ -101,21 +275,19 @@ class SettingsPage extends BasePage<SettingsController> {
           //   titleRight: controller.user.gender == SEX_TYPE.MEN.name
           //       ? textLocalization('common_men')
           //       : (controller.user.gender == SEX_TYPE.WOMAN.name ? textLocalization('common_women') : textLocalization('common_other')),
-          //   isIconNext: true,
+          //
           //   onPressed: () => openSexBottomSheet(context),
           // ),
           Divider(height: 1, thickness: 0.5, color: color929394),
           AccountItemView(
             title: textLocalization('settings_birthday'),
             titleRight: formatDate(controller.user.birthday, DATE_FORMAT),
-            isIconNext: true,
             onPressed: () => _showDatePicker(context, controller),
           ),
           Divider(height: 1, thickness: 0.5, color: color929394),
           AccountItemView(
             title: textLocalization('settings_phone'),
             titleRight: controller.user.phone,
-            isIconNext: true,
             onPressed: () => buildOpenPhone(context),
           ),
         ],
@@ -129,7 +301,6 @@ class SettingsPage extends BasePage<SettingsController> {
         padding: EdgeInsets.symmetric(horizontal: 26.ws),
         child: AccountItemView(
           title: textLocalization('settings_noti'),
-          isIconNext: true,
           onPressed: () => controller.onGotoNotificationsSettingPage(),
         ),
       );

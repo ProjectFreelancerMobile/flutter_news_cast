@@ -6,6 +6,8 @@ enum STATUS_TYPE { FAIL, OK }
 
 enum SEX_TYPE { MEN, WOMAN, OTHER }
 
+enum SWITCH_TYPE { BLOCK_ADS, PLUGIN, NOTI }
+
 enum RSS_TYPE { RSS, ATOM, JSON }
 
 extension StatusTypeExt on STATUS_TYPE {
