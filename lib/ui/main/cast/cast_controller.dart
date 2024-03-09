@@ -1,20 +1,23 @@
 // ignore_for_file: invalid_use_of_protected_member
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:get/get.dart';
+
 import '../../base/base_controller.dart';
+import '../../widgets/debound_util.dart';
 
 class CastController extends BaseController {
   // final _mainController = Get.find<MainController>();
   // final _deviceRepository = Get.find<DeviceRepository>();
   // final _appController = Get.find<AppController>();
-  // var _user = TUser().obs;
-  //
-  // TUser get user => _user.value;
-  // final GlobalKey widgetKey = GlobalKey();
-  //
-  // List<DeviceItem> get listDevice => _listDevice$.value;
-  // final _listDevice$ = <DeviceItem>[].obs;
-  // Timer? periodicTimer = null;
+  TextEditingController textSearchCl = TextEditingController();
 
   bool get isShowScreenError => false;
+  final GlobalKey webViewKey = GlobalKey();
+  InAppWebViewController? webViewController;
+  InAppWebViewSettings settings = InAppWebViewSettings(isInspectable: false, mediaPlaybackRequiresUserGesture: false, allowsInlineMediaPlayback: true, iframeAllowFullscreen: true);
+  PullToRefreshController? pullToRefreshController;
 
   @override
   void onClose() {
@@ -25,117 +28,48 @@ class CastController extends BaseController {
   @override
   void onInit() async {
     super.onInit();
-    // _user.value = _appController.user ?? TUser(name: '', gender: SEX_TYPE.MEN.name, phone: '');
-    // autoRefreshList();
+    pullToRefreshController = kIsWeb
+        ? null
+        : PullToRefreshController(
+            settings: PullToRefreshSettings(
+              color: Colors.blue,
+            ),
+            onRefresh: () async {
+              if (defaultTargetPlatform == TargetPlatform.android) {
+                webViewController?.reload();
+              } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+                webViewController?.loadUrl(urlRequest: URLRequest(url: await webViewController?.getUrl()));
+              }
+            },
+          );
   }
-  //
-  // void autoRefreshList({bool isFore = false}) async {
-  //   print('HomeController:autoRefreshList:' + _mainController.pageIndex.value.toString());
-  //   if (_mainController.pageIndex.value == 0 || isFore) {
-  //     await getListDevice();
-  //     periodicTimer?.cancel();
-  //     periodicTimer = Timer.periodic(Duration(seconds: 5), (timer) async {
-  //       periodicTimer = timer;
-  //       await getListDevice(isShowLoading: false);
-  //     });
-  //   }
-  // }
-  //
-  // MainController get getMainController => _mainController;
-  //
-  // Future<void> getListDevice({bool? isShowLoading = true}) async {
-  //   try {
-  //     if (AppPopup.pairDevice) return;
-  //     if (isShowLoading == true) {
-  //       showLoading();
-  //     }
-  //     await _deviceRepository.getListDevice(_mainController.farmPick).then((value) {
-  //       if (value != null) {
-  //         _listDevice$.value = value;
-  //         Logger(
-  //                 printer: PrettyPrinter(
-  //                     methodCount: 2,
-  //                     // Number of method calls to be displayed
-  //                     errorMethodCount: 8,
-  //                     // Number of method calls if stacktrace is provided
-  //                     lineLength: 120,
-  //                     // Width of the output
-  //                     colors: true,
-  //                     // Colorful log messages
-  //                     printEmojis: true,
-  //                     // Print an emoji for each log message
-  //                     printTime: true // Should each log print contain a timestamp
-  //                     ))
-  //             .i("getListDevice::");
-  //       }
-  //     });
-  //     if (isShowLoading == true) {
-  //       hideLoading();
-  //     }
-  //   } catch (e) {
-  //     if (isShowLoading == true) {
-  //       hideLoading();
-  //     }
-  //     showMessage(getErrors(e), isForeShow: isShowLoading == true);
-  //   }
-  // }
-  //
-  // Future<void> pushDevice(DeviceItem? deviceItem, String? sn, {Function(bool)? isState}) async {
-  //   try {
-  //     if (sn == null || deviceItem == null) return isState != null ? isState(false) : null;
-  //     showLoading();
-  //     await _deviceRepository.pushDevice(sn: sn).then((value) {
-  //       if (value != null) {
-  //         if (value.state == true) {
-  //           isState != null ? isState(true) : null;
-  //           final deviceUpdate = deviceItem.copyWith(data: CONTROL_TYPE.ON.name);
-  //           listDevice[listDevice.indexWhere((element) => element.serialNo == sn)] = deviceUpdate;
-  //         } else if (value.state == false) {
-  //           isState != null ? isState(false) : null;
-  //           final deviceUpdate = deviceItem.copyWith(data: CONTROL_TYPE.OFF.name);
-  //           listDevice[listDevice.indexWhere((element) => element.serialNo == sn)] = deviceUpdate;
-  //         }
-  //         _listDevice$.value = listDevice;
-  //       } else {
-  //         isState != null ? isState(false) : null;
-  //         showMessage(textLocalization('data.error'));
-  //       }
-  //     });
-  //     hideLoading();
-  //   } catch (e) {
-  //     isState != null ? isState(false) : null;
-  //     hideLoading();
-  //     showMessage(getErrors(e));
-  //   }
-  // }
-  //
-  // void updateName(String nameUpdate) {
-  //   _user.update((_user) {
-  //     user.updateUser(name: nameUpdate);
-  //   });
-  //   print('updateName:::' + user.name.toString());
-  // }
-  //
-  // onGotoAddDevice() {
-  //   periodicTimer?.cancel();
-  //   Get.toNamed(AppRoutes.ADD_DEVICE);
-  // }
-  //
-  // onGotoManagerDevice(DeviceItem deviceItem) {
-  //   periodicTimer?.cancel();
-  //   removePopUp();
-  //   Get.toNamed(AppRoutes.MANAGER_DEVICE, arguments: deviceItem);
-  // }
-  //
-  // removePopUp() {
-  //   _mainController.appPopup?.removePopup();
-  // }
-  //
-  // getPopup() => _mainController.appPopup;
-  //
-  // @override
-  // void dispose() {
-  //   periodicTimer?.cancel();
-  //   super.dispose();
-  // }
+
+  void commitURL(String? url) {
+    DeBouncer.run(() {
+      final urlWeb = url?.contains('http') == true ? (url ?? '') : ('https:///www.${url ?? ''}');
+      webViewController?.loadUrl(urlRequest: URLRequest(url: WebUri(urlWeb)));
+    });
+  }
+
+  String? validatorURL(String fieldName) {
+    return (GetUtils.isNullOrBlank(textSearchCl.text) == true)
+        ? 'sign_up_msg_is_required'.trParams(
+            {
+              'field': fieldName,
+            },
+          )
+        : GetUtils.isLengthLessThan(textSearchCl.text, 3)
+            ? 'sign_up_msg_is_at_least_3_characters'.trParams(
+                {
+                  'field': fieldName,
+                },
+              )
+            : null;
+  }
+
+  @override
+  void dispose() {
+    textSearchCl.dispose();
+    super.dispose();
+  }
 }

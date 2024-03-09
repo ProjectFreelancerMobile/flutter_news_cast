@@ -79,9 +79,7 @@ class HomePage extends BasePage<HomeController> {
               return FeedRecentItemView(
                 url: item.image ?? '',
                 content: item.title ?? '',
-                onPressed: () {
-                  Get.toNamed(AppRoutes.READ_RSS, arguments: item);
-                },
+                onPressed: () => Get.toNamed(AppRoutes.READ_RSS, arguments: item),
               );
             },
             itemCount: controller.listBookmark.length > 5 ? 5 : controller.listBookmark.length,

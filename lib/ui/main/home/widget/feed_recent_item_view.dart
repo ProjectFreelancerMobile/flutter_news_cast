@@ -15,20 +15,23 @@ class FeedRecentItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return TouchableOpacity(
       onPressed: onPressed,
-      child: Row(
-        children: [
-          Assets.icons.icGoogle.image(),
-          SizedBox(width: 16.ws),
-          Expanded(
-            child: Text(
-              content,
-              style: text14.textColor141414,
-              textAlign: TextAlign.start,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 12),
+        child: Row(
+          children: [
+            Assets.icons.icGoogle.image(),
+            SizedBox(width: 16.ws),
+            Expanded(
+              child: Text(
+                content,
+                style: text14.textColor141414,
+                textAlign: TextAlign.start,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

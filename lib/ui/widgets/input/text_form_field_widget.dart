@@ -8,6 +8,7 @@ class DTextFromField extends StatelessWidget {
   final TextEditingController? controller;
   final String? Function(String?)? onValidated; // handle error here
   final Function(String?)? onSaved;
+  final Function(String?)? onChange;
   final TextStyle? textStyle;
   final TextStyle? errorStyle;
   final String? hintText;
@@ -33,12 +34,14 @@ class DTextFromField extends StatelessWidget {
   final Function(String)? onFieldSubmitted;
   final bool? isHideCounterText;
   final bool? textCenter;
+  final double? borderRadius;
 
   DTextFromField(
       {this.controller,
       this.errorStyle,
       this.onValidated,
       this.onSaved,
+      this.onChange,
       this.hintText,
       this.textStyle,
       this.strokeColor,
@@ -60,6 +63,7 @@ class DTextFromField extends StatelessWidget {
       this.prefixPadding,
       this.isHideCounterText,
       this.textCenter,
+      this.borderRadius,
       this.prefixConstraints = const BoxConstraints(maxHeight: 36, minHeight: 36),
       this.iconContraints = const BoxConstraints(maxWidth: 24, maxHeight: 24, minHeight: 24),
       this.contentPadding = const EdgeInsets.symmetric(vertical: 17.0, horizontal: 0.0)});
@@ -69,7 +73,7 @@ class DTextFromField extends StatelessWidget {
   }
 
   OutlineInputBorder _outlineInputBorder(Color? strokeColor, BuildContext context) {
-    return OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: strokeColor ?? getColor().textColorB2B2B2));
+    return OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius ?? 8), borderSide: BorderSide(color: strokeColor ?? getColor().textColorB2B2B2));
   }
 
   @override
@@ -107,6 +111,7 @@ class DTextFromField extends StatelessWidget {
           inputFormatters: inputFormatters,
           textInputAction: textInputAction,
           onFieldSubmitted: onFieldSubmitted,
+          onChanged: onChange,
           decoration: InputDecoration(
               filled: true,
               fillColor: background ?? Colors.transparent,
@@ -146,6 +151,7 @@ class ClearTextField extends StatefulWidget {
   final Widget? prefixIcon;
   final String? hint;
   final TextStyle? textStyle;
+  final Function(String?)? onChange;
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
   final Color? underlineColor;
@@ -154,6 +160,8 @@ class ClearTextField extends StatefulWidget {
   final String? errorText;
   final TextStyle? errorStyle;
   final EdgeInsetsGeometry? contentPadding;
+  final Color? background;
+  final double? borderRadius;
 
   ClearTextField(
       {this.hint,
@@ -167,7 +175,10 @@ class ClearTextField extends StatefulWidget {
       this.keyboardType,
       this.underlineColor,
       this.onValidated,
+      this.onChange,
       this.errorText,
+      this.background,
+      this.borderRadius,
       this.contentPadding = const EdgeInsets.symmetric(vertical: 17.0, horizontal: 0.0),
       this.errorStyle});
 
@@ -203,6 +214,9 @@ class _ClearTextFieldState extends State<ClearTextField> {
       onValidated: widget.onValidated,
       errorText: widget.errorText,
       errorStyle: widget.errorStyle,
+      background: widget.background,
+      borderRadius: widget.borderRadius,
+      onChange: widget.onChange,
       contentPadding: widget.contentPadding,
       iconContraints: const BoxConstraints(maxWidth: 30, maxHeight: 30, minHeight: 30),
       suffixIcon: controller?.text != ""
@@ -211,11 +225,7 @@ class _ClearTextFieldState extends State<ClearTextField> {
               minWidth: 24,
               padding: EdgeInsets.all(0),
               onPressed: () => controller?.clear(),
-              child: Image.asset(
-                DImages.textClear,
-                width: 16.ws,
-                height: 16.ws,
-              ),
+              child: Assets.icons.icRemove.svg(),
               shape: CircleBorder(),
             )
           : null,

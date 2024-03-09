@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_news_cast/ui/widgets/base_scaffold_widget.dart';
 import 'package:flutter_news_cast/ui/widgets/data_empty_widget.dart';
+import 'package:get/get.dart';
+
+import '../../../app/app_pages.dart';
 import '../../../res/style.dart';
 import '../../base/base_page.dart';
 import '../../widgets/default_appbar.dart';
@@ -10,7 +14,7 @@ import 'bookmark_controller.dart';
 class ListBookmarkPage extends BasePage<BookmarkController> {
   @override
   Widget buildContentView(BuildContext context, BookmarkController controller) {
-    return Scaffold(
+    return ScaffoldBase(
       appBar: DefaultAppbar(
         title: controller.isBookmark ? textLocalization('home.bookmarks') : textLocalization('home.recents'),
         appBarStyle: AppBarStyle.BACK,
@@ -28,7 +32,7 @@ class ListBookmarkPage extends BasePage<BookmarkController> {
               return FeedRecentItemView(
                 url: item?.image ?? '',
                 content: item?.title ?? '',
-                onPressed: () {},
+                onPressed: () => Get.toNamed(AppRoutes.READ_RSS, arguments: item),
               );
             },
             itemCount: controller.listPost.length,

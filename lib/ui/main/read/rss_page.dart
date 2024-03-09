@@ -50,7 +50,7 @@ class RssPage extends BasePage<RssController> {
           }
         },
         onUpdateVisitedHistory: (controllerWeb, url, androidIsReload) {},
-        onConsoleMessage: (controlcontrollerWebler, consoleMessage) {
+        onConsoleMessage: (controllerWeb, consoleMessage) {
           if (kDebugMode) {
             print(consoleMessage);
           }
