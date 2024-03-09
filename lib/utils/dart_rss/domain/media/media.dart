@@ -40,30 +40,16 @@ class Media {
       text: Text.parse(findElementOrNull(element, 'media:text')),
       restriction: Restriction.parse(findElementOrNull(element, 'media:restriction')),
       community: Community.parse(findElementOrNull(element, 'media:community')),
-      comments: findElementOrNull(element, 'media:comments')
-              ?.findElements('media:comment')
-              .map((e) => e.innerText)
-              .toList() ??
-          <String>[],
+      comments: findElementOrNull(element, 'media:comments')?.findElements('media:comment').map((e) => e.innerText).toList() ?? <String>[],
       embed: Embed.parse(findElementOrNull(element, 'media:embed')),
-      responses: findElementOrNull(element, 'media:responses')
-              ?.findElements('media:response')
-              .map((e) => e.innerText)
-              .toList() ??
-          <String>[],
-      backLinks: findElementOrNull(element, 'media:backLinks')
-              ?.findElements('media:backLink')
-              .map((e) => e.innerText)
-              .toList() ??
-          <String>[],
+      responses: findElementOrNull(element, 'media:responses')?.findElements('media:response').map((e) => e.innerText).toList() ?? <String>[],
+      backLinks: findElementOrNull(element, 'media:backLinks')?.findElements('media:backLink').map((e) => e.innerText).toList() ?? <String>[],
       status: Status.parse(findElementOrNull(element, 'media:status')),
       prices: element.findElements('media:price').map((e) => Price.parse(e)).toList(),
       license: License.parse(findElementOrNull(element, 'media:license')),
       peerLink: PeerLink.parse(findElementOrNull(element, 'media:peerLink')),
       rights: Rights.parse(findElementOrNull(element, 'media:rights')),
-      scenes:
-          findElementOrNull(element, 'media:scenes')?.findElements('media:scene').map((e) => Scene.parse(e)).toList() ??
-              <Scene>[],
+      scenes: findElementOrNull(element, 'media:scenes')?.findElements('media:scene').map((e) => Scene.parse(e)).toList() ?? <Scene>[],
     );
   }
 
@@ -94,6 +80,11 @@ class Media {
     this.rights,
     this.scenes = const <Scene>[],
   });
+
+  @override
+  String toString() {
+    return 'Media{group: $group, contents: $contents, credits: $credits, category: $category, rating: $rating, title: $title, description: $description, keywords: $keywords, thumbnails: $thumbnails, hash: $hash, player: $player, copyright: $copyright, text: $text, restriction: $restriction, community: $community, comments: $comments, embed: $embed, responses: $responses, backLinks: $backLinks, status: $status, prices: $prices, license: $license, peerLink: $peerLink, rights: $rights, scenes: $scenes}';
+  }
 
   final Group? group;
   final List<Content> contents;

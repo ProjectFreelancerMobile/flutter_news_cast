@@ -177,34 +177,34 @@ class RSSService extends BaseService {
         case RSS_TYPE.RSS:
           RssFeed rssFeed = RssFeed.parse(response);
           List<Future> futures = [];
-          for (RssItem item in rssFeed.items) {
-            if (!(_parsePubDate(item.pubDate).isAfter(feedLastUpdated ?? DateTime(0)))) {
-              break;
+          await Future.forEach(rssFeed.items, (element) async {
+            if (!(_parsePubDate(element.pubDate).isAfter(feedLastUpdated ?? DateTime(0)))) {
+              return;
             }
-            futures.add(_parseRSSPostItem(item, feedModel));
-          }
+            futures.add(_parseRSSPostItem(element, feedModel));
+          });
           await Future.wait(futures);
           return true;
         case RSS_TYPE.ATOM:
           AtomFeed atomFeed = AtomFeed.parse(response);
           List<Future> futures = [];
-          for (AtomItem item in atomFeed.items) {
-            if (!(_parsePubDate(item.updated).isAfter(feedLastUpdated ?? DateTime(0)))) {
-              break;
+          await Future.forEach(atomFeed.items, (element) async {
+            if (!(_parsePubDate(atomFeed.updated).isAfter(feedLastUpdated ?? DateTime(0)))) {
+              return;
             }
-            futures.add(_parseAtomPostItem(item, feedModel));
-          }
+            futures.add(_parseAtomPostItem(element, feedModel));
+          });
           await Future.wait(futures);
           return true;
         case RSS_TYPE.JSON:
-          AtomFeed atomFeed = AtomFeed.parse(response);
+          RssFeed rssFeed = RssFeed.parse(response);
           List<Future> futures = [];
-          for (AtomItem item in atomFeed.items) {
-            if (!(_parsePubDate(item.updated).isAfter(feedLastUpdated ?? DateTime(0)))) {
-              break;
+          await Future.forEach(rssFeed.items, (element) async {
+            if (!(_parsePubDate(element.pubDate).isAfter(feedLastUpdated ?? DateTime(0)))) {
+              return;
             }
-            futures.add(_parseAtomPostItem(item, feedModel));
-          }
+            futures.add(_parseRSSPostItem(element, feedModel));
+          });
           await Future.wait(futures);
           return true;
       }
@@ -239,17 +239,17 @@ class RSSService extends BaseService {
     if (blockStatue) {
       return;
     }
+    print('_parseAtomPostItem.post::' + item.media.toString());
     PostModel post = PostModel(
       title: title,
-      link: item.links[0].href!,
-      image: item.media?.thumbnails.first.url ?? '',
-      content: item.content!,
+      link: item.links[0].href ?? '',
+      image: '', //item.media?.thumbnails.first.url ??
+      content: item.content ?? '',
       pubDate: _parsePubDate(item.updated),
       favorite: false,
       fullText: feedModel.fullText,
     );
     post.feed.value = feedModel;
-    print('_parseAtomPostItem.post::' + post.toString());
     await savePost(post);
   }
 
