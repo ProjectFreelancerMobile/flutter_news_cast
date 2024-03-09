@@ -32,6 +32,10 @@ class RssPage extends BasePage<RssController> {
           controller.webViewController = controllerWeb;
         },
         onLoadStart: (controller, url) {},
+        shouldInterceptRequest: (controller, request) async {
+          print("request $request");
+          return null;
+        },
         onPermissionRequest: (controller, request) async {
           return PermissionResponse(resources: request.resources, action: PermissionResponseAction.GRANT);
         },

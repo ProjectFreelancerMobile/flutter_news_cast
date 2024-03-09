@@ -20,14 +20,14 @@ class RSSService extends BaseService {
     List<FeedModel> listFeed = [];
     /*if (await _storage.isInstall() == false || isForceReload) {
       _storage.saveInstall(true);
-      final listRssDefault = [
-        ListFeedBookmarkModel(RSS_1, RSS_TYPE.RSS.index),
-        ListFeedBookmarkModel(RSS_2, RSS_TYPE.ATOM.index),
-        ListFeedBookmarkModel(RSS_3, RSS_TYPE.ATOM.index),
-        ListFeedBookmarkModel(RSS_4, RSS_TYPE.JSON.index),
-        ListFeedBookmarkModel(RSS_5, RSS_TYPE.JSON.index),
-        ListFeedBookmarkModel(RSS_6, RSS_TYPE.RSS.index),
-      ];
+     final listRssDefault = [
+      ListFeedBookmarkModel(RSS_1, RSS_TYPE.RSS.indexValue),
+      ListFeedBookmarkModel(RSS_2, RSS_TYPE.ATOM.indexValue),
+      ListFeedBookmarkModel(RSS_3, RSS_TYPE.ATOM.indexValue),
+      ListFeedBookmarkModel(RSS_4, RSS_TYPE.JSON.indexValue),
+      ListFeedBookmarkModel(RSS_5, RSS_TYPE.JSON.indexValue),
+      ListFeedBookmarkModel(RSS_6, RSS_TYPE.RSS.indexValue),
+    ];
       await Future.forEach(listRssDefault, (element) async {
         await parseRss(element.url, element.rssType).then((value) {
           if (value.url.isNotEmpty) {
@@ -48,12 +48,7 @@ class RSSService extends BaseService {
       print('listRssDefault111::${listFeed.length}');
     }*/
     final listRssDefault = [
-      ListFeedBookmarkModel(RSS_1, RSS_TYPE.RSS.indexValue),
-      // ListFeedBookmarkModel(RSS_2, RSS_TYPE.ATOM.indexValue),
-      // ListFeedBookmarkModel(RSS_3, RSS_TYPE.ATOM.indexValue),
-      // ListFeedBookmarkModel(RSS_4, RSS_TYPE.JSON.indexValue),
-      // ListFeedBookmarkModel(RSS_5, RSS_TYPE.JSON.indexValue),
-      // ListFeedBookmarkModel(RSS_6, RSS_TYPE.RSS.indexValue),
+      ListFeedBookmarkModel(RSS_2, RSS_TYPE.ATOM.indexValue),
     ];
     await Future.forEach(listRssDefault, (element) async {
       await parseRss(element.url, element.rssType).then((value) {
@@ -178,7 +173,6 @@ class RSSService extends BaseService {
     try {
       final response = await getWithUrlRss(feedModel.url);
       final DateTime? feedLastUpdated = await getLatesPubDate(feedModel);
-      print('feedModel.rssType::' + feedModel.toString());
       switch (feedModel.rssType.type) {
         case RSS_TYPE.RSS:
           RssFeed rssFeed = RssFeed.parse(response);
@@ -235,6 +229,7 @@ class RSSService extends BaseService {
       fullText: feedModel.fullText,
     );
     post.feed.value = feedModel;
+    print('_parseRSSPostItem.post::' + post.toString());
     await savePost(post);
   }
 
@@ -254,6 +249,7 @@ class RSSService extends BaseService {
       fullText: feedModel.fullText,
     );
     post.feed.value = feedModel;
+    print('_parseAtomPostItem.post::' + post.toString());
     await savePost(post);
   }
 

@@ -18,7 +18,13 @@ class RssController extends BaseController {
   final postRss = Get.arguments as PostModel?;
   final GlobalKey webViewKey = GlobalKey();
   InAppWebViewController? webViewController;
-  InAppWebViewSettings settings = InAppWebViewSettings(isInspectable: false, mediaPlaybackRequiresUserGesture: false, allowsInlineMediaPlayback: true, iframeAllowFullscreen: true);
+  InAppWebViewSettings settings = InAppWebViewSettings(
+    useShouldInterceptRequest: true,
+    isInspectable: false,
+    mediaPlaybackRequiresUserGesture: false,
+    allowsInlineMediaPlayback: true,
+    iframeAllowFullscreen: true,
+  );
   PullToRefreshController? pullToRefreshController;
 
   bool get isShowScreenError => false;
