@@ -6,7 +6,7 @@ import '../../utils/log_data.dart';
 
 class RestClient {
   static const TIMEOUT = 30000;
-  static const ENABLE_LOG = true;
+  static const ENABLE_LOG = false;
 
   // singleton
   static final RestClient instance = new RestClient._internal();

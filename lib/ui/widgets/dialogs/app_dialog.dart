@@ -169,7 +169,7 @@ class AppDialog {
         ),
         onPressed: () {
           dismiss();
-          onOkPressed?.call();
+          onMidPressed?.call();
         },
         child: Text(
           midText,

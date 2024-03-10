@@ -8,6 +8,8 @@ import 'package:flutter_news_cast/ui/main/home/widget/feed_recent_item_view.dart
 import 'package:flutter_news_cast/ui/widgets/base_scaffold_widget.dart';
 import 'package:get/get.dart';
 
+import '../../../data/api/api_constants.dart';
+import '../../../utils/data_util.dart';
 import '../../base/base_page.dart';
 import '../../widgets/button/touchable_opacity.dart';
 import '../../widgets/dialogs/app_dialog.dart';
@@ -119,7 +121,6 @@ class HomePage extends BasePage<HomeController> {
   }
 
   Widget buildListPostFromFeed(BuildContext context, FeedModel? feedModel, List<PostModel?>? listPost) {
-    print('buildListPostFromFeed::${listPost?.length}');
     return Container(
       width: Get.width,
       height: 170.ws,
@@ -161,11 +162,14 @@ class HomePage extends BasePage<HomeController> {
                     cancelText: textLocalization('dialog.cancel'),
                     okText: textLocalization('dialog.delete'),
                     midText: textLocalization('dialog.learn.more'),
-                    onOkPressed: () {},
+                    onOkPressed: () {
+                      controller.removeBookMark(feedModel);
+                    },
                     onCancelPressed: () {},
-                    onMidPressed: () {},
+                    onMidPressed: () {
+                      launchOpenUrl(Uri.parse(LEARN_MORE_URL));
+                    },
                   ).show();
-                  controller.removeBookMark(feedModel);
                 },
               ),
             ],

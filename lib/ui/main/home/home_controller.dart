@@ -15,11 +15,6 @@ class HomeController extends BaseController {
   final _mainController = Get.find<MainController>();
   final _rssRepository = Get.find<RssRepository>();
   final _appController = Get.find<AppController>();
-
-  // var _user = TUser().obs;
-  //
-  // TUser get user => _user.value;
-  // final GlobalKey widgetKey = GlobalKey();
   TextEditingController textAddRssCl = TextEditingController();
 
   List<PostModel> get listBookmark => _listBookmark$.value;
@@ -45,7 +40,7 @@ class HomeController extends BaseController {
 
   void initRssData() async {
     showLoading();
-    final listRss = await _rssRepository.getInitRss(isRefresh: true);
+    final listRss = await _rssRepository.getInitRss();
     hideLoading();
     _listFeed$.value = listRss;
   }
@@ -69,7 +64,14 @@ class HomeController extends BaseController {
 
   void removeBookMark(FeedModel? feedModel) async {
     if (feedModel == null) return;
-    await _rssRepository.deleteBookmark(feedModel);
+    final isSuccess = await _rssRepository.deleteBookmark(feedModel);
+    if (isSuccess) {
+      await _rssRepository.getInitRss().then((value) {
+        _listFeed$.value = value;
+      });
+    } else {
+      showErrors(textLocalization('error.remove'));
+    }
   }
 
   String? validatorRss(String fieldName) {
