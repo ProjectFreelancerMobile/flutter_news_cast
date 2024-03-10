@@ -9,11 +9,17 @@ import 'package:flutter_news_cast/utils/dart_rss/domain/rss_source.dart';
 import 'package:flutter_news_cast/utils/dart_rss/util/helpers.dart';
 import 'package:xml/xml.dart';
 
+import 'media/group.dart';
+
 class RssItem {
   factory RssItem.parse(XmlElement element) {
     final description = findElementOrNull(element, 'description')?.innerText ?? '';
     var imagePost = null;
-    if (description.contains('<img src="')) {
+    final thumbnail = findElementOrNull(element, 'media:thumbnail');
+    print('RssItem::' + thumbnail.toString());
+    if (thumbnail != null) {
+      imagePost = AtomThumbnail.parse(findElementOrNull(element, 'media:thumbnail'))?.url ?? '';
+    } else if (description.contains('<img src="')) {
       imagePost = description.substring(description.indexOf('<img src="') + 10, description.indexOf('" /></a>'));
     }
     return RssItem(

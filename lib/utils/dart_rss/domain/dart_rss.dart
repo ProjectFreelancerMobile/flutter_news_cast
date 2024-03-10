@@ -115,6 +115,11 @@ class WebFeed {
   final String description;
   final List<String?> links;
   final List<WebFeedItem> items;
+
+  @override
+  String toString() {
+    return 'WebFeed{title: $title, description: $description, links: $links, items: $items}';
+  }
 }
 
 class WebFeedItem {
@@ -129,6 +134,11 @@ class WebFeedItem {
   final String body;
   final List<String?> links;
   final DateTime? updated;
+
+  @override
+  String toString() {
+    return 'WebFeedItem{title: $title, body: $body, links: $links, updated: $updated}';
+  }
 }
 
 enum RssVersion {

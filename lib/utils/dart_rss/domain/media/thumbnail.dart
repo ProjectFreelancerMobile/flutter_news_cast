@@ -21,4 +21,9 @@ class Thumbnail {
   final String? width;
   final String? height;
   final String? time;
+
+  @override
+  String toString() {
+    return 'Thumbnail{url: $url, width: $width, height: $height, time: $time}';
+  }
 }

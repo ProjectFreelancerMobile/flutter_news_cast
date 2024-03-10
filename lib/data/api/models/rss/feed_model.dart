@@ -1,4 +1,3 @@
-import 'package:flutter_news_cast/data/storage/key_constant.dart';
 import 'package:isar/isar.dart';
 
 part 'feed_model.g.dart';
@@ -12,6 +11,7 @@ class FeedModel {
   String category;
   bool fullText;
   int rssType;
+  String? baseUrl;
 
   FeedModel({
     this.id,
@@ -21,11 +21,11 @@ class FeedModel {
     required this.category,
     required this.fullText,
     required this.rssType,
+    this.baseUrl,
   });
 
   @override
   String toString() {
-    return 'FeedModel{id: $id, title: $title, url: $url, description: $description, category: $category, fullText: $fullText, rssType: $rssType}';
+    return 'FeedModel{id: $id, title: $title, url: $url, description: $description, category: $category, fullText: $fullText, rssType: $rssType, baseUrl:$baseUrl}';
   }
-
 }

@@ -13,12 +13,14 @@ const BASE_URL_DEV = "https://12121.urvega.com/";
 var isConnection = true;
 
 //RSS
-const RSS_1 = "https://tuoitre.vn/rss/tin-moi-nhat.rss";
-const RSS_2 = "https://www.youtube.com/feeds/videos.xml?channel_id=UCXuqSBlHAE6Xw-yeJA0Tunw";
-const RSS_3 = "https://vimeo.com/georgiafootball/videos/rss";
-const RSS_4 = "https://api.dailymotion.com/channel/music/videos?limit=100&sort=recent";
-const RSS_5 = "https://api.dailymotion.com/videos?limit=100&sort=recent";
-const RSS_6 = "https://lfm.xiffy.nl/thexiffy";
+const RSS_1 = "https://tuoitre.vn/rss/tin-moi-nhat.rss"; //Rss
+const RSS_2 = "https://www.youtube.com/feeds/videos.xml?channel_id=UCXuqSBlHAE6Xw-yeJA0Tunw"; //atom
+const RSS_3 = "https://vimeo.com/georgiafootball/videos/rss"; //Rss
+const RSS_4 = "https://api.dailymotion.com/channel/music/videos?limit=100&sort=recent"; //Json
+const RSS_5 = "https://api.dailymotion.com/videos?limit=100&sort=recent"; //Json
+const RSS_6 = "https://lfm.xiffy.nl/thexiffy"; //Rss
+
+const BASE_JSON_PARSE = "https://www.dailymotion.com/video/";
 
 const BOOKMARK_1 = "https://soundcloud.com/";
 const BOOKMARK_2 = "https://mixcloud.com";

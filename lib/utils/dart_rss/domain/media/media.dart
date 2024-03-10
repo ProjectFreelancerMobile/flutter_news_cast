@@ -24,6 +24,7 @@ import 'package:xml/xml.dart';
 
 class Media {
   factory Media.parse(XmlElement element) {
+    print('thumbnail:::' + element.findElements('media:thumbnail').toString());
     return Media(
       group: Group.parse(findElementOrNull(element, 'media:group')),
       contents: element.findElements('media:content').map((e) => Content.parse(e)).toList(),

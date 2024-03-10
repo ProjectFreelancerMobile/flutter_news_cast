@@ -22,7 +22,7 @@ class AtomItem {
       summary: findElementOrNull(element, 'summary')?.innerText,
       rights: findElementOrNull(element, 'rights')?.innerText,
       media: Media.parse(element),
-      image: null,
+      image: findElementOrNull(element, 'media:thumbnail')?.innerText,
     );
   }
 

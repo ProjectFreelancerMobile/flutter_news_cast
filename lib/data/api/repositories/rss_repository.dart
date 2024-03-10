@@ -1,3 +1,4 @@
+import 'package:flutter_news_cast/data/api/models/rss/list_feed_bookmark_model.dart';
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +16,7 @@ class RssRepository extends BaseRepository {
   }
 
   Future<FeedModel> getFeed(String url) async {
-    final feed = await _rssService.parseRss(url, RSS_TYPE.RSS.indexValue);
+    final feed = await _rssService.parseRss(ListFeedBookmarkModel(url, RSS_TYPE.RSS.indexValue));
     return feed;
   }
 

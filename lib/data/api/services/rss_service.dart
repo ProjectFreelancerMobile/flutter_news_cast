@@ -1,6 +1,7 @@
 import 'package:flutter_news_cast/app/app_controller.dart';
 import 'package:flutter_news_cast/data/storage/key_constant.dart';
 import 'package:flutter_news_cast/utils/dart_rss/dart_rss.dart';
+import 'package:flutter_news_cast/utils/dart_rss/domain/json/json_feed.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:isar/isar.dart';
@@ -21,9 +22,9 @@ class RSSService extends BaseService {
     /*if (await _storage.isInstall() == false || isForceReload) {
       _storage.saveInstall(true);
      final listRssDefault = [
-      ListFeedBookmarkModel(RSS_1, RSS_TYPE.RSS.indexValue),
+        ListFeedBookmarkModel(RSS_1, RSS_TYPE.RSS.indexValue),
       ListFeedBookmarkModel(RSS_2, RSS_TYPE.ATOM.indexValue),
-      ListFeedBookmarkModel(RSS_3, RSS_TYPE.ATOM.indexValue),
+      ListFeedBookmarkModel(RSS_3, RSS_TYPE.RSS.indexValue),
       ListFeedBookmarkModel(RSS_4, RSS_TYPE.JSON.indexValue),
       ListFeedBookmarkModel(RSS_5, RSS_TYPE.JSON.indexValue),
       ListFeedBookmarkModel(RSS_6, RSS_TYPE.RSS.indexValue),
@@ -48,57 +49,61 @@ class RSSService extends BaseService {
       print('listRssDefault111::${listFeed.length}');
     }*/
     final listRssDefault = [
-      ListFeedBookmarkModel(RSS_2, RSS_TYPE.ATOM.indexValue),
+      ListFeedBookmarkModel(RSS_4, RSS_TYPE.JSON.indexValue, baseUrl: BASE_JSON_PARSE),
     ];
     await Future.forEach(listRssDefault, (element) async {
-      await parseRss(element.url, element.rssType).then((value) {
+      await parseRss(element).then((value) {
         listFeed.add(value);
       });
     });
+    /*WebFeed.fromUrl(RSS_3).then((value) {
+      print('value::::' + value.toString());
+    });*/
     print('listFeed::' + listFeed.length.toString());
     return listFeed;
   }
 
   Future<FeedModel> parseRss(
-    String url,
-    int rssType, [
+    ListFeedBookmarkModel feedModel, [
     String? feedTitle,
   ]) async {
     final categoryName = 'defaultCategory';
     try {
-      final response = await getWithUrlRss(url);
-      print('rssType.type::' + rssType.type.toString());
-      switch (rssType.type) {
+      final response = await getWithUrlRss(feedModel.url);
+      print('rssType.type::' + feedModel.rssType.type.toString());
+      switch (feedModel.rssType.type) {
         case RSS_TYPE.RSS:
           final RssFeed rssFeed = RssFeed.parse(response);
           feedTitle = rssFeed.title;
           return FeedModel(
             title: feedTitle ?? '',
-            url: url,
+            url: feedModel.url,
             description: rssFeed.description ?? '',
             category: categoryName,
             fullText: false,
-            rssType: rssType,
+            rssType: feedModel.rssType,
+            baseUrl: feedModel.baseUrl,
           );
         case RSS_TYPE.ATOM:
           final AtomFeed atomFeed = AtomFeed.parse(response);
           return FeedModel(
             title: atomFeed.title ?? '',
-            url: url,
+            url: feedModel.url,
             description: atomFeed.subtitle ?? '',
             category: categoryName,
             fullText: false,
-            rssType: rssType,
+            rssType: feedModel.rssType,
+            baseUrl: feedModel.baseUrl,
           );
         case RSS_TYPE.JSON:
-          final AtomFeed atomFeed = AtomFeed.parse(response);
           return FeedModel(
-            title: atomFeed.title ?? '',
-            url: url,
-            description: atomFeed.subtitle ?? '',
+            title: feedTitle ?? '',
+            url: feedModel.url,
+            description: '',
             category: categoryName,
             fullText: false,
-            rssType: rssType,
+            rssType: feedModel.rssType,
+            baseUrl: feedModel.baseUrl,
           );
       }
     } catch (e) {
@@ -113,7 +118,8 @@ class RSSService extends BaseService {
         description: '',
         category: categoryName,
         fullText: false,
-        rssType: rssType,
+        rssType: feedModel.rssType,
+        baseUrl: feedModel.baseUrl,
       );
     }
   }
@@ -125,10 +131,28 @@ class RSSService extends BaseService {
   }
 
   Future<void> bookmarkFeed(String url) async {
-    //TODO
-    // await _isar.writeTxn(() async {
-    //   await _isar.feedModels.put(feedModel);
-    // });
+    final response = await getWithUrlRss(url);
+    RssVersion rssVersion = WebFeed.detectRssVersion(response);
+    var rssType = RSS_TYPE.RSS.indexValue;
+    switch (rssVersion) {
+      case RssVersion.atom:
+        rssType = RSS_TYPE.ATOM.indexValue;
+        break;
+      case RssVersion.rss2:
+        rssType = RSS_TYPE.RSS.indexValue;
+        break;
+      case RssVersion.rss1:
+        rssType = RSS_TYPE.RSS.indexValue;
+        break;
+      default:
+        rssType = RSS_TYPE.JSON.indexValue;
+        break;
+    }
+    await parseRss(ListFeedBookmarkModel(url, rssType)).then((value) async {
+      await _isar.writeTxn(() async {
+        await _isar.feedModels.put(value);
+      });
+    });
   }
 
   Future<FeedModel?> isExists(String url) async {
@@ -197,13 +221,10 @@ class RSSService extends BaseService {
           await Future.wait(futures);
           return true;
         case RSS_TYPE.JSON:
-          RssFeed rssFeed = RssFeed.parse(response);
+          final JsonFeed jsonFeed = JsonFeed.fromJson(response);
           List<Future> futures = [];
-          await Future.forEach(rssFeed.items, (element) async {
-            if (!(_parsePubDate(element.pubDate).isAfter(feedLastUpdated ?? DateTime(0)))) {
-              return;
-            }
-            futures.add(_parseRSSPostItem(element, feedModel));
+          await Future.forEach(jsonFeed.list ?? List.empty(), (element) async {
+            futures.add(_parseJsonPostItem(element, feedModel, baseUrl: feedModel.baseUrl));
           });
           await Future.wait(futures);
           return true;
@@ -222,7 +243,7 @@ class RSSService extends BaseService {
     PostModel post = PostModel(
       title: title,
       link: item.link!,
-      image: item.image ?? item.media?.thumbnails.first.url ?? '',
+      image: item.image ?? item.enclosure?.url ?? ((item.media?.thumbnails.isNotEmpty == true) ? item.media?.thumbnails.first.url : '') ?? '',
       content: item.description ?? '',
       pubDate: _parsePubDate(item.pubDate),
       favorite: false,
@@ -243,13 +264,33 @@ class RSSService extends BaseService {
     PostModel post = PostModel(
       title: title,
       link: item.links[0].href ?? '',
-      image: '', //item.media?.thumbnails.first.url ??
+      image: item.media?.group?.thumbnail?.url ?? item.image ?? '',
       content: item.content ?? '',
       pubDate: _parsePubDate(item.updated),
       favorite: false,
       fullText: feedModel.fullText,
     );
     post.feed.value = feedModel;
+    await savePost(post);
+  }
+
+  Future<void> _parseJsonPostItem(JsonItem item, FeedModel feedModel, {String? baseUrl}) async {
+    String title = item.title!.trim();
+    bool blockStatue = _isBlock(title, item.title ?? '');
+    if (blockStatue) {
+      return;
+    }
+    PostModel post = PostModel(
+      title: title,
+      link: '$baseUrl${item.id}',
+      image: '',
+      content: title,
+      pubDate: DateTime.now(),
+      favorite: false,
+      fullText: feedModel.fullText,
+    );
+    post.feed.value = feedModel;
+    print('_parseRSSPostItem.post::' + post.toString());
     await savePost(post);
   }
 
