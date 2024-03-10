@@ -8,7 +8,7 @@ enum SEX_TYPE { MEN, WOMAN, OTHER }
 
 enum SWITCH_TYPE { BLOCK_ADS, PLUGIN, NOTI }
 
-enum RSS_TYPE { RSS, ATOM, JSON }
+enum RSS_TYPE { RSS, ATOM, JSON, UNKNOWN }
 
 extension StatusTypeExt on STATUS_TYPE {
   String get name {
@@ -30,6 +30,8 @@ extension RssNameExt on RSS_TYPE {
         return 0;
       case RSS_TYPE.JSON:
         return 1;
+      case RSS_TYPE.RSS:
+        return 2;
       default:
         return 2;
     }
@@ -43,6 +45,8 @@ extension RssTypeExt on num {
         return RSS_TYPE.ATOM;
       case 1:
         return RSS_TYPE.JSON;
+      case 2:
+        return RSS_TYPE.RSS;
       default:
         return RSS_TYPE.RSS;
     }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/data/api/models/rss/feed_model.dart';
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
 import 'package:flutter_news_cast/data/api/repositories/rss_repository.dart';
+import 'package:flutter_news_cast/res/style.dart';
 import 'package:get/get.dart';
 
 import '../../../app/app_controller.dart';
@@ -43,22 +44,10 @@ class HomeController extends BaseController {
   }
 
   void initRssData() async {
-    await _rssRepository.getInitRss().then((value) async {
-      var listFeed = <ListFeedModel>[];
-      await Future.forEach(value, (element) async {
-        print('111111111');
-        var feed = ListFeedModel();
-        feed.feedModel = element;
-        feed.listPost = await getListPostFromFeed(element);
-        listFeed.add(feed);
-      });
-      print('2222222' + listFeed.length.toString());
-      _listFeed$.value = listFeed;
-    });
-  }
-
-  Future<List<PostModel?>> getListPostFromFeed(FeedModel feedModel) async {
-    return await _rssRepository.getPostsByFeeds(feedModel);
+    showLoading();
+    final listRss = await _rssRepository.getInitRss(isRefresh: true);
+    hideLoading();
+    _listFeed$.value = listRss;
   }
 
   void getListBookMark() async {
@@ -67,7 +56,15 @@ class HomeController extends BaseController {
 
   void addBookMark() async {
     if (textAddRssCl.text.isEmpty) return;
-    await _rssRepository.bookmarkFeed(textAddRssCl.text);
+    final isSuccess = await _rssRepository.bookmarkFeed(textAddRssCl.text);
+    textAddRssCl.clear();
+    if (isSuccess) {
+      await _rssRepository.getInitRss().then((value) {
+        _listFeed$.value = value;
+      });
+    } else {
+      showErrors(textLocalization('error.url.exist'));
+    }
   }
 
   void removeBookMark(FeedModel? feedModel) async {
@@ -89,5 +86,11 @@ class HomeController extends BaseController {
                 },
               )
             : null;
+  }
+
+  @override
+  void dispose() {
+    textAddRssCl.dispose();
+    super.dispose();
   }
 }

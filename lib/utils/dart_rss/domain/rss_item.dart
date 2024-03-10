@@ -16,11 +16,14 @@ class RssItem {
     final description = findElementOrNull(element, 'description')?.innerText ?? '';
     var imagePost = null;
     final thumbnail = findElementOrNull(element, 'media:thumbnail');
-    print('RssItem::' + thumbnail.toString());
     if (thumbnail != null) {
       imagePost = AtomThumbnail.parse(findElementOrNull(element, 'media:thumbnail'))?.url ?? '';
     } else if (description.contains('<img src="')) {
-      imagePost = description.substring(description.indexOf('<img src="') + 10, description.indexOf('" /></a>'));
+      if (description.contains('" /></a>')) {
+        imagePost = description.substring(description.indexOf('<img src="') + 10, description.indexOf('" /></a>'));
+      } else {
+        imagePost = description.substring(description.indexOf('<img src="') + 10, description.indexOf('" ></a>'));
+      }
     }
     return RssItem(
       title: findElementOrNull(element, 'title')?.innerText,

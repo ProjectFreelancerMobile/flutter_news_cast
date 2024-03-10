@@ -59,7 +59,7 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                       DTextFromField(
                         keyboardType: TextInputType.text,
                         controller: controller.textAddRssCl,
-                        textStyle: text12.textColorB2B2B2,
+                        textStyle: text12.textColor141414,
                         hintText: textLocalization('feed.url'),
                         strokeColor: Colors.transparent,
                         contentPadding: EdgeInsets.symmetric(horizontal: 16.ws, vertical: 12.ws),

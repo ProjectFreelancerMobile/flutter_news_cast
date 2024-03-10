@@ -4,7 +4,7 @@ part 'feed_model.g.dart';
 
 @collection
 class FeedModel {
-  Id? id = Isar.autoIncrement;
+  Id? id;
   String title;
   String url;
   String description;

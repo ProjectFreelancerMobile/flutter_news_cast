@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/res/style.dart';
-import 'package:flutter_news_cast/ui/main/cast/cast_page.dart';
 
 import '../../ui/base/base_page.dart';
 import '../../ui/main/main_controller.dart';
@@ -10,7 +9,7 @@ import 'settings/settings_page.dart';
 
 //ignore: must_be_immutable
 class MainPage extends BasePage<MainController> {
-  final List<Widget> pages = [HomePage(), CastPage(), SettingsPage()];
+  final List<Widget> pages = [HomePage(), SettingsPage()]; //HomePage(), CastPage(), SettingsPage()
 
   @override
   Widget buildContentView(BuildContext context, MainController controller) {
@@ -30,7 +29,7 @@ class MainPage extends BasePage<MainController> {
           child: Assets.icons.icMenuHome.svg(),
         ),
       ),
-      BottomNavigationBarItem(
+      /*BottomNavigationBarItem(
         label: 'Menu',
         icon: Assets.icons.icMenuCast.svg(),
         activeIcon: Container(
@@ -43,7 +42,7 @@ class MainPage extends BasePage<MainController> {
           ),
           child: Assets.icons.icMenuCast.svg(),
         ),
-      ),
+      ),*/
       BottomNavigationBarItem(
         label: 'Menu',
         icon: Assets.icons.icMenuSetting.svg(),

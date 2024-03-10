@@ -1,12 +1,13 @@
 class ListFeedBookmarkModel {
+  int id;
   String url;
   int rssType;
   String? baseUrl;
 
-  ListFeedBookmarkModel(this.url, this.rssType, {this.baseUrl});
+  ListFeedBookmarkModel(this.id, this.url, this.rssType, {this.baseUrl});
 
   @override
   String toString() {
-    return 'ListFeedBookmarkModel{url: $url, rssType: $rssType, baseUrl:$baseUrl}';
+    return 'ListFeedBookmarkModel{id:$id, url: $url, rssType: $rssType, baseUrl:$baseUrl}';
   }
 }

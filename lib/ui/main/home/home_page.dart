@@ -102,7 +102,7 @@ class HomePage extends BasePage<HomeController> {
                 style: text16.bold.textColor141414,
               ),
             ),
-            TouchableOpacity(child: Assets.icons.icAdd.svg(), onPressed: () => openBottomSheetScanDevice(controller)),
+            TouchableOpacity(child: Assets.icons.icAdd.svg(), onPressed: () => openBottomSheetAddRss(controller)),
           ],
         ),
         Expanded(

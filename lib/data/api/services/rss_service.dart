@@ -10,6 +10,7 @@ import '../../storage/my_storage.dart';
 import '../api_constants.dart';
 import '../models/rss/feed_model.dart';
 import '../models/rss/list_feed_bookmark_model.dart';
+import '../models/rss/list_feed_model.dart';
 import '../models/rss/post_model.dart';
 import 'base_service.dart';
 
@@ -17,49 +18,82 @@ class RSSService extends BaseService {
   final _storage = Get.find<MyStorage>();
   final _isar = Get.find<AppController>().isar;
 
-  Future<List<FeedModel>> getInitRss({isForceReload = false}) async {
-    List<FeedModel> listFeed = [];
-    /*if (await _storage.isInstall() == false || isForceReload) {
+  Future<List<ListFeedModel>> getInitRss({isRefresh = false}) async {
+    List<ListFeedModel> listFeed = [];
+    if (await _storage.isInstall() == false) {
       _storage.saveInstall(true);
-     final listRssDefault = [
-        ListFeedBookmarkModel(RSS_1, RSS_TYPE.RSS.indexValue),
-      ListFeedBookmarkModel(RSS_2, RSS_TYPE.ATOM.indexValue),
-      ListFeedBookmarkModel(RSS_3, RSS_TYPE.RSS.indexValue),
-      ListFeedBookmarkModel(RSS_4, RSS_TYPE.JSON.indexValue),
-      ListFeedBookmarkModel(RSS_5, RSS_TYPE.JSON.indexValue),
-      ListFeedBookmarkModel(RSS_6, RSS_TYPE.RSS.indexValue),
-    ];
+      final listRssDefault = [
+        ListFeedBookmarkModel(0, RSS_1, RSS_TYPE.RSS.indexValue),
+        ListFeedBookmarkModel(1, RSS_2, RSS_TYPE.ATOM.indexValue),
+        ListFeedBookmarkModel(2, RSS_3, RSS_TYPE.RSS.indexValue),
+        ListFeedBookmarkModel(3, RSS_4, RSS_TYPE.JSON.indexValue, baseUrl: BASE_JSON_PARSE),
+        ListFeedBookmarkModel(4, RSS_5, RSS_TYPE.JSON.indexValue, baseUrl: BASE_JSON_PARSE),
+        ListFeedBookmarkModel(5, RSS_6, RSS_TYPE.RSS.indexValue),
+      ];
+      var listFeedLite = <FeedModel>[];
       await Future.forEach(listRssDefault, (element) async {
-        await parseRss(element.url, element.rssType).then((value) {
-          if (value.url.isNotEmpty) {
-            listFeed.add(value);
-          }
+        var feedItemModel = ListFeedModel();
+        await parseRss(element).then((value) async {
+          listFeedLite.add(value);
+          feedItemModel.feedModel = value;
+          await fetchPostFromFeed(value);
+          feedItemModel.listPost = await getPostsByFeeds(value);
         });
+        listFeed.add(feedItemModel);
       });
-      print('listRssDefault000::${listFeed.length}');
-      saveListFeed(listFeed);
-    } else {
-      await getFeeds().then((value) {
-        if (value.isNotEmpty) {
-          listFeed.addAll(value);
-        } else {
-          getInitRss(isForceReload: true);
+      print('00000000000');
+      saveListFeed(listFeedLite);
+    } else if (isRefresh) {
+      var listFeedLite = <FeedModel>[];
+      await Future.forEach(await getFeedsDB(), (element) async {
+        if (element.feedModel != null) {
+          var feedItemModel = ListFeedModel();
+          await parseRss(ListFeedBookmarkModel(
+            element.feedModel?.id ?? 0,
+            element.feedModel?.url ?? '',
+            element.feedModel?.rssType ?? RSS_TYPE.RSS.indexValue,
+          )).then((value) async {
+            listFeedLite.add(value);
+            feedItemModel.feedModel = value;
+            await fetchPostFromFeed(value);
+            feedItemModel.listPost = await getPostsByFeeds(value);
+          });
+          listFeed.add(feedItemModel);
         }
       });
-      print('listRssDefault111::${listFeed.length}');
-    }*/
-    final listRssDefault = [
-      ListFeedBookmarkModel(RSS_4, RSS_TYPE.JSON.indexValue, baseUrl: BASE_JSON_PARSE),
-    ];
-    await Future.forEach(listRssDefault, (element) async {
-      await parseRss(element).then((value) {
-        listFeed.add(value);
+      print('11111111111');
+    } else {
+      await getFeedsDB().then((value) {
+        listFeed.addAll(value);
       });
+      print('22222222222');
+    }
+    print('listFeed:::::${listFeed.length}');
+    return listFeed;
+  }
+
+  Future<List<ListFeedModel>> getInitRssCloud({isForceReload = false}) async {
+    List<ListFeedModel> listFeed = [];
+    final listRssDefault = [
+      // ListFeedBookmarkModel(0, RSS_1, RSS_TYPE.RSS.indexValue),
+      // ListFeedBookmarkModel(1, RSS_2, RSS_TYPE.ATOM.indexValue),
+      // ListFeedBookmarkModel(2, RSS_3, RSS_TYPE.RSS.indexValue),
+      // ListFeedBookmarkModel(3, RSS_4, RSS_TYPE.JSON.indexValue, baseUrl: BASE_JSON_PARSE),
+      // ListFeedBookmarkModel(4, RSS_5, RSS_TYPE.JSON.indexValue, baseUrl: BASE_JSON_PARSE),
+      // ListFeedBookmarkModel(5, RSS_6, RSS_TYPE.RSS.indexValue),
+      ListFeedBookmarkModel(6, 'https://vnexpress.net/rss/tin-moi-nhat.rss', RSS_TYPE.RSS.indexValue),
+    ];
+    var listFeedLite = <FeedModel>[];
+    await Future.forEach(listRssDefault, (element) async {
+      var feedItemModel = ListFeedModel();
+      await parseRss(element).then((value) async {
+        listFeedLite.add(value);
+        feedItemModel.feedModel = value;
+        await fetchPostFromFeed(value);
+      });
+      feedItemModel.listPost = await getPostsByListFeeds(listFeedLite);
+      listFeed.add(feedItemModel);
     });
-    /*WebFeed.fromUrl(RSS_3).then((value) {
-      print('value::::' + value.toString());
-    });*/
-    print('listFeed::' + listFeed.length.toString());
     return listFeed;
   }
 
@@ -76,6 +110,7 @@ class RSSService extends BaseService {
           final RssFeed rssFeed = RssFeed.parse(response);
           feedTitle = rssFeed.title;
           return FeedModel(
+            id: feedModel.id,
             title: feedTitle ?? '',
             url: feedModel.url,
             description: rssFeed.description ?? '',
@@ -87,6 +122,7 @@ class RSSService extends BaseService {
         case RSS_TYPE.ATOM:
           final AtomFeed atomFeed = AtomFeed.parse(response);
           return FeedModel(
+            id: feedModel.id,
             title: atomFeed.title ?? '',
             url: feedModel.url,
             description: atomFeed.subtitle ?? '',
@@ -97,9 +133,23 @@ class RSSService extends BaseService {
           );
         case RSS_TYPE.JSON:
           return FeedModel(
+            id: feedModel.id,
             title: feedTitle ?? '',
             url: feedModel.url,
             description: '',
+            category: categoryName,
+            fullText: false,
+            rssType: feedModel.rssType,
+            baseUrl: feedModel.baseUrl,
+          );
+        default:
+          final RssFeed rssFeed = RssFeed.parse(response);
+          feedTitle = rssFeed.title;
+          return FeedModel(
+            id: feedModel.id,
+            title: feedTitle ?? '',
+            url: feedModel.url,
+            description: rssFeed.description ?? '',
             category: categoryName,
             fullText: false,
             rssType: feedModel.rssType,
@@ -113,6 +163,7 @@ class RSSService extends BaseService {
         'resolveError'.tr,
       );
       return FeedModel(
+        id: feedModel.id,
         title: '',
         url: '',
         description: '',
@@ -130,10 +181,15 @@ class RSSService extends BaseService {
     });
   }
 
-  Future<void> bookmarkFeed(String url) async {
+  Future<bool> bookmarkFeed(String url) async {
+    if (await isExists(url)) {
+      return false;
+    }
     final response = await getWithUrlRss(url);
     RssVersion rssVersion = WebFeed.detectRssVersion(response);
     var rssType = RSS_TYPE.RSS.indexValue;
+    final id = await _isar.feedModels.count() + 1;
+    print('rssVersion::$rssVersion id:$id');
     switch (rssVersion) {
       case RssVersion.atom:
         rssType = RSS_TYPE.ATOM.indexValue;
@@ -148,21 +204,31 @@ class RSSService extends BaseService {
         rssType = RSS_TYPE.JSON.indexValue;
         break;
     }
-    await parseRss(ListFeedBookmarkModel(url, rssType)).then((value) async {
+    print('url::$url rssType:$rssType');
+    await parseRss(ListFeedBookmarkModel(id, url, rssType)).then((value) async {
       await _isar.writeTxn(() async {
         await _isar.feedModels.put(value);
       });
+      await fetchPostFromFeed(value);
     });
+    return true;
   }
 
-  Future<FeedModel?> isExists(String url) async {
+  Future<bool> isExists(String url) async {
     final FeedModel? result = await _isar.feedModels.where().filter().urlEqualTo(url).findFirst();
-    return result;
+    return result != null;
   }
 
-  Future<List<FeedModel>> getFeeds() async {
+  Future<List<ListFeedModel>> getFeedsDB() async {
+    var listFeed = <ListFeedModel>[];
     final List<FeedModel> feeds = await _isar.feedModels.where().findAll();
-    return feeds;
+    await Future.forEach(feeds, (element) async {
+      var feed = ListFeedModel();
+      feed.feedModel = element;
+      feed.listPost = await getPostsByFeeds(element);
+      listFeed.add(feed);
+    });
+    return listFeed;
   }
 
   Future<DateTime?> getLatesPubDate(FeedModel feed) async {
@@ -225,6 +291,17 @@ class RSSService extends BaseService {
           List<Future> futures = [];
           await Future.forEach(jsonFeed.list ?? List.empty(), (element) async {
             futures.add(_parseJsonPostItem(element, feedModel, baseUrl: feedModel.baseUrl));
+          });
+          await Future.wait(futures);
+          return true;
+        default:
+          RssFeed rssFeed = RssFeed.parse(response);
+          List<Future> futures = [];
+          await Future.forEach(rssFeed.items, (element) async {
+            if (!(_parsePubDate(element.pubDate).isAfter(feedLastUpdated ?? DateTime(0)))) {
+              return;
+            }
+            futures.add(_parseRSSPostItem(element, feedModel));
           });
           await Future.wait(futures);
           return true;

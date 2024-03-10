@@ -15,7 +15,7 @@ abstract class BaseController<C> extends GetxController {
     2. Hiển thị thông báo dạng popup
     3.Hiển thị thông báo dạng Snackbar
     */
-  int get typeViewNoti => 1;
+  int get typeViewNoti => 3;
 
   @override
   void onInit() async {

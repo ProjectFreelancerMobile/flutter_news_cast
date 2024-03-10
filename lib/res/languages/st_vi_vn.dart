@@ -100,4 +100,5 @@ final Map<String, String> viVN = {
   'settings.remove.ads': 'Remove Ads Forever',
   'settings.restore.ads': 'Restore In-app Purchases',
   'setting.error.connect': 'Không có internet. Vui lòng kiểm tra lại kết nối mạng của bạn',
+  'error.url.exist': 'Địa chỉ này đã tồn tại!',
 };
