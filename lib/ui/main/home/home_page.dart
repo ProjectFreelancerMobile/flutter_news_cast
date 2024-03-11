@@ -104,6 +104,7 @@ class HomePage extends BasePage<HomeController> {
             TouchableOpacity(child: Assets.icons.icAdd.svg(), onPressed: () => openBottomSheetAddRss(controller)),
           ],
         ),
+        SizedBox(height: 16.ws),
         Expanded(
           child: SingleChildScrollView(
             child: Column(
@@ -120,9 +121,7 @@ class HomePage extends BasePage<HomeController> {
   Widget buildListPostFromFeed(BuildContext context, FeedModel? feedModel, List<PostModel?>? listPost) {
     return Container(
       width: Get.width,
-      height: 200.ws,
-      margin: EdgeInsets.only(top: 12.ws),
-      padding: EdgeInsets.symmetric(vertical: 10.ws),
+      height: 195.ws,
       child: Column(
         children: [
           Row(

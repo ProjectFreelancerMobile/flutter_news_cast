@@ -18,12 +18,15 @@ class RssItem {
     final thumbnail = findElementOrNull(element, 'media:thumbnail');
     if (thumbnail != null) {
       imagePost = AtomThumbnail.parse(findElementOrNull(element, 'media:thumbnail'))?.url ?? '';
-    } else if (description.contains('<img src="')) {
+    } else if (description.contains('<img src=')) {
       if (description.contains('" /></a>')) {
-        imagePost = description.substring(description.indexOf('<img src="') + 10, description.indexOf('" /></a>'));
+        imagePost = description.substring(description.indexOf('<img src="') + 10, description.indexOf('" /></a>')); // Thanh Nien
+      } else if (description.contains('" ></a>')) {
+        imagePost = description.substring(description.indexOf('<img src="') + 10, description.indexOf('" ></a>')); //Vnexpress
       } else {
-        imagePost = description.substring(description.indexOf('<img src="') + 10, description.indexOf('" ></a>'));
+        imagePost = description.substring(description.indexOf('<img src=') + 10, description.indexOf('\'/></a>')); //Dan tri
       }
+      //print('imagePost::' + imagePost);
     }
     return RssItem(
       title: findElementOrNull(element, 'title')?.innerText,
