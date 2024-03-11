@@ -77,6 +77,11 @@ android {
             minifyEnabled true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "FEDo(${defaultConfig.versionName})_release.apk"
+                }
+            }
         }
         debug {
             signingConfig signingConfigs.debug
@@ -89,5 +94,4 @@ flutter {
 }
 
 dependencies {
-    implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
 }
