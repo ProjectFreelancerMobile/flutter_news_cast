@@ -43,7 +43,7 @@ class RssController extends BaseController {
   @override
   void onInit() async {
     super.onInit();
-    _isHasBookmark$.value = postRss?.favorite ?? false;
+    _isHasBookmark$.value = await getBookMark();
     pullToRefreshController = kIsWeb
         ? null
         : PullToRefreshController(
@@ -78,5 +78,10 @@ class RssController extends BaseController {
   void updatePost() {
     if (postRss == null) return;
     _rssRepository.updatePostStatus(postRss!, readTime: DateTime.now());
+  }
+
+  Future<bool> getBookMark() {
+    if (postRss == null) return Future.value(false);
+    return _rssRepository.getBookmark(postRss!);
   }
 }

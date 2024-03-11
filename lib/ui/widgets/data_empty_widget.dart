@@ -12,7 +12,7 @@ class DataEmptyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      color: background ?? getColor().bgThemeColorWhite,
+      color: background ?? getColor().background,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

@@ -25,6 +25,8 @@ class FeedRecentItemView extends StatelessWidget {
         trailingActions: <SwipeAction>[
           SwipeAction(
             title: textLocalization('home.delete'),
+            style: text12.textColorWhite,
+            widthSpace: 60.ws,
             onTap: (CompletionHandler handler) async {
               if (onPressedRemove != null) {
                 onPressedRemove!();
@@ -34,7 +36,7 @@ class FeedRecentItemView extends StatelessWidget {
           ),
         ],
         child: Padding(
-          padding: const EdgeInsets.only(top: 12),
+          padding: const EdgeInsets.only(top: 12, right: 12),
           child: Row(
             children: [
               Assets.icons.icGoogle.image(),

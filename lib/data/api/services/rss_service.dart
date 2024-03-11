@@ -377,6 +377,10 @@ class RSSService extends BaseService {
     return await _isar.postModels.where().findAll();
   }
 
+  Future<PostModel?> getPosts(PostModel postModel) async {
+    return await _isar.postModels.where().filter().idEqualTo(postModel.id).findFirst();
+  }
+
   Future<List<PostModel>> getPostsByListFeeds(List<FeedModel> feeds) async {
     final List<PostModel> result = [];
     for (final FeedModel feed in feeds) {
@@ -399,7 +403,7 @@ class RSSService extends BaseService {
   }
 
   Future<void> updatePostStatus(PostModel post, {DateTime? readTime, bool? bookMark}) async {
-    post.readDate = readTime ?? post.readDate;
+    post.readDate = readTime;
     post.favorite = bookMark ?? post.favorite;
     await savePost(post);
   }
