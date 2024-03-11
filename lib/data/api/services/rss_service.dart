@@ -26,8 +26,8 @@ class RSSService extends BaseService {
         ListFeedBookmarkModel(0, RSS_1, RSS_TYPE.RSS.indexValue),
         ListFeedBookmarkModel(1, RSS_2, RSS_TYPE.ATOM.indexValue),
         ListFeedBookmarkModel(2, RSS_3, RSS_TYPE.RSS.indexValue),
-        ListFeedBookmarkModel(3, RSS_4, RSS_TYPE.JSON.indexValue, baseUrl: BASE_JSON_PARSE),
-        ListFeedBookmarkModel(4, RSS_5, RSS_TYPE.JSON.indexValue, baseUrl: BASE_JSON_PARSE),
+        ListFeedBookmarkModel(3, RSS_4, RSS_TYPE.JSON.indexValue, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE),
+        ListFeedBookmarkModel(4, RSS_5, RSS_TYPE.JSON.indexValue, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE),
         ListFeedBookmarkModel(5, RSS_6, RSS_TYPE.RSS.indexValue),
       ];
       await Future.forEach(listRssDefault, (element) async {
@@ -122,6 +122,7 @@ class RSSService extends BaseService {
           await saveFeed(feedItemModel.feedModel, feedItemModel.listPost);
           return feedItemModel;
         case RSS_TYPE.JSON:
+          feedTitle = feedModel.title;
           final feedSyncModel = FeedModel(
             id: feedModel.id,
             title: feedTitle ?? '',
