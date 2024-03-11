@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:get/get.dart';
 
 import '../../../res/style.dart';
 import '../../base/base_page.dart';
@@ -9,6 +10,9 @@ import 'rss_controller.dart';
 
 //ignore: must_be_immutable
 class RssPage extends BasePage<RssController> {
+  @override
+  String? get tag => Get.arguments?['id']?.toString();
+
   @override
   Widget buildContentView(BuildContext context, RssController controller) {
     return Scaffold(

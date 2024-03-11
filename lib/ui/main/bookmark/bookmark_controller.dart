@@ -40,10 +40,10 @@ class BookmarkController extends BaseController {
   void deleteBookmark(PostModel? postModel) async {
     if (postModel == null) return;
     if (isBookmark) {
-      await _rssRepository.updatePostStatus(postModel, bookMark: false);
+      await _rssRepository.updatePostStatus(postModel, bookMark: false, readTime: postModel.readDate);
       _listPost$.value = await Get.find<HomeController>().getListBookMark();
     } else {
-      await _rssRepository.updatePostStatus(postModel, readTime: null);
+      await _rssRepository.updatePostStatus(postModel, bookMark: postModel.favorite, readTime: null);
       getListRecent();
     }
   }

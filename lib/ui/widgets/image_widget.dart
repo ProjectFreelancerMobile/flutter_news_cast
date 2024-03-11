@@ -32,7 +32,7 @@ class RoundNetworkImage extends StatelessWidget {
           height: height,
           width: width,
           decoration: BoxDecoration(
-            borderRadius: new BorderRadius.all(Radius.circular(radius ?? 0)),
+            borderRadius: BorderRadius.all(Radius.circular(radius ?? 0)),
             border: Border.all(color: strokeColor ?? Colors.transparent, width: strokeWidth ?? 0),
             image: DecorationImage(
               image: imageProvider,
@@ -42,12 +42,7 @@ class RoundNetworkImage extends StatelessWidget {
         ),
         placeholder: (context, url) => ImageShimmer(width: width, height: height),
         errorWidget: (context, url, error) => showImageError!
-            ? Image.asset(
-                DImages.error,
-                width: width,
-                height: height,
-                fit: boxFit ?? BoxFit.cover,
-              )
+            ? Assets.images.imgDefault.image(width: width, height: height, fit: BoxFit.contain)
             : ImageShimmer(
                 width: width,
                 height: height,

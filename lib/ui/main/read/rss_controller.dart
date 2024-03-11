@@ -15,7 +15,7 @@ class RssController extends BaseController {
   final _mainController = Get.find<MainController>();
   final _rssRepository = Get.find<RssRepository>();
   final _appController = Get.find<AppController>();
-  final postRss = Get.arguments as PostModel?;
+  final postRss = Get.arguments?['item'] as PostModel?;
   final GlobalKey webViewKey = GlobalKey();
   InAppWebViewController? webViewController;
   InAppWebViewSettings settings = InAppWebViewSettings(
@@ -43,6 +43,7 @@ class RssController extends BaseController {
   @override
   void onInit() async {
     super.onInit();
+    print('RssController:::' + postRss.toString());
     _isHasBookmark$.value = await getBookMark();
     pullToRefreshController = kIsWeb
         ? null
@@ -59,7 +60,7 @@ class RssController extends BaseController {
             },
           );
     updatePost();
-    Future.delayed(Duration(milliseconds: 500), () {
+    Future.delayed(Duration(milliseconds: 200), () {
       webViewController?.loadUrl(urlRequest: URLRequest(url: WebUri(postRss?.link ?? '')));
     });
   }
@@ -71,7 +72,7 @@ class RssController extends BaseController {
   void saveBookMark() {
     if (postRss == null) return;
     updateStateBookmark();
-    _rssRepository.updatePostStatus(postRss!, bookMark: isHasBookmark);
+    _rssRepository.updatePostStatus(postRss!, bookMark: isHasBookmark, readTime: DateTime.now());
     Get.find<HomeController>().getListBookMark();
   }
 

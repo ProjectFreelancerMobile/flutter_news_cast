@@ -15,6 +15,7 @@ class ListBookmarkPage extends BasePage<BookmarkController> {
   @override
   Widget buildContentView(BuildContext context, BookmarkController controller) {
     return ScaffoldBase(
+      offMarginVertical: true,
       appBar: DefaultAppbar(
         title: controller.isBookmark ? textLocalization('home.bookmarks') : textLocalization('home.recents'),
         appBarStyle: AppBarStyle.BACK,

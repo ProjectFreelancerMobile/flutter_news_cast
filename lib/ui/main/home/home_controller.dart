@@ -91,6 +91,12 @@ class HomeController extends BaseController {
             : null;
   }
 
+  void deleteBookmark(PostModel? postModel) async {
+    if (postModel == null) return;
+    await _rssRepository.updatePostStatus(postModel, bookMark: false, readTime: postModel.readDate);
+    await getListBookMark();
+  }
+
   @override
   void dispose() {
     textAddRssCl.dispose();

@@ -3,13 +3,13 @@
 ///  FlutterGen
 /// *****************************************************
 
-import 'package:flutter/services.dart';
 // coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/services.dart';
 
 class $AssetsFontsGen {
   const $AssetsFontsGen();
@@ -141,6 +141,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/avatar_default.jpeg
   AssetGenImage get avatarDefault => const AssetGenImage('assets/images/avatar_default.jpeg');
 
+  /// File path: assets/images/img_default.webp
+  AssetGenImage get imgDefault => const AssetGenImage('assets/images/img_default.webp');
+
   /// File path: assets/images/img_error.jpg
   AssetGenImage get imgError => const AssetGenImage('assets/images/img_error.jpg');
 
@@ -148,7 +151,7 @@ class $AssetsImagesGen {
   AssetGenImage get imgIcEmpty => const AssetGenImage('assets/images/img_ic_empty.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [avatarDefault, imgError, imgIcEmpty];
+  List<AssetGenImage> get values => [avatarDefault, imgDefault, imgError, imgIcEmpty];
 }
 
 class $AssetsJsonGen {

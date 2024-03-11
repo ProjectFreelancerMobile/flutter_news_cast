@@ -79,7 +79,7 @@ class HomePage extends BasePage<HomeController> {
               url: item.image ?? '',
               content: item.title ?? '',
               onPressed: () => Get.toNamed(AppRoutes.READ_RSS, arguments: item),
-              onPressedRemove: () {},
+              onPressedRemove: () => controller.deleteBookmark(item),
             );
           },
           itemCount: controller.listBookmark.length > 5 ? 5 : controller.listBookmark.length,
@@ -120,7 +120,7 @@ class HomePage extends BasePage<HomeController> {
   Widget buildListPostFromFeed(BuildContext context, FeedModel? feedModel, List<PostModel?>? listPost) {
     return Container(
       width: Get.width,
-      height: 170.ws,
+      height: 200.ws,
       margin: EdgeInsets.only(top: 12.ws),
       padding: EdgeInsets.symmetric(vertical: 10.ws),
       child: Column(
@@ -194,9 +194,10 @@ class HomePage extends BasePage<HomeController> {
                 return FeedItemView(
                   url: item?.image ?? '',
                   content: item?.title ?? '',
-                  onPressed: () {
-                    Get.toNamed(AppRoutes.READ_RSS, arguments: item);
-                  },
+                  onPressed: () => Get.toNamed(AppRoutes.READ_RSS, arguments: {
+                    'id': item?.id,
+                    'item': item,
+                  }),
                 );
               },
               itemCount: listPost?.length,

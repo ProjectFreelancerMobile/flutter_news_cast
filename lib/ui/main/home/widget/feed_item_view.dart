@@ -18,14 +18,14 @@ class FeedItemView extends StatelessWidget {
       onPressed: onPressed,
       child: Container(
         width: 180.ws,
-        height: 100.ws,
+        height: 120.ws,
         margin: EdgeInsets.only(right: 10.ws),
         child: Column(
           children: [
-            PhotoViewNetworkImage(
+            RoundNetworkImage(
               url: url,
               width: 180.ws,
-              height: 76.ws,
+              height: 100.ws,
             ),
             SizedBox(height: 6.ws),
             Text(
