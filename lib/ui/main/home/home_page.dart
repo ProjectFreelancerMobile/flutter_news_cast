@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_news_cast/app/app_pages.dart';
 import 'package:flutter_news_cast/data/api/models/rss/feed_model.dart';
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
@@ -8,8 +10,6 @@ import 'package:flutter_news_cast/ui/main/home/widget/feed_recent_item_view.dart
 import 'package:flutter_news_cast/ui/widgets/base_scaffold_widget.dart';
 import 'package:get/get.dart';
 
-import '../../../data/api/api_constants.dart';
-import '../../../utils/data_util.dart';
 import '../../base/base_page.dart';
 import '../../widgets/button/touchable_opacity.dart';
 import '../../widgets/dialogs/app_dialog.dart';
@@ -37,10 +37,8 @@ class HomePage extends BasePage<HomeController> {
             ],
           ),
           SizedBox(height: 12.ws),
-          Expanded(
-            flex: 1,
-            child: buildListFeedRecent(),
-          ),
+          buildListFeedBookMark(),
+          SizedBox(height: 24.ws),
           Expanded(
             flex: 3,
             child: buildListFeed(context),
@@ -50,7 +48,7 @@ class HomePage extends BasePage<HomeController> {
     );
   }
 
-  Widget buildListFeedRecent() {
+  Widget buildListFeedBookMark() {
     return Column(
       children: [
         TouchableOpacity(
@@ -71,21 +69,20 @@ class HomePage extends BasePage<HomeController> {
             ],
           ),
         ),
-        SizedBox(height: 10.ws),
-        Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              final item = controller.listBookmark[index];
-              return FeedRecentItemView(
-                url: item.image ?? '',
-                content: item.title ?? '',
-                onPressed: () => Get.toNamed(AppRoutes.READ_RSS, arguments: item),
-              );
-            },
-            itemCount: controller.listBookmark.length > 5 ? 5 : controller.listBookmark.length,
-          ),
+        SizedBox(height: 8.ws),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            final item = controller.listBookmark[index];
+            return FeedRecentItemView(
+              url: item.image ?? '',
+              content: item.title ?? '',
+              onPressed: () => Get.toNamed(AppRoutes.READ_RSS, arguments: item),
+              onPressedRemove: () {},
+            );
+          },
+          itemCount: controller.listBookmark.length > 5 ? 5 : controller.listBookmark.length,
         ),
       ],
     );
@@ -158,6 +155,18 @@ class HomePage extends BasePage<HomeController> {
                     context: context,
                     title: textLocalization('dialog.delete.learn'),
                     description: textLocalization('dialog.undone.action'),
+                    type: DialogType.TWO_ACTION,
+                    cancelText: textLocalization('dialog.cancel'),
+                    okText: textLocalization('dialog.delete'),
+                    onOkPressed: () {
+                      controller.deleteRssFeed(feedModel);
+                    },
+                    onCancelPressed: () {},
+                  ).show();
+                  /*AppDialog(
+                    context: context,
+                    title: textLocalization('dialog.delete.learn'),
+                    description: textLocalization('dialog.undone.action'),
                     type: DialogType.THREE_ACTION,
                     cancelText: textLocalization('dialog.cancel'),
                     okText: textLocalization('dialog.delete'),
@@ -169,7 +178,7 @@ class HomePage extends BasePage<HomeController> {
                     onMidPressed: () {
                       launchOpenUrl(Uri.parse(LEARN_MORE_URL));
                     },
-                  ).show();
+                  ).show();*/
                 },
               ),
             ],

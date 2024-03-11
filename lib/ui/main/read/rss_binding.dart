@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'rss_controller.dart';
 
+import 'rss_controller.dart';
 
 class RssBinding extends Bindings {
   @override

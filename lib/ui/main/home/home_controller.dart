@@ -45,13 +45,14 @@ class HomeController extends BaseController {
     _listFeed$.value = listRss;
   }
 
-  void getListBookMark() async {
+  Future<List<PostModel>> getListBookMark() async {
     _listBookmark$.value = await _rssRepository.getListBookmark();
+    return listBookmark;
   }
 
-  void addBookMark() async {
+  void saveRssFeed() async {
     if (textAddRssCl.text.isEmpty) return;
-    final isSuccess = await _rssRepository.bookmarkFeed(textAddRssCl.text);
+    final isSuccess = await _rssRepository.saveRssFeed(textAddRssCl.text);
     textAddRssCl.clear();
     if (isSuccess) {
       await _rssRepository.getInitRss().then((value) {
@@ -62,9 +63,9 @@ class HomeController extends BaseController {
     }
   }
 
-  void removeBookMark(FeedModel? feedModel) async {
+  void deleteRssFeed(FeedModel? feedModel) async {
     if (feedModel == null) return;
-    final isSuccess = await _rssRepository.deleteBookmark(feedModel);
+    final isSuccess = await _rssRepository.deleteRssFeed(feedModel);
     if (isSuccess) {
       await _rssRepository.getInitRss().then((value) {
         _listFeed$.value = value;

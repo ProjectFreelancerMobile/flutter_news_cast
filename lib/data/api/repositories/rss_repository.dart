@@ -26,11 +26,11 @@ class RssRepository extends BaseRepository {
     return await _rssService.getListRecent();
   }
 
-  Future<bool> deleteBookmark(FeedModel feedModel) async {
-    return await _rssService.deleteBookmark(feedModel);
+  Future<bool> deleteRssFeed(FeedModel feedModel) async {
+    return await _rssService.deleteRssFeed(feedModel);
   }
 
-  Future<bool> bookmarkFeed(String url) async {
-    return await _rssService.bookmarkFeed(url);
+  Future<bool> saveRssFeed(String url) async {
+    return await _rssService.saveRssFeed(url);
   }
 }

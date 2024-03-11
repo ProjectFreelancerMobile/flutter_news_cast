@@ -170,7 +170,7 @@ class RSSService extends BaseService {
     });
   }
 
-  Future<bool> bookmarkFeed(String url) async {
+  Future<bool> saveRssFeed(String url) async {
     if (await isExists(url)) {
       return false;
     }
@@ -199,14 +199,7 @@ class RSSService extends BaseService {
     return true;
   }
 
-  Future<void> deleteBookmark1(FeedModel feed) async {
-    await deletePostsByFeed(feed);
-    await _isar.writeTxn(() async {
-      await _isar.feedModels.delete(feed.id!);
-    });
-  }
-
-  Future<bool> deleteBookmark(FeedModel feed) async {
+  Future<bool> deleteRssFeed(FeedModel feed) async {
     await deletePostsByFeed(feed);
     await _isar.writeTxn(() async {
       await _isar.feedModels.delete(feed.id!);

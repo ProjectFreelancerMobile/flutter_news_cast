@@ -1,6 +1,5 @@
-import 'package:xml/xml.dart';
-
 import 'package:flutter_news_cast/utils/dart_rss/util/helpers.dart';
+import 'package:xml/xml.dart';
 
 class RssItunesOwner {
   static RssItunesOwner? parse(XmlElement? element) {

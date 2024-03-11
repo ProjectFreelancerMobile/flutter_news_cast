@@ -6,13 +6,6 @@ export 'domain/atom_link.dart';
 export 'domain/atom_person.dart';
 export 'domain/atom_source.dart';
 export 'domain/dart_rss.dart';
-export 'domain/rss_category.dart';
-export 'domain/rss_cloud.dart';
-export 'domain/rss_feed.dart';
-export 'domain/rss_image.dart';
-export 'domain/rss_item.dart';
-export 'domain/rss_source.dart';
-
 // Podcasts
 export 'domain/podcast_index/rss_podcast_index.dart';
 export 'domain/podcast_index/rss_podcast_index_alternate_enclosure.dart';
@@ -26,3 +19,9 @@ export 'domain/podcast_index/rss_podcast_index_person.dart';
 export 'domain/podcast_index/rss_podcast_index_soudbite.dart';
 export 'domain/podcast_index/rss_podcast_index_transcript.dart';
 export 'domain/podcast_index/rss_podcast_live_item_images.dart';
+export 'domain/rss_category.dart';
+export 'domain/rss_cloud.dart';
+export 'domain/rss_feed.dart';
+export 'domain/rss_image.dart';
+export 'domain/rss_item.dart';
+export 'domain/rss_source.dart';

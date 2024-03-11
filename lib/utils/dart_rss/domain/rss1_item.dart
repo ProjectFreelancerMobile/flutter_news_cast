@@ -1,8 +1,7 @@
+import 'package:flutter_news_cast/utils/dart_rss/domain/dublin_core/dublin_core.dart';
 import 'package:flutter_news_cast/utils/dart_rss/domain/rss_content.dart';
 import 'package:flutter_news_cast/utils/dart_rss/util/helpers.dart';
 import 'package:xml/xml.dart';
-
-import 'package:flutter_news_cast/utils/dart_rss/domain/dublin_core/dublin_core.dart';
 
 class Rss1Item {
   factory Rss1Item.parse(XmlElement element) {

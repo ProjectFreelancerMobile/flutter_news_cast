@@ -72,7 +72,7 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                       CustomButton(
                         text: textLocalization('feed.add'),
                         onPressed: () {
-                          controller.addBookMark();
+                          controller.saveRssFeed();
                           Get.back();
                         },
                         isEnable: true,

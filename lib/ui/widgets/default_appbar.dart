@@ -14,30 +14,46 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String? leading;
   final Color? leadingColor;
   final List<Widget>? actions;
+  final bool? isLeft;
   final double? height;
   AppBarStyle? appBarStyle = AppBarStyle.NONE;
 
   final VoidCallback? onPress;
   final PreferredSizeWidget? tabBar;
 
-  DefaultAppbar({this.leading, this.title, this.style, this.color, this.actions, this.height, this.leadingColor, this.onPress, this.tabBar, this.appBarStyle = AppBarStyle.NONE});
+  DefaultAppbar({
+    this.leading,
+    this.title,
+    this.style,
+    this.color,
+    this.actions,
+    this.height,
+    this.leadingColor,
+    this.onPress,
+    this.tabBar,
+    this.appBarStyle = AppBarStyle.NONE,
+    this.isLeft = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
       preferredSize: preferredSize,
-      child: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        actions: actions,
-        leading: buildWidgetLeading(appBarStyle, leading),
-        title: Text(
-          title ?? "",
-          style: style ?? text16.bold.textColor141414,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 10.0),
+        child: AppBar(
+          centerTitle: isLeft == true ? false : true,
+          automaticallyImplyLeading: false,
+          actions: actions,
+          leading: buildWidgetLeading(appBarStyle, leading),
+          title: Text(
+            title ?? "",
+            style: style ?? text16.bold.textColor141414,
+          ),
+          backgroundColor: color ?? colorBackground,
+          elevation: 0,
+          bottom: tabBar,
         ),
-        backgroundColor: color ?? colorBackground,
-        elevation: 0,
-        bottom: tabBar,
       ),
     );
   }

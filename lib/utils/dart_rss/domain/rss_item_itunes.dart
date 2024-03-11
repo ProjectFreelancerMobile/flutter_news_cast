@@ -1,9 +1,8 @@
-import 'package:flutter_news_cast/utils/dart_rss/util/helpers.dart';
-import 'package:xml/xml.dart';
-
 import 'package:flutter_news_cast/utils/dart_rss/domain/rss_itunes_category.dart';
 import 'package:flutter_news_cast/utils/dart_rss/domain/rss_itunes_episode_type.dart';
 import 'package:flutter_news_cast/utils/dart_rss/domain/rss_itunes_image.dart';
+import 'package:flutter_news_cast/utils/dart_rss/util/helpers.dart';
+import 'package:xml/xml.dart';
 
 class RssItemItunes {
   factory RssItemItunes.parse(XmlElement element) {
@@ -23,12 +22,7 @@ class RssItemItunes {
       summary: findElementOrNull(element, 'itunes:summary')?.innerText.trim(),
       explicit: parseBoolLiteral(element, 'itunes:explicit'),
       subtitle: findElementOrNull(element, 'itunes:subtitle')?.innerText.trim(),
-      keywords: findElementOrNull(element, 'itunes:keywords')
-              ?.innerText
-              .split(',')
-              .map((keyword) => keyword.trim())
-              .toList() ??
-          const <String>[],
+      keywords: findElementOrNull(element, 'itunes:keywords')?.innerText.split(',').map((keyword) => keyword.trim()).toList() ?? const <String>[],
       image: RssItunesImage.parse(findElementOrNull(element, 'itunes:image')),
       category: RssItunesCategory.parse(
         findElementOrNull(element, 'itunes:category'),

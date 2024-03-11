@@ -18,6 +18,7 @@ class ListBookmarkPage extends BasePage<BookmarkController> {
       appBar: DefaultAppbar(
         title: controller.isBookmark ? textLocalization('home.bookmarks') : textLocalization('home.recents'),
         appBarStyle: AppBarStyle.BACK,
+        isLeft: true,
       ),
       body: buildListBookmark(),
     );
@@ -33,6 +34,7 @@ class ListBookmarkPage extends BasePage<BookmarkController> {
                 url: item?.image ?? '',
                 content: item?.title ?? '',
                 onPressed: () => Get.toNamed(AppRoutes.READ_RSS, arguments: item),
+                onPressedRemove: () => controller.deleteBookmark(item),
               );
             },
             itemCount: controller.listPost.length,

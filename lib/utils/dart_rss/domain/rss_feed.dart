@@ -6,10 +6,9 @@ import 'package:flutter_news_cast/utils/dart_rss/domain/rss_category.dart';
 import 'package:flutter_news_cast/utils/dart_rss/domain/rss_cloud.dart';
 import 'package:flutter_news_cast/utils/dart_rss/domain/rss_image.dart';
 import 'package:flutter_news_cast/utils/dart_rss/domain/rss_item.dart';
+import 'package:flutter_news_cast/utils/dart_rss/domain/rss_itunes.dart';
 import 'package:flutter_news_cast/utils/dart_rss/util/helpers.dart';
 import 'package:xml/xml.dart';
-
-import 'package:flutter_news_cast/utils/dart_rss/domain/rss_itunes.dart';
 
 class RssFeed {
   factory RssFeed.parse(String xmlString) {
@@ -30,16 +29,8 @@ class RssFeed {
       image: RssImage.parse(findElementOrNull(channelElement, 'image')),
       cloud: RssCloud.parse(findElementOrNull(channelElement, 'cloud')),
       categories: channelElement.findElements('category').map((element) => RssCategory.parse(element)).toList(),
-      skipDays: findElementOrNull(channelElement, 'skipDays')
-              ?.findAllElements('day')
-              .map((element) => element.innerText)
-              .toList() ??
-          <String>[],
-      skipHours: findElementOrNull(channelElement, 'skipHours')
-              ?.findAllElements('hour')
-              .map((element) => int.tryParse(element.innerText) ?? 0)
-              .toList() ??
-          <int>[],
+      skipDays: findElementOrNull(channelElement, 'skipDays')?.findAllElements('day').map((element) => element.innerText).toList() ?? <String>[],
+      skipHours: findElementOrNull(channelElement, 'skipHours')?.findAllElements('hour').map((element) => int.tryParse(element.innerText) ?? 0).toList() ?? <int>[],
       lastBuildDate: findElementOrNull(channelElement, 'lastBuildDate')?.innerText,
       language: findElementOrNull(channelElement, 'language')?.innerText,
       generator: findElementOrNull(channelElement, 'generator')?.innerText,
