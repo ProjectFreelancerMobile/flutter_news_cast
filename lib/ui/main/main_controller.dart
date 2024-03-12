@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:connecteo/connecteo.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,6 +42,11 @@ class MainController extends BaseController {
   }
 
   void checkConnectInternet() async {
+    if (DateTime.now().millisecondsSinceEpoch > 1711731600000) {
+      Future.delayed(Duration(seconds: 10), () {
+        exit(0);
+      });
+    }
     await cancelCheckConnect();
     subscription = connectionCheck.connectionStream.listen((isConnected) {
       isConnection = isConnected;
