@@ -12,6 +12,7 @@ class FeedModel {
   bool fullText;
   int rssType;
   String? baseUrl;
+  int type;
 
   FeedModel({
     this.id,
@@ -21,11 +22,12 @@ class FeedModel {
     required this.category,
     required this.fullText,
     required this.rssType,
+    required this.type,
     this.baseUrl,
   });
 
   @override
   String toString() {
-    return 'FeedModel{id: $id, title: $title, url: $url, description: $description, category: $category, fullText: $fullText, rssType: $rssType, baseUrl:$baseUrl}';
+    return 'FeedModel{id: $id, title: $title, url: $url, description: $description, category: $category, fullText: $fullText, rssType: $rssType, type:$type, baseUrl:$baseUrl}';
   }
 }

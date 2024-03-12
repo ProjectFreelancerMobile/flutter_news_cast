@@ -23,12 +23,12 @@ class RSSService extends BaseService {
     if (await _storage.isInstall() == false) {
       _storage.saveInstall(true);
       final listRssDefault = [
-        ListFeedBookmarkModel(0, RSS_1, RSS_TYPE.RSS.indexValue),
-        ListFeedBookmarkModel(1, RSS_2, RSS_TYPE.ATOM.indexValue),
-        ListFeedBookmarkModel(2, RSS_3, RSS_TYPE.RSS.indexValue),
-        ListFeedBookmarkModel(3, RSS_4, RSS_TYPE.JSON.indexValue, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE),
-        ListFeedBookmarkModel(4, RSS_5, RSS_TYPE.JSON.indexValue, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE),
-        ListFeedBookmarkModel(5, RSS_6, RSS_TYPE.RSS.indexValue),
+        ListFeedBookmarkModel(0, RSS_1, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.THANHNIEN),
+        ListFeedBookmarkModel(1, RSS_2, RSS_TYPE.ATOM.indexValue, type: RSS_TITLE.YOUTUBE),
+        ListFeedBookmarkModel(2, RSS_3, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.VIMEO),
+        ListFeedBookmarkModel(3, RSS_4, RSS_TYPE.JSON.indexValue, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE, type: RSS_TITLE.DAILYMOTION),
+        ListFeedBookmarkModel(4, RSS_5, RSS_TYPE.JSON.indexValue, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE, type: RSS_TITLE.DAILYMOTION),
+        ListFeedBookmarkModel(5, RSS_6, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.THEXIFFY),
       ];
       await Future.forEach(listRssDefault, (element) async {
         await parseRss(element).then((value) async {
@@ -100,6 +100,7 @@ class RSSService extends BaseService {
             fullText: false,
             rssType: feedModel.rssType,
             baseUrl: feedModel.baseUrl,
+            type: feedModel.type.indexTitleValue,
           );
           feedItemModel.feedModel = feedSyncModel;
           feedItemModel.listPost = await fetchPostFromFeed(response, feedSyncModel);
@@ -116,6 +117,7 @@ class RSSService extends BaseService {
             fullText: false,
             rssType: feedModel.rssType,
             baseUrl: feedModel.baseUrl,
+            type: feedModel.type.indexTitleValue,
           );
           feedItemModel.feedModel = feedSyncModel;
           feedItemModel.listPost = await fetchPostFromFeed(response, feedSyncModel);
@@ -132,6 +134,7 @@ class RSSService extends BaseService {
             fullText: false,
             rssType: feedModel.rssType,
             baseUrl: feedModel.baseUrl,
+            type: feedModel.type.indexTitleValue,
           );
           feedItemModel.feedModel = feedSyncModel;
           feedItemModel.listPost = await fetchPostFromFeed(response, feedSyncModel);
@@ -149,6 +152,7 @@ class RSSService extends BaseService {
             fullText: false,
             rssType: feedModel.rssType,
             baseUrl: feedModel.baseUrl,
+            type: feedModel.type.indexTitleValue,
           );
           feedItemModel.feedModel = feedSyncModel;
           feedItemModel.listPost = await fetchPostFromFeed(response, feedSyncModel);

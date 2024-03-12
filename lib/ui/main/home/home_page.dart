@@ -10,6 +10,7 @@ import 'package:flutter_news_cast/ui/main/home/widget/feed_recent_item_view.dart
 import 'package:flutter_news_cast/ui/widgets/base_scaffold_widget.dart';
 import 'package:get/get.dart';
 
+import '../../../data/storage/key_constant.dart';
 import '../../base/base_page.dart';
 import '../../widgets/button/touchable_opacity.dart';
 import '../../widgets/dialogs/app_dialog.dart';
@@ -21,6 +22,7 @@ class HomePage extends BasePage<HomeController> {
   @override
   Widget buildContentView(BuildContext context, HomeController controller) {
     return ScaffoldBase(
+      isHome: true,
       body: Column(
         children: [
           Row(
@@ -29,7 +31,12 @@ class HomePage extends BasePage<HomeController> {
               SizedBox(),
               Text(textLocalization('home.title').toUpperCase(), style: text24.bold.textColor141414),
               TouchableOpacity(
-                child: Assets.icons.icRecent.svg(),
+                child: Row(
+                  children: [
+                    Assets.icons.icRecent.svg(),
+                    SizedBox(width: 16.ws),
+                  ],
+                ),
                 onPressed: () {
                   Get.toNamed(AppRoutes.LIST_BOOKMARK, arguments: false);
                 },
@@ -49,42 +56,46 @@ class HomePage extends BasePage<HomeController> {
   }
 
   Widget buildListFeedBookMark() {
-    return Column(
-      children: [
-        TouchableOpacity(
-          onPressed: () {
-            Get.toNamed(AppRoutes.LIST_BOOKMARK, arguments: true);
-          },
-          child: Row(
-            children: [
-              Assets.icons.icHomeBookmark.svg(),
-              SizedBox(width: 16.ws),
-              Expanded(
-                child: Text(
-                  textLocalization('home.bookmarks'),
-                  style: text16.bold.textColor141414,
+    return Padding(
+      padding: EdgeInsets.only(right: 16.ws),
+      child: Column(
+        children: [
+          TouchableOpacity(
+            onPressed: () {
+              Get.toNamed(AppRoutes.LIST_BOOKMARK, arguments: true);
+            },
+            child: Row(
+              children: [
+                Assets.icons.icHomeBookmark.svg(),
+                SizedBox(width: 16.ws),
+                Expanded(
+                  child: Text(
+                    textLocalization('home.bookmarks'),
+                    style: text16.bold.textColor141414,
+                  ),
                 ),
-              ),
-              Assets.icons.icSettingsNext.svg(),
-            ],
+                Assets.icons.icSettingsNext.svg(),
+              ],
+            ),
           ),
-        ),
-        SizedBox(height: 8.ws),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            final item = controller.listBookmark[index];
-            return FeedRecentItemView(
-              url: item.image ?? '',
-              content: item.title ?? '',
-              onPressed: () => Get.toNamed(AppRoutes.READ_RSS, arguments: item),
-              onPressedRemove: () => controller.deleteBookmark(item),
-            );
-          },
-          itemCount: controller.listBookmark.length > 5 ? 5 : controller.listBookmark.length,
-        ),
-      ],
+          SizedBox(height: 8.ws),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final item = controller.listBookmark[index];
+              return FeedRecentItemView(
+                type: item.feed.value?.type ?? RSS_TITLE.GOOGLE.indexTitleValue,
+                url: item.image ?? '',
+                content: item.title ?? '',
+                onPressed: () => Get.toNamed(AppRoutes.READ_RSS, arguments: item),
+                onPressedRemove: () => controller.deleteBookmark(item),
+              );
+            },
+            itemCount: controller.listBookmark.length > 5 ? 5 : controller.listBookmark.length,
+          ),
+        ],
+      ),
     );
   }
 
@@ -102,6 +113,7 @@ class HomePage extends BasePage<HomeController> {
               ),
             ),
             TouchableOpacity(child: Assets.icons.icAdd.svg(), onPressed: () => openBottomSheetAddRss(controller)),
+            SizedBox(width: 16.ws),
           ],
         ),
         SizedBox(height: 16.ws),
@@ -180,6 +192,7 @@ class HomePage extends BasePage<HomeController> {
                   ).show();*/
                 },
               ),
+              SizedBox(width: 16.ws),
             ],
           ),
           SizedBox(height: 10.ws),

@@ -10,6 +10,8 @@ enum SWITCH_TYPE { BLOCK_ADS, PLUGIN, NOTI }
 
 enum RSS_TYPE { RSS, ATOM, JSON, UNKNOWN }
 
+enum RSS_TITLE { THANHNIEN, YOUTUBE, VIMEO, DAILYMOTION, THEXIFFY, GOOGLE }
+
 extension StatusTypeExt on STATUS_TYPE {
   String get name {
     switch (this) {
@@ -49,6 +51,44 @@ extension RssTypeExt on num {
         return RSS_TYPE.RSS;
       default:
         return RSS_TYPE.RSS;
+    }
+  }
+}
+
+extension RssTitleExt on RSS_TITLE {
+  int get indexTitleValue {
+    switch (this) {
+      case RSS_TITLE.THANHNIEN:
+        return 0;
+      case RSS_TITLE.YOUTUBE:
+        return 1;
+      case RSS_TITLE.VIMEO:
+        return 2;
+      case RSS_TITLE.DAILYMOTION:
+        return 3;
+      case RSS_TITLE.THEXIFFY:
+        return 4;
+      default:
+        return 5;
+    }
+  }
+}
+
+extension RssTitleIntExt on num {
+  RSS_TITLE get typeTitle {
+    switch (this) {
+      case 0:
+        return RSS_TITLE.THANHNIEN;
+      case 1:
+        return RSS_TITLE.YOUTUBE;
+      case 2:
+        return RSS_TITLE.VIMEO;
+      case 3:
+        return RSS_TITLE.DAILYMOTION;
+      case 4:
+        return RSS_TITLE.THEXIFFY;
+      default:
+        return RSS_TITLE.YOUTUBE;
     }
   }
 }

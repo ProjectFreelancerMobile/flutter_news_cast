@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_news_cast/data/storage/key_constant.dart';
 import 'package:flutter_news_cast/res/style.dart';
 import 'package:flutter_news_cast/ui/widgets/button/touchable_opacity.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
 
 class FeedRecentItemView extends StatelessWidget {
+  final int type;
   final String url;
   final String content;
   final VoidCallback? onPressed;
   final VoidCallback? onPressedRemove;
 
   FeedRecentItemView({
+    required this.type,
     required this.url,
     required this.content,
     required this.onPressed,
@@ -39,7 +42,11 @@ class FeedRecentItemView extends StatelessWidget {
           padding: const EdgeInsets.only(top: 12, right: 12),
           child: Row(
             children: [
-              Assets.icons.icGoogle.image(),
+              SizedBox(
+                height: 20.ws,
+                width: 20.ws,
+                child: buildIcon(type.typeTitle),
+              ),
               SizedBox(width: 16.ws),
               Expanded(
                 child: Text(
@@ -55,5 +62,22 @@ class FeedRecentItemView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget buildIcon(RSS_TITLE type) {
+    switch (type) {
+      case RSS_TITLE.THANHNIEN:
+        return Assets.icons.icThanhnien.image();
+      case RSS_TITLE.YOUTUBE:
+        return Assets.icons.icYoutube.image();
+      case RSS_TITLE.VIMEO:
+        return Assets.icons.icVimeo.image();
+      case RSS_TITLE.DAILYMOTION:
+        return Assets.icons.icDailymotion.image();
+      case RSS_TITLE.THEXIFFY:
+        return Assets.icons.icThexiffy.image();
+      default:
+        return Assets.icons.icGoogle.image();
+    }
   }
 }

@@ -47,8 +47,13 @@ const FeedModelSchema = CollectionSchema(
       name: r'title',
       type: IsarType.string,
     ),
-    r'url': PropertySchema(
+    r'type': PropertySchema(
       id: 6,
+      name: r'type',
+      type: IsarType.long,
+    ),
+    r'url': PropertySchema(
+      id: 7,
       name: r'url',
       type: IsarType.string,
     )
@@ -98,7 +103,8 @@ void _feedModelSerialize(
   writer.writeBool(offsets[3], object.fullText);
   writer.writeLong(offsets[4], object.rssType);
   writer.writeString(offsets[5], object.title);
-  writer.writeString(offsets[6], object.url);
+  writer.writeLong(offsets[6], object.type);
+  writer.writeString(offsets[7], object.url);
 }
 
 FeedModel _feedModelDeserialize(
@@ -115,7 +121,8 @@ FeedModel _feedModelDeserialize(
     id: id,
     rssType: reader.readLong(offsets[4]),
     title: reader.readString(offsets[5]),
-    url: reader.readString(offsets[6]),
+    type: reader.readLong(offsets[6]),
+    url: reader.readString(offsets[7]),
   );
   return object;
 }
@@ -140,6 +147,8 @@ P _feedModelDeserializeProp<P>(
     case 5:
       return (reader.readString(offset)) as P;
     case 6:
+      return (reader.readLong(offset)) as P;
+    case 7:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -911,6 +920,59 @@ extension FeedModelQueryFilter
     });
   }
 
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> typeEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'type',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> typeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'type',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> typeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'type',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> typeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'type',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> urlEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1121,6 +1183,18 @@ extension FeedModelQuerySortBy on QueryBuilder<FeedModel, FeedModel, QSortBy> {
     });
   }
 
+  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> sortByType() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'type', Sort.asc);
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> sortByTypeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'type', Sort.desc);
+    });
+  }
+
   QueryBuilder<FeedModel, FeedModel, QAfterSortBy> sortByUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'url', Sort.asc);
@@ -1220,6 +1294,18 @@ extension FeedModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> thenByType() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'type', Sort.asc);
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> thenByTypeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'type', Sort.desc);
+    });
+  }
+
   QueryBuilder<FeedModel, FeedModel, QAfterSortBy> thenByUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'url', Sort.asc);
@@ -1275,6 +1361,12 @@ extension FeedModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<FeedModel, FeedModel, QDistinct> distinctByType() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'type');
+    });
+  }
+
   QueryBuilder<FeedModel, FeedModel, QDistinct> distinctByUrl(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1324,6 +1416,12 @@ extension FeedModelQueryProperty
   QueryBuilder<FeedModel, String, QQueryOperations> titleProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'title');
+    });
+  }
+
+  QueryBuilder<FeedModel, int, QQueryOperations> typeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'type');
     });
   }
 

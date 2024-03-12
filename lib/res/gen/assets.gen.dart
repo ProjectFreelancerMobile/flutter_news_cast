@@ -48,8 +48,11 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_cast.svg
   SvgGenImage get icCast => const SvgGenImage('assets/icons/ic_cast.svg');
 
-  /// File path: assets/icons/ic_dailymotion.svg
-  SvgGenImage get icDailymotion => const SvgGenImage('assets/icons/ic_dailymotion.svg');
+  /// File path: assets/icons/ic_dailymotion.png
+  AssetGenImage get icDailymotion => const AssetGenImage('assets/icons/ic_dailymotion.png');
+
+  /// File path: assets/icons/ic_dailymotion_text.svg
+  SvgGenImage get icDailymotionText => const SvgGenImage('assets/icons/ic_dailymotion_text.svg');
 
   /// File path: assets/icons/ic_delete.svg
   SvgGenImage get icDelete => const SvgGenImage('assets/icons/ic_delete.svg');
@@ -99,11 +102,23 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_settings_next.svg
   SvgGenImage get icSettingsNext => const SvgGenImage('assets/icons/ic_settings_next.svg');
 
-  /// File path: assets/icons/ic_vimeo.svg
-  SvgGenImage get icVimeo => const SvgGenImage('assets/icons/ic_vimeo.svg');
+  /// File path: assets/icons/ic_thanhnien.png
+  AssetGenImage get icThanhnien => const AssetGenImage('assets/icons/ic_thanhnien.png');
 
-  /// File path: assets/icons/ic_youtube.svg
-  SvgGenImage get icYoutube => const SvgGenImage('assets/icons/ic_youtube.svg');
+  /// File path: assets/icons/ic_thexiffy.png
+  AssetGenImage get icThexiffy => const AssetGenImage('assets/icons/ic_thexiffy.png');
+
+  /// File path: assets/icons/ic_vimeo.png
+  AssetGenImage get icVimeo => const AssetGenImage('assets/icons/ic_vimeo.png');
+
+  /// File path: assets/icons/ic_vimeo_text.svg
+  SvgGenImage get icVimeoText => const SvgGenImage('assets/icons/ic_vimeo_text.svg');
+
+  /// File path: assets/icons/ic_youtube.png
+  AssetGenImage get icYoutube => const AssetGenImage('assets/icons/ic_youtube.png');
+
+  /// File path: assets/icons/ic_youtube_text.svg
+  SvgGenImage get icYoutubeText => const SvgGenImage('assets/icons/ic_youtube_text.svg');
 
   /// List of all assets
   List<dynamic> get values => [
@@ -114,6 +129,7 @@ class $AssetsIconsGen {
         icCancel,
         icCast,
         icDailymotion,
+        icDailymotionText,
         icDelete,
         icFeed,
         icFeedBig,
@@ -130,8 +146,12 @@ class $AssetsIconsGen {
         icRefresh,
         icRemove,
         icSettingsNext,
+        icThanhnien,
+        icThexiffy,
         icVimeo,
-        icYoutube
+        icVimeoText,
+        icYoutube,
+        icYoutubeText
       ];
 }
 

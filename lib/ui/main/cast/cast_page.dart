@@ -43,7 +43,7 @@ class CastPage extends BasePage<CastController> {
                   ),
                 ),
                 IconButton(onPressed: () {}, icon: Assets.icons.icBookmark.svg(height: 22.ws)),
-                IconButton(onPressed: () {}, icon: Assets.icons.icCast.svg(height: 22.ws)),
+                // IconButton(onPressed: () {}, icon: Assets.icons.icCast.svg(height: 22.ws)),
               ],
             ),
           ),

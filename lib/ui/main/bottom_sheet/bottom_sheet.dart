@@ -92,9 +92,9 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                   SizedBox(height: 8.ws),
                   Row(
                     children: [
-                      Assets.icons.icYoutube.svg(),
-                      Assets.icons.icVimeo.svg(),
-                      Assets.icons.icDailymotion.svg(),
+                      Assets.icons.icYoutubeText.svg(),
+                      Assets.icons.icVimeoText.svg(),
+                      Assets.icons.icDailymotionText.svg(),
                     ],
                   ),
                 ],

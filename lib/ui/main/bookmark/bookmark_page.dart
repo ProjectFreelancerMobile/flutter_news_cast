@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_news_cast/data/storage/key_constant.dart';
 import 'package:flutter_news_cast/ui/widgets/base_scaffold_widget.dart';
 import 'package:flutter_news_cast/ui/widgets/data_empty_widget.dart';
 import 'package:get/get.dart';
@@ -32,6 +33,7 @@ class ListBookmarkPage extends BasePage<BookmarkController> {
             itemBuilder: (context, index) {
               final item = controller.listPost[index];
               return FeedRecentItemView(
+                type: item?.feed.value?.type ?? RSS_TITLE.GOOGLE.indexTitleValue,
                 url: item?.image ?? '',
                 content: item?.title ?? '',
                 onPressed: () => Get.toNamed(AppRoutes.READ_RSS, arguments: item),

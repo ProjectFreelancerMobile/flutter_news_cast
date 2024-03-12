@@ -16,7 +16,13 @@ class CastController extends BaseController {
   bool get isShowScreenError => false;
   final GlobalKey webViewKey = GlobalKey();
   InAppWebViewController? webViewController;
-  InAppWebViewSettings settings = InAppWebViewSettings(isInspectable: false, mediaPlaybackRequiresUserGesture: false, allowsInlineMediaPlayback: true, iframeAllowFullscreen: true);
+  InAppWebViewSettings settings = InAppWebViewSettings(
+    isInspectable: false,
+    mediaPlaybackRequiresUserGesture: false,
+    allowsInlineMediaPlayback: true,
+    iframeAllowFullscreen: true,
+    transparentBackground: true,
+  );
   PullToRefreshController? pullToRefreshController;
 
   @override
