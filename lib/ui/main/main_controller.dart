@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:connecteo/connecteo.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_news_cast/ui/main/cast/cast_controller.dart';
 import 'package:get/get.dart';
 
 import '../../data/api/api_constants.dart';
@@ -22,6 +23,12 @@ class MainController extends BaseController {
   onTabChanged(int index) {
     pageController.jumpToPage(index);
     pageIndex.value = index;
+  }
+
+  onTabChangedCast() {
+    pageController.jumpToPage(1);
+    pageIndex.value = 1;
+    Get.find<CastController>().initUrlCast();
   }
 
   @override

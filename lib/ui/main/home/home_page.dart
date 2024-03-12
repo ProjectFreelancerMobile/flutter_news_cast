@@ -88,7 +88,13 @@ class HomePage extends BasePage<HomeController> {
                 type: item.feed.value?.type ?? RSS_TITLE.GOOGLE.indexTitleValue,
                 url: item.image ?? '',
                 content: item.title ?? '',
-                onPressed: () => Get.toNamed(AppRoutes.READ_RSS, arguments: item),
+                onPressed: () {
+                  if (item.isUrlCast == true) {
+                    controller.navigationCast(item.link);
+                  } else {
+                    Get.toNamed(AppRoutes.READ_RSS, arguments: item);
+                  }
+                },
                 onPressedRemove: () => controller.deleteBookmark(item),
               );
             },

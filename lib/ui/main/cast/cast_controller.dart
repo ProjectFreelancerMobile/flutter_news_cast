@@ -2,12 +2,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
 import 'package:get/get.dart';
 
+import '../../../data/api/api_constants.dart';
+import '../../../data/api/repositories/rss_repository.dart';
 import '../../base/base_controller.dart';
 import '../../widgets/debound_util.dart';
+import '../home/home_controller.dart';
 
 class CastController extends BaseController {
+  final _rssRepository = Get.find<RssRepository>();
   TextEditingController textSearchCl = TextEditingController();
 
   bool get isShowScreenError => false;
@@ -24,6 +29,9 @@ class CastController extends BaseController {
 
   bool get isHasLoadWeb => _isHasLoadWeb$.value;
   var _isHasLoadWeb$ = false.obs;
+
+  bool get isHasBookmark => _isHasBookmark$.value;
+  var _isHasBookmark$ = false.obs;
 
   @override
   void onClose() {
@@ -44,6 +52,16 @@ class CastController extends BaseController {
               await reloadWeb();
             },
           );
+  }
+
+  void initUrlCast() {
+    print('urlCast:::' + urlCast.toString());
+    _isHasBookmark$.value = urlCast.isNotEmpty;
+    if (urlCast.isNotEmpty) {
+      textSearchCl.text = urlCast;
+      commitURL(textSearchCl.text);
+      urlCast = '';
+    }
   }
 
   Future<void> reloadWeb() async {
@@ -85,6 +103,26 @@ class CastController extends BaseController {
     //   textSearchCl.clear();
     // else
     //   await reloadWeb();
+  }
+
+  void saveBookMark() {
+    if (textSearchCl.text.isEmpty) return;
+    _isHasBookmark$.value = !isHasBookmark;
+    _rssRepository.updatePostStatus(
+      PostModel(
+        title: textSearchCl.text,
+        link: textSearchCl.text,
+        image: '',
+        content: textSearchCl.text,
+        pubDate: DateTime.now(),
+        favorite: true,
+        fullText: false,
+        isUrlCast: true,
+      ),
+      bookMark: isHasBookmark,
+      readTime: null,
+    );
+    Get.find<HomeController>().getListBookMark();
   }
 
   String? validatorURL(String fieldName) {

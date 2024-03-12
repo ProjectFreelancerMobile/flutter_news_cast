@@ -11,6 +11,7 @@ const MIN_YEAR_OLD_USED_APP = 18;
 const PAGE_SIZE = 30;
 const BASE_URL_DEV = "https://12121.urvega.com/";
 var isConnection = true;
+var urlCast = '';
 
 //RSS
 const RSS_1 = "https://tuoitre.vn/rss/tin-moi-nhat.rss"; //Rss

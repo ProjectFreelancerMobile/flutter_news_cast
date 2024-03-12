@@ -386,7 +386,11 @@ class RSSService extends BaseService {
   }
 
   Future<PostModel?> getPosts(PostModel postModel) async {
-    return await _isar.postModels.where().filter().idEqualTo(postModel.id).findFirst();
+    if (postModel.isUrlCast) {
+      return await _isar.postModels.where().filter().linkContains(postModel.link).findFirst();
+    } else {
+      return await _isar.postModels.where().filter().idEqualTo(postModel.id).findFirst();
+    }
   }
 
   Future<List<PostModel>> getPostsByListFeeds(List<FeedModel> feeds) async {

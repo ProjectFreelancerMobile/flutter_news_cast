@@ -15,10 +15,12 @@ class PostModel {
   DateTime? readDate;
   bool favorite;
   bool fullText;
+  bool isUrlCast;
 
   PostModel({
     this.id,
     this.readDate,
+    this.isUrlCast = false,
     required this.title,
     required this.link,
     required this.image,
@@ -30,7 +32,6 @@ class PostModel {
 
   @override
   String toString() {
-    return 'PostModel{id: $id, feed: $feed, title: $title, link: $link, image:$image, content: $content, pubDate: $pubDate, readDate: $readDate, favorite: $favorite, fullText: $fullText}';
+    return 'PostModel{id: $id, feed: $feed, title: $title, link: $link, readDate: $readDate, favorite: $favorite, isUrlCast: $isUrlCast}';
   }
-
 }

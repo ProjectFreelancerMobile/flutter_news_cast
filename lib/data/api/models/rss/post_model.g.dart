@@ -37,23 +37,28 @@ const PostModelSchema = CollectionSchema(
       name: r'image',
       type: IsarType.string,
     ),
-    r'link': PropertySchema(
+    r'isUrlCast': PropertySchema(
       id: 4,
+      name: r'isUrlCast',
+      type: IsarType.bool,
+    ),
+    r'link': PropertySchema(
+      id: 5,
       name: r'link',
       type: IsarType.string,
     ),
     r'pubDate': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'pubDate',
       type: IsarType.dateTime,
     ),
     r'readDate': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'readDate',
       type: IsarType.dateTime,
     ),
     r'title': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'title',
       type: IsarType.string,
     )
@@ -102,10 +107,11 @@ void _postModelSerialize(
   writer.writeBool(offsets[1], object.favorite);
   writer.writeBool(offsets[2], object.fullText);
   writer.writeString(offsets[3], object.image);
-  writer.writeString(offsets[4], object.link);
-  writer.writeDateTime(offsets[5], object.pubDate);
-  writer.writeDateTime(offsets[6], object.readDate);
-  writer.writeString(offsets[7], object.title);
+  writer.writeBool(offsets[4], object.isUrlCast);
+  writer.writeString(offsets[5], object.link);
+  writer.writeDateTime(offsets[6], object.pubDate);
+  writer.writeDateTime(offsets[7], object.readDate);
+  writer.writeString(offsets[8], object.title);
 }
 
 PostModel _postModelDeserialize(
@@ -120,10 +126,11 @@ PostModel _postModelDeserialize(
     fullText: reader.readBool(offsets[2]),
     id: id,
     image: reader.readString(offsets[3]),
-    link: reader.readString(offsets[4]),
-    pubDate: reader.readDateTime(offsets[5]),
-    readDate: reader.readDateTimeOrNull(offsets[6]),
-    title: reader.readString(offsets[7]),
+    isUrlCast: reader.readBoolOrNull(offsets[4]) ?? false,
+    link: reader.readString(offsets[5]),
+    pubDate: reader.readDateTime(offsets[6]),
+    readDate: reader.readDateTimeOrNull(offsets[7]),
+    title: reader.readString(offsets[8]),
   );
   return object;
 }
@@ -144,12 +151,14 @@ P _postModelDeserializeProp<P>(
     case 3:
       return (reader.readString(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 5:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 6:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 7:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 8:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -594,6 +603,16 @@ extension PostModelQueryFilter
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'image',
         value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> isUrlCastEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isUrlCast',
+        value: value,
       ));
     });
   }
@@ -1050,6 +1069,18 @@ extension PostModelQuerySortBy on QueryBuilder<PostModel, PostModel, QSortBy> {
     });
   }
 
+  QueryBuilder<PostModel, PostModel, QAfterSortBy> sortByIsUrlCast() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isUrlCast', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterSortBy> sortByIsUrlCastDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isUrlCast', Sort.desc);
+    });
+  }
+
   QueryBuilder<PostModel, PostModel, QAfterSortBy> sortByLink() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'link', Sort.asc);
@@ -1161,6 +1192,18 @@ extension PostModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<PostModel, PostModel, QAfterSortBy> thenByIsUrlCast() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isUrlCast', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterSortBy> thenByIsUrlCastDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isUrlCast', Sort.desc);
+    });
+  }
+
   QueryBuilder<PostModel, PostModel, QAfterSortBy> thenByLink() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'link', Sort.asc);
@@ -1238,6 +1281,12 @@ extension PostModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<PostModel, PostModel, QDistinct> distinctByIsUrlCast() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isUrlCast');
+    });
+  }
+
   QueryBuilder<PostModel, PostModel, QDistinct> distinctByLink(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1294,6 +1343,12 @@ extension PostModelQueryProperty
   QueryBuilder<PostModel, String, QQueryOperations> imageProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'image');
+    });
+  }
+
+  QueryBuilder<PostModel, bool, QQueryOperations> isUrlCastProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isUrlCast');
     });
   }
 

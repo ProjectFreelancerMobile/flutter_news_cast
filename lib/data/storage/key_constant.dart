@@ -88,7 +88,7 @@ extension RssTitleIntExt on num {
       case 4:
         return RSS_TITLE.THEXIFFY;
       default:
-        return RSS_TITLE.YOUTUBE;
+        return RSS_TITLE.GOOGLE;
     }
   }
 }

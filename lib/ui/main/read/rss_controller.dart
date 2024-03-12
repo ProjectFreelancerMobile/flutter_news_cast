@@ -7,14 +7,10 @@ import 'package:flutter_news_cast/data/api/repositories/rss_repository.dart';
 import 'package:flutter_news_cast/ui/main/home/home_controller.dart';
 import 'package:get/get.dart';
 
-import '../../../app/app_controller.dart';
 import '../../base/base_controller.dart';
-import '../main_controller.dart';
 
 class RssController extends BaseController {
-  final _mainController = Get.find<MainController>();
   final _rssRepository = Get.find<RssRepository>();
-  final _appController = Get.find<AppController>();
   final postRss = Get.arguments?['item'] as PostModel?;
   final GlobalKey webViewKey = GlobalKey();
   InAppWebViewController? webViewController;

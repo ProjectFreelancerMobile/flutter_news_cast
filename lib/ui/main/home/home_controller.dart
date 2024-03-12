@@ -7,6 +7,7 @@ import 'package:flutter_news_cast/res/style.dart';
 import 'package:get/get.dart';
 
 import '../../../app/app_controller.dart';
+import '../../../data/api/api_constants.dart';
 import '../../../data/api/models/rss/list_feed_model.dart';
 import '../../base/base_controller.dart';
 import '../main_controller.dart';
@@ -95,6 +96,11 @@ class HomeController extends BaseController {
     if (postModel == null) return;
     await _rssRepository.updatePostStatus(postModel, bookMark: false, readTime: postModel.readDate);
     await getListBookMark();
+  }
+
+  void navigationCast(String? url) {
+    urlCast = url ?? '';
+    _mainController.onTabChangedCast();
   }
 
   @override

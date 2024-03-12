@@ -3,7 +3,7 @@ import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
 import 'package:flutter_news_cast/data/api/repositories/rss_repository.dart';
 import 'package:get/get.dart';
 
-import '../../../app/app_controller.dart';
+import '../../../data/api/api_constants.dart';
 import '../../base/base_controller.dart';
 import '../home/home_controller.dart';
 import '../main_controller.dart';
@@ -11,7 +11,6 @@ import '../main_controller.dart';
 class BookmarkController extends BaseController {
   final _mainController = Get.find<MainController>();
   final _rssRepository = Get.find<RssRepository>();
-  final _appController = Get.find<AppController>();
   final isBookmark = Get.arguments as bool;
 
   List<PostModel?> get listPost => _listPost$.value;
@@ -46,5 +45,11 @@ class BookmarkController extends BaseController {
       await _rssRepository.updatePostStatus(postModel, bookMark: postModel.favorite, readTime: null);
       getListRecent();
     }
+  }
+
+  void navigationCast(String? url) {
+    urlCast = url ?? '';
+    Get.back();
+    _mainController.onTabChangedCast();
   }
 }

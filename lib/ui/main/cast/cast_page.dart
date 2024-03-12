@@ -53,7 +53,12 @@ class CastPage extends BasePage<CastController> {
                     },
                   ),
                 ),
-                IconButton(onPressed: () {}, icon: Assets.icons.icBookmark.svg(height: 22.ws)),
+                IconButton(
+                  onPressed: () {
+                    controller.saveBookMark();
+                  },
+                  icon: controller.isHasBookmark ? Icon(Icons.bookmark) : Assets.icons.icBookmark.svg(),
+                ),
                 // IconButton(onPressed: () {}, icon: Assets.icons.icCast.svg(height: 22.ws)),
               ],
             ),
