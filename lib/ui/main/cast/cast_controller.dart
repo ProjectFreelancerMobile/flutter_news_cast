@@ -8,9 +8,6 @@ import '../../base/base_controller.dart';
 import '../../widgets/debound_util.dart';
 
 class CastController extends BaseController {
-  // final _mainController = Get.find<MainController>();
-  // final _deviceRepository = Get.find<DeviceRepository>();
-  // final _appController = Get.find<AppController>();
   TextEditingController textSearchCl = TextEditingController();
 
   bool get isShowScreenError => false;
@@ -24,6 +21,9 @@ class CastController extends BaseController {
     transparentBackground: true,
   );
   PullToRefreshController? pullToRefreshController;
+
+  bool get isHasLoadWeb => _isHasLoadWeb$.value;
+  var _isHasLoadWeb$ = false.obs;
 
   @override
   void onClose() {
@@ -41,20 +41,50 @@ class CastController extends BaseController {
               color: Colors.blue,
             ),
             onRefresh: () async {
-              if (defaultTargetPlatform == TargetPlatform.android) {
-                webViewController?.reload();
-              } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-                webViewController?.loadUrl(urlRequest: URLRequest(url: await webViewController?.getUrl()));
-              }
+              await reloadWeb();
             },
           );
   }
 
+  Future<void> reloadWeb() async {
+    showLoading();
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      webViewController?.reload();
+    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+      webViewController?.loadUrl(urlRequest: URLRequest(url: await webViewController?.getUrl()));
+    }
+  }
+
   void commitURL(String? url) {
-    DeBouncer.run(() {
-      final urlWeb = url?.contains('http') == true ? (url ?? '') : ('https:///www.${url ?? ''}');
-      webViewController?.loadUrl(urlRequest: URLRequest(url: WebUri(urlWeb)));
-    });
+    print('commitURL:$url');
+    if (url?.isNotEmpty == true) {
+      DeBouncer.run(() {
+        showLoading();
+        final urlWeb = url?.contains('http') == true ? (url ?? '') : ('https:///www.${url ?? ''}');
+        webViewController?.loadUrl(urlRequest: URLRequest(url: WebUri(urlWeb)));
+      });
+    } else {
+      loadWeb(false);
+    }
+  }
+
+  void loadWeb(bool isDone) {
+    print('loadWeb:$isDone');
+    if (textSearchCl.text.isEmpty) {
+      _isHasLoadWeb$.value = false;
+    } else {
+      _isHasLoadWeb$.value = isDone;
+    }
+    if (isDone) hideLoading();
+  }
+
+  void clearOrReload() async {
+    print('clearOrReload');
+    await reloadWeb();
+    // if (isHasLoadWeb)
+    //   textSearchCl.clear();
+    // else
+    //   await reloadWeb();
   }
 
   String? validatorURL(String fieldName) {

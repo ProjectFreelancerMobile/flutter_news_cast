@@ -12,7 +12,7 @@ class DeBouncer {
       timer!.cancel(); // Cancel any previous Timer instance
     }
     timer = Timer(
-      const Duration(milliseconds: Duration.millisecondsPerSecond),
+      const Duration(milliseconds: 1000),
       action, // Schedule the action after a delay
     );
   }

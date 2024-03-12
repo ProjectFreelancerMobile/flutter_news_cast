@@ -3,13 +3,13 @@
 ///  FlutterGen
 /// *****************************************************
 
-import 'package:flutter/services.dart';
 // coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/services.dart';
 
 class $AssetsFontsGen {
   const $AssetsFontsGen();
@@ -47,6 +47,12 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/ic_cast.svg
   SvgGenImage get icCast => const SvgGenImage('assets/icons/ic_cast.svg');
+
+  /// File path: assets/icons/ic_cast_lock.svg
+  SvgGenImage get icCastLock => const SvgGenImage('assets/icons/ic_cast_lock.svg');
+
+  /// File path: assets/icons/ic_cast_replay.svg
+  SvgGenImage get icCastReplay => const SvgGenImage('assets/icons/ic_cast_replay.svg');
 
   /// File path: assets/icons/ic_dailymotion.png
   AssetGenImage get icDailymotion => const AssetGenImage('assets/icons/ic_dailymotion.png');
@@ -128,6 +134,8 @@ class $AssetsIconsGen {
         icBookmark,
         icCancel,
         icCast,
+        icCastLock,
+        icCastReplay,
         icDailymotion,
         icDailymotionText,
         icDelete,

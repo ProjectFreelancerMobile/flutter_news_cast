@@ -22,17 +22,28 @@ class CastPage extends BasePage<CastController> {
               children: [
                 IconButton(onPressed: () => Get.offAllNamed(AppRoutes.MAIN), icon: Icon(Icons.arrow_back_ios_new)),
                 Expanded(
-                  child: ClearTextField(
+                  child: DTextFromField(
                     keyboardType: TextInputType.text,
                     controller: controller.textSearchCl,
-                    textStyle: text12.textColor141414,
+                    textStyle: text14.textColor141414,
                     prefixIcon: Padding(
-                      padding: EdgeInsets.only(left: 10),
-                      child: Icon(Icons.search),
+                      padding: EdgeInsets.only(left: 16.ws),
+                      child: controller.isHasLoadWeb ? Assets.icons.icCastLock.svg() : Icon(Icons.search),
                     ),
+                    suffixIcon: MaterialButton(
+                      onPressed: () {
+                        controller.clearOrReload();
+                      },
+                      height: 24.ws,
+                      minWidth: 24.ws,
+                      padding: EdgeInsets.all(0),
+                      child: controller.isHasLoadWeb ? Assets.icons.icCastReplay.svg() : Assets.icons.icRemove.svg(),
+                    ),
+                    iconContraints: BoxConstraints(maxWidth: 40.ws, maxHeight: 24, minHeight: 24),
                     background: colorSearch,
                     borderRadius: 18,
-                    hint: textLocalization('feed.search.url'),
+                    strokeColor: Colors.transparent,
+                    hintText: textLocalization('feed.search.url'),
                     contentPadding: EdgeInsets.symmetric(horizontal: 2.ws, vertical: 12.ws),
                     onValidated: (val) {
                       return controller.validatorURL('Địa chỉ URL');
@@ -55,7 +66,9 @@ class CastPage extends BasePage<CastController> {
               onWebViewCreated: (controllerWeb) {
                 controller.webViewController = controllerWeb;
               },
-              onLoadStart: (controller, url) {},
+              onLoadStart: (controllerWeb, url) {
+                controller.loadWeb(false);
+              },
               onPermissionRequest: (controller, request) async {
                 return PermissionResponse(resources: request.resources, action: PermissionResponseAction.GRANT);
               },
@@ -70,6 +83,7 @@ class CastPage extends BasePage<CastController> {
               },
               onProgressChanged: (controllerWeb, progress) {
                 if (progress == 100) {
+                  controller.loadWeb(true);
                   controller.pullToRefreshController?.endRefreshing();
                 }
               },

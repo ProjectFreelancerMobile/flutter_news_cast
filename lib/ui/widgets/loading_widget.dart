@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_news_cast/res/style.dart';
 
 class LoadingWidget extends StatefulWidget {
   final double? radius;
@@ -14,6 +15,7 @@ class _LoadingWidgetState extends State<LoadingWidget> {
   Widget build(BuildContext context) {
     return CupertinoActivityIndicator(
       radius: widget.radius!,
+      color: colorFF6F15,
     );
   }
 }

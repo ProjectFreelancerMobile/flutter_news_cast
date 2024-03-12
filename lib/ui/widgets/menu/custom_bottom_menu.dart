@@ -34,7 +34,7 @@ class CustomBottomNenu extends StatelessWidget {
         init: CustomBottomMenuController(),
         builder: (controller) {
           return BottomNavigationBar(
-            elevation: 20,
+            elevation: 0,
             showSelectedLabels: false,
             showUnselectedLabels: false,
             currentIndex: index,
