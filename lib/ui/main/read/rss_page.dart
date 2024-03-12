@@ -35,7 +35,7 @@ class RssPage extends BasePage<RssController> {
         onWebViewCreated: (controllerWeb) {
           controller.webViewController = controllerWeb;
         },
-        onLoadStart: (controller, url) {},
+        onLoadStart: (controllerWeb, url) {},
         shouldInterceptRequest: (controller, request) async {
           print("request $request");
           return null;
@@ -54,6 +54,7 @@ class RssPage extends BasePage<RssController> {
         },
         onProgressChanged: (controllerWeb, progress) {
           if (progress == 100) {
+            controller.showLoadingRss(false);
             controller.pullToRefreshController?.endRefreshing();
           }
         },

@@ -44,6 +44,7 @@ class RssController extends BaseController {
   void onInit() async {
     super.onInit();
     print('RssController:::' + postRss.toString());
+    showLoadingRss(true);
     _isHasBookmark$.value = await getBookMark();
     pullToRefreshController = kIsWeb
         ? null
@@ -63,6 +64,13 @@ class RssController extends BaseController {
     Future.delayed(Duration(milliseconds: 200), () {
       webViewController?.loadUrl(urlRequest: URLRequest(url: WebUri(postRss?.link ?? '')));
     });
+  }
+
+  void showLoadingRss(bool isShow) {
+    if (isShow)
+      showLoading();
+    else
+      hideLoading();
   }
 
   void updateStateBookmark() {

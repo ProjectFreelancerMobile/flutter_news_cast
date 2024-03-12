@@ -74,6 +74,9 @@ class RSSService extends BaseService {
           element.feedModel?.id ?? 0,
           element.feedModel?.url ?? '',
           element.feedModel?.rssType ?? RSS_TYPE.RSS.indexValue,
+          title: element.feedModel?.title,
+          baseUrl: element.feedModel?.baseUrl,
+          type: element.feedModel?.type.typeTitle ?? RSS_TITLE.GOOGLE,
         ));
       }
     });
