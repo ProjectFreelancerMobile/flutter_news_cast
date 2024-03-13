@@ -158,13 +158,18 @@ class HomePage extends BasePage<HomeController> {
               onPressed: () {
                 AppDialog(
                   context: context,
-                  title: textLocalization('dialog.delete.learn'),
+                  title: textLocalization('dialog.delete.learn').trParams(
+                    {
+                      'field': feedModel?.title ?? '',
+                    },
+                  ),
                   description: textLocalization('dialog.undone.action'),
                   type: DialogType.TWO_ACTION,
                   cancelText: textLocalization('dialog.cancel'),
                   okText: textLocalization('dialog.delete'),
-                  onOkPressed: () {
-                    controller.deleteRssFeed(feedModel);
+                  onOkPressed: (dialog) async {
+                    await controller.deleteRssFeed(feedModel);
+                    dialog.dismiss();
                   },
                   onCancelPressed: () {},
                 ).show();

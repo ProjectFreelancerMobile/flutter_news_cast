@@ -59,7 +59,7 @@ final Map<String, String> viVN = {
   'dialog.find.network': '”FEDO” would like to find and connect to devices on your local network.',
   'dialog.connect.network': 'This app will be able to discover and connect to devices on the networks you use.',
   'dialog.not.allow': 'Don’t Allow',
-  'dialog.delete.learn': 'Delete “Unsupervised Learning”?',
+  'dialog.delete.learn': 'Delete "@field"?',
   'dialog.undone.action': 'This action cannot be undone',
   'dialog.delete': 'Delete',
   //Home

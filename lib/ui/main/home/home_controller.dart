@@ -86,9 +86,11 @@ class HomeController extends BaseController {
     _addRssExist$.value = false;
   }
 
-  void deleteRssFeed(FeedModel? feedModel) async {
+  Future<void> deleteRssFeed(FeedModel? feedModel) async {
     if (feedModel == null) return;
+    showLoading();
     final isSuccess = await _rssRepository.deleteRssFeed(feedModel);
+    hideLoading();
     if (isSuccess) {
       await _rssRepository.getInitRss().then((value) {
         _listFeed$.value = value;

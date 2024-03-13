@@ -36,37 +36,38 @@ class DTextFromField extends StatelessWidget {
   final bool? textCenter;
   final double? borderRadius;
 
-  DTextFromField(
-      {this.controller,
-      this.errorStyle,
-      this.onValidated,
-      this.onSaved,
-      this.onChange,
-      this.hintText,
-      this.textStyle,
-      this.strokeColor,
-      this.background,
-      this.obscureText,
-      this.prefixIcon,
-      this.keyboardType,
-      this.suffixIcon,
-      this.inputFormatters,
-      this.maxLines = 1,
-      this.maxLength,
-      this.enabled = true,
-      this.leftTitle,
-      this.rightTitle,
-      this.errorText,
-      this.autoFocus = false,
-      this.textInputAction,
-      this.onFieldSubmitted,
-      this.prefixPadding,
-      this.isHideCounterText,
-      this.textCenter,
-      this.borderRadius,
-      this.prefixConstraints = const BoxConstraints(maxHeight: 36, minHeight: 36),
-      this.iconContraints = const BoxConstraints(maxWidth: 24, maxHeight: 24, minHeight: 24),
-      this.contentPadding = const EdgeInsets.symmetric(vertical: 17.0, horizontal: 0.0)});
+  DTextFromField({
+    this.controller,
+    this.errorStyle,
+    this.onValidated,
+    this.onSaved,
+    this.onChange,
+    this.hintText,
+    this.textStyle,
+    this.strokeColor,
+    this.background,
+    this.obscureText,
+    this.prefixIcon,
+    this.keyboardType,
+    this.suffixIcon,
+    this.inputFormatters,
+    this.maxLines = 1,
+    this.maxLength,
+    this.enabled = true,
+    this.leftTitle,
+    this.rightTitle,
+    this.errorText,
+    this.autoFocus = false,
+    this.textInputAction,
+    this.onFieldSubmitted,
+    this.prefixPadding,
+    this.isHideCounterText,
+    this.textCenter,
+    this.borderRadius,
+    this.prefixConstraints = const BoxConstraints(maxHeight: 36, minHeight: 36),
+    this.iconContraints = const BoxConstraints(maxWidth: 24, maxHeight: 24, minHeight: 24),
+    this.contentPadding = const EdgeInsets.symmetric(vertical: 17.0, horizontal: 0.0),
+  });
 
   UnderlineInputBorder _underlineInputBorder(Color? strokeColor, BuildContext context) {
     return UnderlineInputBorder(borderSide: BorderSide(color: strokeColor ?? getColor().textColorB2B2B2));
@@ -164,25 +165,26 @@ class ClearTextField extends StatefulWidget {
   final Color? background;
   final double? borderRadius;
 
-  ClearTextField(
-      {this.hint,
-      this.inputFormatters,
-      this.maxLength,
-      this.controller,
-      this.prefixIcon,
-      this.leftTitle,
-      this.rightTitle,
-      this.textStyle,
-      this.keyboardType,
-      this.underlineColor,
-      this.onValidated,
-      this.onChange,
-      this.onClear,
-      this.errorText,
-      this.background,
-      this.borderRadius,
-      this.contentPadding = const EdgeInsets.symmetric(vertical: 17.0, horizontal: 0.0),
-      this.errorStyle});
+  ClearTextField({
+    this.hint,
+    this.inputFormatters,
+    this.maxLength,
+    this.controller,
+    this.prefixIcon,
+    this.leftTitle,
+    this.rightTitle,
+    this.textStyle,
+    this.keyboardType,
+    this.underlineColor,
+    this.onValidated,
+    this.onChange,
+    this.onClear,
+    this.errorText,
+    this.background,
+    this.borderRadius,
+    this.contentPadding = const EdgeInsets.symmetric(vertical: 17.0, horizontal: 0.0),
+    this.errorStyle,
+  });
 
   @override
   State<StatefulWidget> createState() => _ClearTextFieldState();
@@ -220,7 +222,7 @@ class _ClearTextFieldState extends State<ClearTextField> {
       borderRadius: widget.borderRadius,
       onChange: widget.onChange,
       contentPadding: widget.contentPadding,
-      iconContraints: const BoxConstraints(maxWidth: 30, maxHeight: 30, minHeight: 30),
+      iconContraints: const BoxConstraints(maxWidth: 24, maxHeight: 24, minHeight: 24),
       suffixIcon: controller?.text != ""
           ? MaterialButton(
               height: 24,

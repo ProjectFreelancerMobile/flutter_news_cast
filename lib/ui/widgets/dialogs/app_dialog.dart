@@ -12,7 +12,7 @@ class AppDialog {
   final String title;
   final String description;
   final String okText;
-  final VoidCallback? onOkPressed;
+  final Function(AppDialog)? onOkPressed;
   final String cancelText;
   final VoidCallback? onCancelPressed;
   final String midText;
@@ -154,8 +154,7 @@ class AppDialog {
           minimumSize: Size(113.ws, 48.hs),
         ),
         onPressed: () {
-          dismiss();
-          onOkPressed?.call();
+          onOkPressed?.call(this);
         },
         child: Text(
           okText,
@@ -168,8 +167,8 @@ class AppDialog {
           minimumSize: Size(113.ws, 48.hs),
         ),
         onPressed: () {
-          dismiss();
           onMidPressed?.call();
+          dismiss();
         },
         child: Text(
           midText,
@@ -182,8 +181,8 @@ class AppDialog {
           minimumSize: Size(113.ws, 48.hs),
         ),
         onPressed: () {
-          dismiss();
           onCancelPressed?.call();
+          dismiss();
         },
         child: Text(
           cancelText,
