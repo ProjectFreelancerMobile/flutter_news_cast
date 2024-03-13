@@ -12,7 +12,12 @@ class MainBinding extends Bindings {
     //Home
     Get.put(HomeController());
     //Cast
-    Get.put(CastController());
+    Get.lazyPut(
+      () => CastController(),
+      tag: Get.arguments?['id'].toString() ?? '',
+      fenix: true,
+    );
+
     //Settings
     Get.lazyPut<SettingsController>(() => SettingsController());
   }

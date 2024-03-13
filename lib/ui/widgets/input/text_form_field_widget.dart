@@ -152,6 +152,7 @@ class ClearTextField extends StatefulWidget {
   final String? hint;
   final TextStyle? textStyle;
   final Function(String?)? onChange;
+  final VoidCallback? onClear;
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
   final Color? underlineColor;
@@ -176,6 +177,7 @@ class ClearTextField extends StatefulWidget {
       this.underlineColor,
       this.onValidated,
       this.onChange,
+      this.onClear,
       this.errorText,
       this.background,
       this.borderRadius,
@@ -224,7 +226,12 @@ class _ClearTextFieldState extends State<ClearTextField> {
               height: 24,
               minWidth: 24,
               padding: EdgeInsets.all(0),
-              onPressed: () => controller?.clear(),
+              onPressed: () {
+                if (widget.onClear != null) {
+                  widget.onClear!();
+                }
+                controller?.clear();
+              },
               child: Assets.icons.icRemove.svg(),
               shape: CircleBorder(),
             )

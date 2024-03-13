@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/res/style.dart';
 import 'package:flutter_news_cast/ui/widgets/button/touchable_opacity.dart';
 import 'package:flutter_news_cast/ui/widgets/input/text_form_field_widget.dart';
+import 'package:flutter_news_cast/ui/widgets/loading_widget.dart';
 import 'package:get/get.dart';
 
 import '../../widgets/button/custom_button.dart';
@@ -28,7 +29,11 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   TextButton(
-                    onPressed: () => Get.back(),
+                    onPressed: () {
+                      controller.clearInputRss();
+                      controller.textAddRssCl.clear();
+                      Get.back();
+                    },
                     child: Text(
                       textLocalization('dialog.cancel'),
                       style: text14.bold.textColorFF6F15,
@@ -46,24 +51,42 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                       ),
                       SizedBox(height: 16.ws),
                       RichText(
+                        textAlign: TextAlign.center,
                         text: TextSpan(
                           text: textLocalization('feed.content1'),
-                          style: text14.textColorB2B2B2,
+                          style: text14.textColor141414,
                           children: <TextSpan>[
                             TextSpan(text: textLocalization('feed.content2'), style: text14.bold.textColor141414),
-                            TextSpan(text: textLocalization('feed.content3'))
+                            TextSpan(text: textLocalization('feed.content3')),
                           ],
                         ),
                       ),
                       SizedBox(height: 16.ws),
-                      DTextFromField(
+                      Obx(
+                        () => Stack(
+                          children: [
+                            Visibility(
+                              visible: controller.addRssLoading,
+                              child: LoadingWidget(),
+                            ),
+                            Visibility(
+                              visible: controller.addRssExist,
+                              child: Text(textLocalization('error.url.exist'), style: text14.textColorFF6F15),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 16.ws),
+                      ClearTextField(
                         keyboardType: TextInputType.text,
                         controller: controller.textAddRssCl,
                         textStyle: text14.textColor141414,
-                        hintText: textLocalization('feed.url'),
-                        strokeColor: Colors.transparent,
+                        hint: textLocalization('feed.url'),
                         contentPadding: EdgeInsets.symmetric(horizontal: 16.ws, vertical: 12.ws),
                         background: colorWhite,
+                        onClear: () {
+                          controller.clearInputRss();
+                        },
                         onValidated: (val) {
                           return controller.validatorRss('Địa chỉ RSS');
                         },
@@ -73,7 +96,6 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                         text: textLocalization('feed.add'),
                         onPressed: () {
                           controller.saveRssFeed();
-                          Get.back();
                         },
                         isEnable: true,
                         width: 150.ws,

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/data/storage/key_constant.dart';
 import 'package:flutter_news_cast/ui/widgets/base_scaffold_widget.dart';
 import 'package:flutter_news_cast/ui/widgets/data_empty_widget.dart';
-import 'package:get/get.dart';
 
-import '../../../app/app_pages.dart';
 import '../../../res/style.dart';
 import '../../base/base_page.dart';
 import '../../widgets/default_appbar.dart';
@@ -37,18 +35,12 @@ class ListBookmarkPage extends BasePage<BookmarkController> {
                 type: item?.feed.value?.type ?? RSS_TITLE.GOOGLE.indexTitleValue,
                 url: item?.image ?? '',
                 content: item?.title ?? '',
-                onPressed: () {
-                  if (item?.isUrlCast == true) {
-                    controller.navigationCast(item?.link);
-                  } else {
-                    Get.toNamed(AppRoutes.READ_RSS, arguments: item);
-                  }
-                },
+                onPressed: () => controller.navigationCast(item),
                 onPressedRemove: () => controller.deleteBookmark(item),
               );
             },
             itemCount: controller.listPost.length,
           )
-        : DataEmptyWidget(textEmpty: textLocalization('error.empty.bookmark'));
+        : DataEmptyWidget(textEmpty: controller.isBookmark ? textLocalization('error.empty.bookmark') : null);
   }
 }

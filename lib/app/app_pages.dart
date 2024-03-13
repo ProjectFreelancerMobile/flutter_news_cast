@@ -4,8 +4,6 @@ import '../../ui/main/main_binding.dart';
 import '../../ui/main/main_page.dart';
 import '../ui/main/bookmark/bookmark_binding.dart';
 import '../ui/main/bookmark/bookmark_page.dart';
-import '../ui/main/read/rss_binding.dart';
-import '../ui/main/read/rss_page.dart';
 
 part 'app_routes.dart';
 
@@ -22,10 +20,10 @@ class AppPages {
       binding: BookmarkBinding(),
       transition: Transition.rightToLeft,
     ),
-    GetPage(
-      name: AppRoutes.READ_RSS,
-      page: () => RssPage(),
-      binding: RssBinding(),
-    ),
+    // GetPage(
+    //   name: AppRoutes.READ_RSS,
+    //   page: () => RssPage(),
+    //   binding: RssBinding(),
+    // ),
   ];
 }

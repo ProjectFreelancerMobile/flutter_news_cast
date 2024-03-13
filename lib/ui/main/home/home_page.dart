@@ -89,13 +89,7 @@ class HomePage extends BasePage<HomeController> {
                 type: item.feed.value?.type ?? RSS_TITLE.GOOGLE.indexTitleValue,
                 url: item.image ?? '',
                 content: item.title ?? '',
-                onPressed: () {
-                  if (item.isUrlCast == true) {
-                    controller.navigationCast(item.link);
-                  } else {
-                    Get.toNamed(AppRoutes.READ_RSS, arguments: item);
-                  }
-                },
+                onPressed: () => controller.navigationCast(item),
                 onPressedRemove: () => controller.deleteBookmark(item),
               );
             },
@@ -208,10 +202,7 @@ class HomePage extends BasePage<HomeController> {
               return FeedItemView(
                 url: item?.image ?? '',
                 content: item?.title ?? '',
-                onPressed: () => Get.toNamed(AppRoutes.READ_RSS, arguments: {
-                  'id': item?.id,
-                  'item': item,
-                }),
+                onPressed: () => controller.navigationCast(item),
               );
             },
             itemCount: listPost?.length,

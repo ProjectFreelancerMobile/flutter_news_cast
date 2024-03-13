@@ -5,7 +5,6 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
 import 'package:get/get.dart';
 
-import '../../../data/api/api_constants.dart';
 import '../../../data/api/repositories/rss_repository.dart';
 import '../../base/base_controller.dart';
 import '../../widgets/debound_util.dart';
@@ -14,6 +13,7 @@ import '../home/home_controller.dart';
 class CastController extends BaseController {
   final _rssRepository = Get.find<RssRepository>();
   TextEditingController textSearchCl = TextEditingController();
+  final postRss = Get.arguments?['item'] as PostModel?;
 
   bool get isShowScreenError => false;
   final GlobalKey webViewKey = GlobalKey();
@@ -32,6 +32,8 @@ class CastController extends BaseController {
 
   bool get isHasBookmark => _isHasBookmark$.value;
   var _isHasBookmark$ = false.obs;
+
+  String get postTitle => postRss?.title ?? '';
 
   @override
   void onClose() {
@@ -54,13 +56,12 @@ class CastController extends BaseController {
           );
   }
 
-  void initUrlCast() {
-    print('urlCast:::' + urlCast.toString());
-    _isHasBookmark$.value = urlCast.isNotEmpty;
-    if (urlCast.isNotEmpty) {
-      textSearchCl.text = urlCast;
+  void initUrlCast(PostModel? postModel) {
+    if (postModel == null) return;
+    _isHasBookmark$.value = postModel.favorite;
+    if (postModel.link.isNotEmpty) {
+      textSearchCl.text = postModel.link;
       commitURL(textSearchCl.text);
-      urlCast = '';
     }
   }
 

@@ -47,7 +47,7 @@ final appThemeData = {
     appBarTheme: AppBarTheme(
       color: colorBackground,
       scrolledUnderElevation: 0,
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: colorPrimary,

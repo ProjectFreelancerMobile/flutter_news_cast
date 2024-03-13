@@ -7,6 +7,7 @@ import 'package:flutter_news_cast/ui/main/cast/cast_controller.dart';
 import 'package:get/get.dart';
 
 import '../../data/api/api_constants.dart';
+import '../../data/api/models/rss/post_model.dart';
 import '../../ui/base/base_controller.dart';
 
 class MainController extends BaseController {
@@ -25,10 +26,10 @@ class MainController extends BaseController {
     pageIndex.value = index;
   }
 
-  onTabChangedCast() {
+  onRunRssPost(PostModel? postModel) {
     pageController.jumpToPage(1);
     pageIndex.value = 1;
-    Get.find<CastController>().initUrlCast();
+    Get.find<CastController>().initUrlCast(postModel);
   }
 
   @override

@@ -3,7 +3,6 @@ import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
 import 'package:flutter_news_cast/data/api/repositories/rss_repository.dart';
 import 'package:get/get.dart';
 
-import '../../../data/api/api_constants.dart';
 import '../../base/base_controller.dart';
 import '../home/home_controller.dart';
 import '../main_controller.dart';
@@ -47,9 +46,8 @@ class BookmarkController extends BaseController {
     }
   }
 
-  void navigationCast(String? url) {
-    urlCast = url ?? '';
+  void navigationCast(PostModel? postModel) {
     Get.back();
-    _mainController.onTabChangedCast();
+    _mainController.onRunRssPost(postModel);
   }
 }

@@ -7,7 +7,6 @@ import 'package:flutter_news_cast/res/style.dart';
 import 'package:get/get.dart';
 
 import '../../../app/app_controller.dart';
-import '../../../data/api/api_constants.dart';
 import '../../../data/api/models/rss/list_feed_model.dart';
 import '../../base/base_controller.dart';
 import '../main_controller.dart';
@@ -23,6 +22,13 @@ class HomeController extends BaseController {
 
   List<ListFeedModel> get listFeed => _listFeed$.value;
   final _listFeed$ = <ListFeedModel>[].obs;
+
+  bool get addRssLoading => _addRssLoading$.value;
+
+  bool get addRssExist => _addRssExist$.value;
+
+  var _addRssLoading$ = false.obs;
+  var _addRssExist$ = false.obs;
 
   bool get isShowScreenError => false;
 
@@ -53,15 +59,31 @@ class HomeController extends BaseController {
 
   void saveRssFeed() async {
     if (textAddRssCl.text.isEmpty) return;
-    final isSuccess = await _rssRepository.saveRssFeed(textAddRssCl.text);
-    textAddRssCl.clear();
-    if (isSuccess) {
-      await _rssRepository.getInitRss().then((value) {
-        _listFeed$.value = value;
-      });
-    } else {
-      showErrors(textLocalization('error.url.exist'));
+    _addRssLoading$.value = true;
+    _addRssExist$.value = false;
+    try {
+      final isSuccess = await _rssRepository.saveRssFeed(textAddRssCl.text);
+      if (isSuccess) {
+        await _rssRepository.getInitRss().then((value) {
+          _listFeed$.value = value;
+        });
+        textAddRssCl.clear();
+        _addRssLoading$.value = false;
+        Get.back();
+      } else {
+        _addRssLoading$.value = false;
+        _addRssExist$.value = true;
+      }
+    } catch (e) {
+      _addRssLoading$.value = false;
+      showErrors(e);
+      print(e.toString());
     }
+  }
+
+  void clearInputRss() {
+    _addRssLoading$.value = false;
+    _addRssExist$.value = false;
   }
 
   void deleteRssFeed(FeedModel? feedModel) async {
@@ -98,9 +120,8 @@ class HomeController extends BaseController {
     await getListBookMark();
   }
 
-  void navigationCast(String? url) {
-    urlCast = url ?? '';
-    _mainController.onTabChangedCast();
+  void navigationCast(PostModel? postModel) {
+    _mainController.onRunRssPost(postModel);
   }
 
   @override

@@ -39,7 +39,7 @@ final Map<String, String> enUS = {
   'week': 'tuần',
   'data.error': 'Có lỗi xảy ra,vui lòng thử lại',
   'noti.title': 'Thông báo',
-  'data.empty': 'Không có dữ liệu',
+  'data.empty': 'No data',
   'feature': 'Tính năng đang phát triển!',
   //Dialog
   'dialog.select.device': 'Select a device',
@@ -100,7 +100,7 @@ final Map<String, String> enUS = {
   'settings.remove.ads': 'Remove Ads Forever',
   'settings.restore.ads': 'Restore In-app Purchases',
   'setting.error.connect': 'Không có internet. Vui lòng kiểm tra lại kết nối mạng của bạn',
-  'error.url.exist': 'Địa chỉ này đã tồn tại!',
-  'error.remove': 'Xoá bị lỗi!',
+  'error.url.exist': 'This URL already exists.',
+  'error.remove': 'Remove error!',
   'error.empty.bookmark': 'No results, don\'t forget to bookmark the website you like the most so that you can find those easily over here.',
 };

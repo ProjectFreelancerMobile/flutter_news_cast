@@ -17,7 +17,7 @@ class CastPage extends BasePage<CastController> {
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(left: 16.ws, right: 16.ws, top: 46.ws, bottom: 12.ws),
+            padding: EdgeInsets.only(left: 8.ws, right: 16.ws, top: 46.ws, bottom: 12.ws),
             child: Row(
               children: [
                 IconButton(onPressed: () => Get.offAllNamed(AppRoutes.MAIN), icon: Icon(Icons.arrow_back_ios_new)),

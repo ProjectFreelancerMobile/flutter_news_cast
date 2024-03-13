@@ -36,6 +36,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_airplay.svg
   SvgGenImage get icAirplay => const SvgGenImage('assets/icons/ic_airplay.svg');
 
+  /// File path: assets/icons/ic_audiomack.svg
+  SvgGenImage get icAudiomack => const SvgGenImage('assets/icons/ic_audiomack.svg');
+
   /// File path: assets/icons/ic_back.svg
   SvgGenImage get icBack => const SvgGenImage('assets/icons/ic_back.svg');
 
@@ -93,6 +96,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_menu_setting.svg
   SvgGenImage get icMenuSetting => const SvgGenImage('assets/icons/ic_menu_setting.svg');
 
+  /// File path: assets/icons/ic_mixcloud.svg
+  SvgGenImage get icMixcloud => const SvgGenImage('assets/icons/ic_mixcloud.svg');
+
   /// File path: assets/icons/ic_no_image.svg
   SvgGenImage get icNoImage => const SvgGenImage('assets/icons/ic_no_image.svg');
 
@@ -107,6 +113,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/ic_settings_next.svg
   SvgGenImage get icSettingsNext => const SvgGenImage('assets/icons/ic_settings_next.svg');
+
+  /// File path: assets/icons/ic_soundcloud.svg
+  SvgGenImage get icSoundcloud => const SvgGenImage('assets/icons/ic_soundcloud.svg');
 
   /// File path: assets/icons/ic_thanhnien.png
   AssetGenImage get icThanhnien => const AssetGenImage('assets/icons/ic_thanhnien.png');
@@ -130,6 +139,7 @@ class $AssetsIconsGen {
   List<dynamic> get values => [
         icAdd,
         icAirplay,
+        icAudiomack,
         icBack,
         icBookmark,
         icCancel,
@@ -149,11 +159,13 @@ class $AssetsIconsGen {
         icMenuCast,
         icMenuHome,
         icMenuSetting,
+        icMixcloud,
         icNoImage,
         icRecent,
         icRefresh,
         icRemove,
         icSettingsNext,
+        icSoundcloud,
         icThanhnien,
         icThexiffy,
         icVimeo,

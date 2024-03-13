@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_news_cast/ui/widgets/button/touchable_opacity.dart';
 import 'package:get/get.dart';
 
 import '../../res/style.dart';
@@ -40,7 +41,7 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
     return PreferredSize(
       preferredSize: preferredSize,
       child: Padding(
-        padding: const EdgeInsets.only(top: 10.0),
+        padding: EdgeInsets.only(left: 16.ws, top: 10.ws),
         child: AppBar(
           centerTitle: isLeft == true ? false : true,
           automaticallyImplyLeading: false,
@@ -48,8 +49,9 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
           leading: buildWidgetLeading(appBarStyle, leading),
           title: Text(
             title ?? "",
-            style: style ?? text16.bold.textColor141414,
+            style: style ?? text16.medium.textColor141414,
           ),
+          leadingWidth: 7.ws,
           backgroundColor: color ?? colorBackground,
           elevation: 0,
           bottom: tabBar,
@@ -85,12 +87,8 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
             onPress != null ? onPress!() : Get.back();
           },
         )
-      : IconButton(
-          icon: Icon(
-            isClose == true ? Icons.close : Icons.arrow_back_ios_new,
-            color: color141414,
-            size: 20,
-          ),
+      : TouchableOpacity(
+          child: Assets.icons.icBack.svg(),
           onPressed: () {
             onPress != null ? onPress!() : Get.back();
           },

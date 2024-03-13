@@ -35,17 +35,17 @@ class RSSService extends BaseService {
           listFeed.add(value);
         });
       });
-      print('1111111111111');
+      print('Load First');
     } else {
       final feedDB = await getFeedsDB();
       listFeed.addAll(feedDB);
       syncRefreshFeed(feedDB);
-      print('22222222222');
+      print('load Local');
     }
     listFeed.forEach((element) {
       print('listFeed:::::${element.feedModel?.id} url=${element.feedModel?.url} listPost=${element.listPost?.length}');
     });
-    return listFeed;
+    return listFeed.reversed.toList();
   }
 
   Future<List<ListFeedModel>> getInitRssCloud({isForceReload = false}) async {
