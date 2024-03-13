@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_news_cast/app/app_pages.dart';
 import 'package:flutter_news_cast/res/style.dart';
+import 'package:flutter_news_cast/ui/widgets/button/touchable_opacity.dart';
 import 'package:get/get.dart';
 
 import '../../base/base_page.dart';
+import '../../widgets/base_scaffold_widget.dart';
 import '../../widgets/input/text_form_field_widget.dart';
 import 'cast_controller.dart';
 
@@ -13,55 +15,54 @@ import 'cast_controller.dart';
 class CastPage extends BasePage<CastController> {
   @override
   Widget buildContentView(BuildContext context, CastController controller) {
-    return Scaffold(
+    return ScaffoldBase(
       body: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.only(left: 8.ws, right: 16.ws, top: 46.ws, bottom: 12.ws),
-            child: Row(
-              children: [
-                IconButton(onPressed: () => Get.offAllNamed(AppRoutes.MAIN), icon: Icon(Icons.arrow_back_ios_new)),
-                Expanded(
-                  child: DTextFromField(
-                    keyboardType: TextInputType.text,
-                    controller: controller.textSearchCl,
-                    textStyle: text14.textColor141414,
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.only(left: 16.ws),
-                      child: controller.isHasLoadWeb ? Assets.icons.icCastLock.svg() : Icon(Icons.search),
-                    ),
-                    suffixIcon: MaterialButton(
-                      onPressed: () {
-                        controller.clearOrReload();
-                      },
-                      height: 24.ws,
-                      minWidth: 24.ws,
-                      padding: EdgeInsets.all(0),
-                      child: controller.isHasLoadWeb ? Assets.icons.icCastReplay.svg() : Assets.icons.icRemove.svg(),
-                    ),
-                    iconContraints: BoxConstraints(maxWidth: 40.ws, maxHeight: 24, minHeight: 24),
-                    background: colorSearch,
-                    borderRadius: 18,
-                    strokeColor: Colors.transparent,
-                    hintText: textLocalization('feed.search.url'),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 2.ws, vertical: 12.ws),
-                    onValidated: (val) {
-                      return controller.validatorURL('Địa chỉ URL');
-                    },
-                    onChange: (value) {
-                      controller.commitURL(value);
-                    },
+          Row(
+            children: [
+              TouchableOpacity(onPressed: () => Get.offAllNamed(AppRoutes.MAIN), child: Assets.icons.icBack.svg()),
+              SizedBox(width: 24.ws),
+              Expanded(
+                child: DTextFromField(
+                  keyboardType: TextInputType.text,
+                  controller: controller.textSearchCl,
+                  textStyle: text14.textColor141414,
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.only(left: 16.ws),
+                    child: controller.isHasLoadWeb ? Assets.icons.icCastLock.svg() : Icon(Icons.search),
                   ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    controller.saveBookMark();
+                  suffixIcon: MaterialButton(
+                    onPressed: () {
+                      controller.clearOrReload();
+                    },
+                    height: 24.ws,
+                    minWidth: 24.ws,
+                    padding: EdgeInsets.all(0),
+                    child: controller.isHasLoadWeb ? Assets.icons.icCastReplay.svg() : Assets.icons.icRemove.svg(),
+                  ),
+                  iconContraints: BoxConstraints(maxWidth: 40.ws, maxHeight: 24, minHeight: 24),
+                  background: colorSearch,
+                  borderRadius: 18,
+                  strokeColor: Colors.transparent,
+                  hintText: textLocalization('feed.search.url'),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 2.ws, vertical: 12.ws),
+                  onValidated: (val) {
+                    return controller.validatorURL('Địa chỉ URL');
                   },
-                  icon: controller.isHasBookmark ? Icon(Icons.bookmark) : Assets.icons.icBookmark.svg(),
+                  onChange: (value) {
+                    controller.commitURL(value);
+                  },
                 ),
-                // IconButton(onPressed: () {}, icon: Assets.icons.icCast.svg(height: 22.ws)),
-              ],
-            ),
+              ),
+              SizedBox(width: 12.ws),
+              TouchableOpacity(
+                onPressed: () {
+                  controller.saveBookMark();
+                },
+                child: controller.isHasBookmark ? Icon(Icons.bookmark) : Assets.icons.icBookmark.svg(),
+              ),
+              // IconButton(onPressed: () {}, icon: Assets.icons.icCast.svg(height: 22.ws)),
+            ],
           ),
           Expanded(
             child: InAppWebView(

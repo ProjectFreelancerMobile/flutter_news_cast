@@ -5,10 +5,9 @@ class ScaffoldBase extends StatelessWidget {
   final Widget body;
   final PreferredSizeWidget? appBar;
   final Widget? bottomNavigationBar;
-  final bool? offMarginVertical;
   final bool? isHome;
 
-  ScaffoldBase({Key? key, required this.body, this.appBar, this.offMarginVertical, this.bottomNavigationBar, this.isHome = false}) : super(key: key);
+  ScaffoldBase({Key? key, required this.body, this.appBar, this.bottomNavigationBar, this.isHome = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,7 @@ class ScaffoldBase extends StatelessWidget {
       body: SafeArea(
         child: Material(
           child: Padding(
-            padding: isHome == true ? EdgeInsets.only(left: 16.ws, top: 16.ws) : EdgeInsets.symmetric(horizontal: 16.ws, vertical: offMarginVertical == true ? 0 : 16.ws),
+            padding: isHome == true ? EdgeInsets.only(left: 16.ws, top: 16.ws) : EdgeInsets.symmetric(horizontal: 16.ws, vertical: 16.ws),
             child: body,
           ),
         ),
