@@ -112,7 +112,7 @@ class AppDialog {
       child: Text(
         description,
         textAlign: TextAlign.center,
-        style: text12.textColor141414,
+        style: text14.textColor141414,
       ),
     );
   }

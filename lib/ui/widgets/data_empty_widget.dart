@@ -5,8 +5,9 @@ import '../../../res/theme/theme_service.dart';
 
 class DataEmptyWidget extends StatelessWidget {
   final Color? background;
+  final String? textEmpty;
 
-  DataEmptyWidget({this.background});
+  DataEmptyWidget({this.background, this.textEmpty});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class DataEmptyWidget extends StatelessWidget {
             height: 10,
           ),
           Text(
-            textLocalization('data.empty'),
+            textEmpty ?? textLocalization('data.empty'),
             style: text16.textColor141414,
           )
         ],

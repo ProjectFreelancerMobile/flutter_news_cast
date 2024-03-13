@@ -34,9 +34,9 @@ class AccountItemView extends StatelessWidget {
               icon!,
               SizedBox(width: 10.ws),
             ],
-            Expanded(child: Text(title, style: text12.textColor141414, overflow: TextOverflow.ellipsis, maxLines: 1)),
+            Expanded(child: Text(title, style: text14.textColor141414, overflow: TextOverflow.ellipsis, maxLines: 1)),
             if (titleRight != null) ...[
-              Text(titleRight ?? '', style: isActionTitleRight ? text12.textColorPrimary : (isHighlightTitleRight ? text12.textColorD3D3D4 : text12.textColor141414)),
+              Text(titleRight ?? '', style: isActionTitleRight ? text14.textColorPrimary : (isHighlightTitleRight ? text14.textColorD3D3D4 : text14.textColor141414)),
               SizedBox(width: 10.ws),
             ],
             if (isIconNext) ...[

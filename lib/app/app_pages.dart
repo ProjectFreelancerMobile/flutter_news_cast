@@ -20,6 +20,7 @@ class AppPages {
       name: AppRoutes.LIST_BOOKMARK,
       page: () => ListBookmarkPage(),
       binding: BookmarkBinding(),
+      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: AppRoutes.READ_RSS,

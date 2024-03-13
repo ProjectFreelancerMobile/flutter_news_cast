@@ -137,7 +137,7 @@ class ListNotificationPage extends BaseListPage<NotificationItem, ListNotificati
               ),
               Text(
                 "12 giờ trước",
-                style: text12.textColor777777,
+                style: text14.textColor777777,
               ),
               SizedBox(
                 height: 16,
@@ -178,7 +178,7 @@ class ListNotificationPage extends BaseListPage<NotificationItem, ListNotificati
               ),
               Text(
                 "12 giờ trước",
-                style: text12.textColorB2B2B2,
+                style: text14.textColorB2B2B2,
               ),
               SizedBox(
                 height: 16,

@@ -30,7 +30,7 @@ class FeedItemView extends StatelessWidget {
             SizedBox(height: 6.ws),
             Text(
               content,
-              style: text12.textColor141414,
+              style: text14.textColor141414,
               textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,

@@ -49,7 +49,7 @@ class UserRoleWidget extends StatelessWidget {
               SizedBox(
                 height: 2.ws,
               ),
-              Text("${readTimeStampBySecond(createDate)} trước", style: text12.textColorB2B2B2)
+              Text("${readTimeStampBySecond(createDate)} trước", style: text14.textColorB2B2B2)
             ],
           )
         ],

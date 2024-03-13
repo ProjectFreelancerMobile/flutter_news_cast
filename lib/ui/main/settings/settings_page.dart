@@ -36,7 +36,7 @@ class SettingsPage extends BasePage<SettingsController> {
             SizedBox(height: 24.ws),
             CustomButton(
               text: textLocalization('settings.remove.ads'),
-              textStyle: text12.medium.textColorWhite,
+              textStyle: text14.medium.textColorWhite,
               onPressed: () => {},
               width: double.infinity,
               height: 42.ws,
@@ -125,10 +125,10 @@ class SettingsPage extends BasePage<SettingsController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(textLocalization('settings.block.ads'), style: text12.textColor141414),
+                    Text(textLocalization('settings.block.ads'), style: text14.textColor141414),
                     Text(
                       textLocalization('settings.ads.name'),
-                      style: text12.textColorB2B2B2,
+                      style: text14.textColorB2B2B2,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -145,10 +145,10 @@ class SettingsPage extends BasePage<SettingsController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(textLocalization('settings.plugin.title'), style: text12.textColor141414),
+                    Text(textLocalization('settings.plugin.title'), style: text14.textColor141414),
                     Text(
                       textLocalization('settings.plugin.content'),
-                      style: text12.textColorB2B2B2,
+                      style: text14.textColorB2B2B2,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -160,7 +160,7 @@ class SettingsPage extends BasePage<SettingsController> {
           ),
           Row(
             children: [
-              Expanded(child: Text(textLocalization('settings.notification'), style: text12.textColor141414)),
+              Expanded(child: Text(textLocalization('settings.notification'), style: text14.textColor141414)),
               buildSwitch(context, SWITCH_TYPE.NOTI),
             ],
           ),
@@ -360,7 +360,7 @@ class SettingsPage extends BasePage<SettingsController> {
         */ /* input: TextInputLineBorder(
           width: double.infinity,
           hint: 'Nguyễn Văn An',
-          hintTextStyle: text12.textColorB2B2B2,
+          hintTextStyle: text14.textColorB2B2B2,
           textTextStyle: text14.textColor141414,
           height: 36.hs,
           textEditingController: controller.txtNameController,
@@ -381,7 +381,7 @@ class SettingsPage extends BasePage<SettingsController> {
           width: double.infinity,
           hint: '0333332093',
           keyboardType: TextInputType.phone,
-          hintTextStyle: text12.textColorB2B2B2,
+          hintTextStyle: text14.textColorB2B2B2,
           textTextStyle: text14.textColor141414,
           height: 36.hs,
           textEditingController: controller.txtPhoneController,

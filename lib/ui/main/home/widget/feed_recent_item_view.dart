@@ -32,7 +32,7 @@ class FeedRecentItemView extends StatelessWidget {
               trailingActions: <SwipeAction>[
                 SwipeAction(
                   title: textLocalization('home.delete'),
-                  style: text12.textColorWhite,
+                  style: text14.textColorWhite,
                   widthSpace: 60.ws,
                   onTap: (CompletionHandler handler) async {
                     if (onPressedRemove != null) {

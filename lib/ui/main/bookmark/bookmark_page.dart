@@ -49,6 +49,6 @@ class ListBookmarkPage extends BasePage<BookmarkController> {
             },
             itemCount: controller.listPost.length,
           )
-        : DataEmptyWidget();
+        : DataEmptyWidget(textEmpty: textLocalization('error.empty.bookmark'));
   }
 }

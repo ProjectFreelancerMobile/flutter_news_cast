@@ -31,7 +31,7 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                     onPressed: () => Get.back(),
                     child: Text(
                       textLocalization('dialog.cancel'),
-                      style: text12.bold.textColorFF6F15,
+                      style: text14.bold.textColorFF6F15,
                     ),
                   ),
                   SizedBox(height: 60.ws),
@@ -48,9 +48,9 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                       RichText(
                         text: TextSpan(
                           text: textLocalization('feed.content1'),
-                          style: text12.textColorB2B2B2,
+                          style: text14.textColorB2B2B2,
                           children: <TextSpan>[
-                            TextSpan(text: textLocalization('feed.content2'), style: text12.bold.textColor141414),
+                            TextSpan(text: textLocalization('feed.content2'), style: text14.bold.textColor141414),
                             TextSpan(text: textLocalization('feed.content3'))
                           ],
                         ),
@@ -59,7 +59,7 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                       DTextFromField(
                         keyboardType: TextInputType.text,
                         controller: controller.textAddRssCl,
-                        textStyle: text12.textColor141414,
+                        textStyle: text14.textColor141414,
                         hintText: textLocalization('feed.url'),
                         strokeColor: Colors.transparent,
                         contentPadding: EdgeInsets.symmetric(horizontal: 16.ws, vertical: 12.ws),
@@ -78,7 +78,7 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                         isEnable: true,
                         width: 150.ws,
                         background: colorFF6F15,
-                        textStyle: text12.bold.textColorWhite,
+                        textStyle: text14.bold.textColorWhite,
                         height: 42.ws,
                         radius: 32.rs,
                       ),
@@ -232,36 +232,36 @@ Future<void> openBottomSheetScanDevice(HomeController controller) {
                         children: [
                           Text(
                             textLocalization('dialog.local.network'),
-                            style: text12.bold.textColor141414,
+                            style: text14.bold.textColor141414,
                           ),
                           SizedBox(height: 12.ws),
                           Text(
                             textLocalization('dialog.local.setting'),
-                            style: text12.textColor141414,
+                            style: text14.textColor141414,
                           ),
                           SizedBox(height: 12.ws),
                           TouchableOpacity(
                             child: Text(
                               textLocalization('settings.title'),
-                              style: text12.medium.textColorPrimary,
+                              style: text14.medium.textColorPrimary,
                             ),
                             onPressed: () {},
                           ),
                           SizedBox(height: 24.ws),
                           Text(
                             textLocalization('dialog.check.wifi'),
-                            style: text12.bold.textColor141414,
+                            style: text14.bold.textColor141414,
                           ),
                           SizedBox(height: 12.ws),
                           Text(
                             textLocalization('dialog.cast.device'),
-                            style: text12.textColor141414,
+                            style: text14.textColor141414,
                           ),
                           SizedBox(height: 12.ws),
                           TouchableOpacity(
                             child: Text(
                               textLocalization('dialog.learn.more'),
-                              style: text12.medium.textColorPrimary,
+                              style: text14.medium.textColorPrimary,
                             ),
                             onPressed: () {},
                           ),
