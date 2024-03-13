@@ -29,6 +29,7 @@ class ThemeService {
   }
 
   updateTheme(int theme) async {
+    print('updateTheme::' + theme.toString());
     currentAppTheme = getAppTheme(theme);
     _themeData = appThemeData[theme];
     store.setTheme(theme);

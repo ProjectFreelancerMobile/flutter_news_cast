@@ -85,6 +85,7 @@ class HomePage extends BasePage<HomeController> {
             itemBuilder: (context, index) {
               final item = controller.listBookmark[index];
               return FeedRecentItemView(
+                isBookmark: true,
                 type: item.feed.value?.type ?? RSS_TITLE.GOOGLE.indexTitleValue,
                 url: item.image ?? '',
                 content: item.title ?? '',

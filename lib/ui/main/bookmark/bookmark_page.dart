@@ -33,6 +33,7 @@ class ListBookmarkPage extends BasePage<BookmarkController> {
             itemBuilder: (context, index) {
               final item = controller.listPost[index];
               return FeedRecentItemView(
+                isBookmark: controller.isBookmark,
                 type: item?.feed.value?.type ?? RSS_TITLE.GOOGLE.indexTitleValue,
                 url: item?.image ?? '',
                 content: item?.title ?? '',

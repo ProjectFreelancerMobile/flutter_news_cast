@@ -7,11 +7,14 @@ import 'package:package_info_plus/package_info_plus.dart';
 import '../../../app/app_controller.dart';
 import '../../../data/storage/key_constant.dart';
 import '../../../data/storage/my_storage.dart';
+import '../../../res/theme/app_theme.dart';
+import '../../../res/theme/theme_service.dart';
 import '../../base/base_controller.dart';
 
 class SettingsController extends BaseController {
   final appController = Get.find<AppController>();
   final storage = Get.find<MyStorage>();
+  final themeManager = Get.find<ThemeService>();
   final txtNameController = TextEditingController();
   final txtPhoneController = TextEditingController();
   final sexType = SEX_TYPE.MEN.obs;
@@ -53,6 +56,7 @@ class SettingsController extends BaseController {
         break;
       case SWITCH_TYPE.PLUGIN:
         switchPlugin.value = value;
+        themeManager.updateTheme(value ? AppTheme.DARK.index : AppTheme.LIGHT.index);
         break;
       case SWITCH_TYPE.NOTI:
         switchNotification.value = value;

@@ -1,21 +1,16 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
-import 'package:flutter_news_cast/data/api/api_constants.dart';
 import 'package:flutter_news_cast/res/style.dart';
 import 'package:flutter_news_cast/ui/widgets/base_scaffold_widget.dart';
-import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../data/storage/key_constant.dart';
 import '../../../res/theme/theme_service.dart';
-import '../../../utils/date_time_utils.dart';
 import '../../base/base_page.dart';
 import '../../widgets/button/custom_button.dart';
-import '../../widgets/button/touchable_opacity.dart';
 import '../../widgets/default_appbar.dart';
-import '../../widgets/dialogs/app_dialog.dart';
 import 'settings_controller.dart';
 import 'widget/settings_item_view.dart';
 
@@ -171,7 +166,9 @@ class SettingsPage extends BasePage<SettingsController> {
           ),
           AccountItemView(
             title: textLocalization('settings.rate'),
-            onPressed: () => {},
+            onPressed: () {
+              _launchStore();
+            },
           ),
         ],
       );
@@ -180,19 +177,27 @@ class SettingsPage extends BasePage<SettingsController> {
         children: [
           AccountItemView(
             title: textLocalization('settings.share'),
-            onPressed: () => {},
+            onPressed: () {
+              Share.share(getLinkApp());
+            },
           ),
           AccountItemView(
             title: textLocalization('settings.follow.facebook'),
-            onPressed: () => {},
+            onPressed: () {
+              _launchUrl(Uri.parse('https://facebook.com'));
+            },
           ),
           AccountItemView(
             title: textLocalization('settings.follow.telegram'),
-            onPressed: () => {},
+            onPressed: () {
+              _launchUrl(Uri.parse('https://www.telegram.com'));
+            },
           ),
           AccountItemView(
             title: textLocalization('settings.follow.tiktok'),
-            onPressed: () => {},
+            onPressed: () {
+              _launchUrl(Uri.parse('https://tiktok.com'));
+            },
           ),
         ],
       );
@@ -201,12 +206,10 @@ class SettingsPage extends BasePage<SettingsController> {
         children: [
           AccountItemView(
             title: textLocalization('settings.update'),
-            titleRight: 'v2.3',
-            onPressed: () => {},
-          ),
-          AccountItemView(
-            title: textLocalization('settings.help.feedback'),
-            onPressed: () => {},
+            titleRight: controller.appVersion.value,
+            onPressed: () {
+              _launchStore();
+            },
           ),
         ],
       );
@@ -246,7 +249,7 @@ class SettingsPage extends BasePage<SettingsController> {
     );
   }
 
-  buildSettingsAccount(BuildContext context) {
+  /* buildSettingsAccount(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 26.ws),
       color: getColor().themeColorWhite,
@@ -304,7 +307,7 @@ class SettingsPage extends BasePage<SettingsController> {
           onPressed: () => controller.onGotoNotificationsSettingPage(),
         ),
       );
-
+*/
   Widget buildSupport() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 26.ws),
@@ -347,21 +350,21 @@ class SettingsPage extends BasePage<SettingsController> {
     );
   }
 
-  buildOpenUserName(BuildContext context) => AppDialog(
+  /*buildOpenUserName(BuildContext context) => AppDialog(
         context: context,
         title: '',
         description: textLocalization('settings_edit_name'),
         type: DialogType.TWO_ACTION,
         cancelText: textLocalization('dialog.ignore'),
         okText: textLocalization('dialog.save'),
-        /* input: TextInputLineBorder(
+        */ /* input: TextInputLineBorder(
           width: double.infinity,
           hint: 'Nguyễn Văn An',
           hintTextStyle: text12.textColorB2B2B2,
           textTextStyle: text14.textColor141414,
           height: 36.hs,
           textEditingController: controller.txtNameController,
-        ),*/
+        ),*/ /*
         onOkPressed: () => controller.updateProfile((error) {
           showMessage(error);
         }, userName: controller.txtNameController.text),
@@ -374,7 +377,7 @@ class SettingsPage extends BasePage<SettingsController> {
         type: DialogType.TWO_ACTION,
         cancelText: textLocalization('dialog.ignore'),
         okText: textLocalization('dialog.save'),
-        /*input: TextInputLineBorder(
+        */ /*input: TextInputLineBorder(
           width: double.infinity,
           hint: '0333332093',
           keyboardType: TextInputType.phone,
@@ -382,7 +385,7 @@ class SettingsPage extends BasePage<SettingsController> {
           textTextStyle: text14.textColor141414,
           height: 36.hs,
           textEditingController: controller.txtPhoneController,
-        ),*/
+        ),*/ /*
         onOkPressed: () => controller.updateProfile((error) {
           showMessage(error);
         }, phone: controller.txtPhoneController.text),
@@ -500,18 +503,21 @@ class SettingsPage extends BasePage<SettingsController> {
       ),
     );
   }
-
+*/
   void _launchStore() {
+    launchUrl(
+      Uri.parse(getLinkApp()),
+      mode: LaunchMode.externalApplication,
+    );
+  }
+
+  String getLinkApp() {
     if (Platform.isAndroid || Platform.isIOS) {
-      final appId = Platform.isAndroid ? 'com.urvega.app' : '12345678';
-      final url = Uri.parse(
-        Platform.isAndroid ? "market://details?id=$appId" : "https://apps.apple.com/app/id$appId",
-      );
-      launchUrl(
-        url,
-        mode: LaunchMode.externalApplication,
-      );
+      final appId = Platform.isAndroid ? 'com.fedoapp.app' : '12345678';
+      final url = Platform.isAndroid ? "market://details?id=$appId" : "https://apps.apple.com/app/id$appId";
+      return url;
     }
+    return '';
   }
 
   Future<void> _launchUrl(Uri _url) async {
