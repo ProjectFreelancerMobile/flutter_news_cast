@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_news_cast/app/app_pages.dart';
 import 'package:flutter_news_cast/data/api/models/rss/feed_model.dart';
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
@@ -23,34 +21,36 @@ class HomePage extends BasePage<HomeController> {
   Widget buildContentView(BuildContext context, HomeController controller) {
     return ScaffoldBase(
       isHome: true,
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(),
-              Text(textLocalization('home.title').toUpperCase(), style: text24.bold.textColor141414),
-              TouchableOpacity(
-                child: Row(
-                  children: [
-                    Assets.icons.icRecent.svg(),
-                    SizedBox(width: 16.ws),
-                  ],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(),
+                Text(textLocalization('home.title').toUpperCase(), style: text24.bold.textColor141414),
+                TouchableOpacity(
+                  child: Row(
+                    children: [
+                      Assets.icons.icRecent.svg(),
+                      SizedBox(width: 16.ws),
+                    ],
+                  ),
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.LIST_BOOKMARK, arguments: false);
+                  },
                 ),
-                onPressed: () {
-                  Get.toNamed(AppRoutes.LIST_BOOKMARK, arguments: false);
-                },
-              ),
-            ],
-          ),
-          SizedBox(height: 12.ws),
-          buildListFeedBookMark(),
-          SizedBox(height: 24.ws),
-          Expanded(
-            flex: 3,
-            child: buildListFeed(context),
-          ),
-        ],
+              ],
+            ),
+            SizedBox(height: 12.ws),
+            buildListFeedBookMark(),
+            SizedBox(height: 24.ws),
+            buildListFeed(context),
+          ],
+        ),
       ),
     );
   }
@@ -124,106 +124,100 @@ class HomePage extends BasePage<HomeController> {
           ],
         ),
         SizedBox(height: 16.ws),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                for (var item in controller.listFeed) buildListPostFromFeed(context, item.feedModel, item.listPost),
-              ],
-            ),
-          ),
+        Column(
+          children: [
+            for (var item in controller.listFeed) buildListPostFromFeed(context, item.feedModel, item.listPost),
+          ],
         ),
       ],
     );
   }
 
   Widget buildListPostFromFeed(BuildContext context, FeedModel? feedModel, List<PostModel?>? listPost) {
-    return Container(
-      width: Get.width,
-      height: 195.ws,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: TouchableOpacity(
-                  child: Row(
-                    children: [
-                      Flexible(
-                        child: Text(
-                          feedModel?.title ?? '',
-                          style: text14.bold.textColor141414,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: TouchableOpacity(
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        feedModel?.title ?? '',
+                        style: text14.bold.textColor141414,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      SizedBox(width: 6.ws),
-                      Assets.icons.icFeedUrl.svg(),
-                    ],
-                  ),
-                  onPressed: () {},
+                    ),
+                    SizedBox(width: 6.ws),
+                    Assets.icons.icFeedUrl.svg(),
+                  ],
                 ),
+                onPressed: () {},
               ),
-              SizedBox(width: 16.ws),
-              TouchableOpacity(
-                child: Assets.icons.icDelete.svg(),
-                onPressed: () {
-                  AppDialog(
-                    context: context,
-                    title: textLocalization('dialog.delete.learn'),
-                    description: textLocalization('dialog.undone.action'),
-                    type: DialogType.TWO_ACTION,
-                    cancelText: textLocalization('dialog.cancel'),
-                    okText: textLocalization('dialog.delete'),
-                    onOkPressed: () {
-                      controller.deleteRssFeed(feedModel);
-                    },
-                    onCancelPressed: () {},
-                  ).show();
-                  /*AppDialog(
-                    context: context,
-                    title: textLocalization('dialog.delete.learn'),
-                    description: textLocalization('dialog.undone.action'),
-                    type: DialogType.THREE_ACTION,
-                    cancelText: textLocalization('dialog.cancel'),
-                    okText: textLocalization('dialog.delete'),
-                    midText: textLocalization('dialog.learn.more'),
-                    onOkPressed: () {
-                      controller.removeBookMark(feedModel);
-                    },
-                    onCancelPressed: () {},
-                    onMidPressed: () {
-                      launchOpenUrl(Uri.parse(LEARN_MORE_URL));
-                    },
-                  ).show();*/
-                },
-              ),
-              SizedBox(width: 16.ws),
-            ],
-          ),
-          SizedBox(height: 10.ws),
-          Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                final item = listPost?[index];
-                return FeedItemView(
-                  url: item?.image ?? '',
-                  content: item?.title ?? '',
-                  onPressed: () => Get.toNamed(AppRoutes.READ_RSS, arguments: {
-                    'id': item?.id,
-                    'item': item,
-                  }),
-                );
-              },
-              itemCount: listPost?.length,
             ),
+            SizedBox(width: 16.ws),
+            TouchableOpacity(
+              child: Assets.icons.icDelete.svg(),
+              onPressed: () {
+                AppDialog(
+                  context: context,
+                  title: textLocalization('dialog.delete.learn'),
+                  description: textLocalization('dialog.undone.action'),
+                  type: DialogType.TWO_ACTION,
+                  cancelText: textLocalization('dialog.cancel'),
+                  okText: textLocalization('dialog.delete'),
+                  onOkPressed: () {
+                    controller.deleteRssFeed(feedModel);
+                  },
+                  onCancelPressed: () {},
+                ).show();
+                /*AppDialog(
+                  context: context,
+                  title: textLocalization('dialog.delete.learn'),
+                  description: textLocalization('dialog.undone.action'),
+                  type: DialogType.THREE_ACTION,
+                  cancelText: textLocalization('dialog.cancel'),
+                  okText: textLocalization('dialog.delete'),
+                  midText: textLocalization('dialog.learn.more'),
+                  onOkPressed: () {
+                    controller.removeBookMark(feedModel);
+                  },
+                  onCancelPressed: () {},
+                  onMidPressed: () {
+                    launchOpenUrl(Uri.parse(LEARN_MORE_URL));
+                  },
+                ).show();*/
+              },
+            ),
+            SizedBox(width: 16.ws),
+          ],
+        ),
+        SizedBox(height: 10.ws),
+        SizedBox(
+          width: double.infinity,
+          height: 170.ws,
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              final item = listPost?[index];
+              return FeedItemView(
+                url: item?.image ?? '',
+                content: item?.title ?? '',
+                onPressed: () => Get.toNamed(AppRoutes.READ_RSS, arguments: {
+                  'id': item?.id,
+                  'item': item,
+                }),
+              );
+            },
+            itemCount: listPost?.length,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
