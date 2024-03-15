@@ -23,15 +23,15 @@ class RSSService extends BaseService {
 
   Future<List<ListFeedModel>> getInitRss() async {
     List<ListFeedModel> listFeed = [];
-    if (await _storage.isInstall() == true) {
+    if (await _storage.isInstall() == false) {
       _storage.saveInstall(true);
       final listRssDefault = [
-        ListFeedBookmarkModel(0, RSS_1, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.THANHNIEN),
-        ListFeedBookmarkModel(1, RSS_2, RSS_TYPE.ATOM.indexValue, type: RSS_TITLE.YOUTUBE),
-        ListFeedBookmarkModel(2, RSS_3, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.VIMEO),
-        ListFeedBookmarkModel(3, RSS_4, RSS_TYPE.JSON.indexValue, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE, type: RSS_TITLE.DAILYMOTION),
-        ListFeedBookmarkModel(4, RSS_5, RSS_TYPE.JSON.indexValue, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE, type: RSS_TITLE.DAILYMOTION),
-        ListFeedBookmarkModel(5, RSS_6, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.THEXIFFY),
+        ListFeedBookmarkModel(0, RSS_1, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.THEXIFFY),
+        ListFeedBookmarkModel(1, RSS_2, RSS_TYPE.JSON.indexValue, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE, type: RSS_TITLE.DAILYMOTION),
+        ListFeedBookmarkModel(2, RSS_3, RSS_TYPE.JSON.indexValue, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE, type: RSS_TITLE.DAILYMOTION),
+        ListFeedBookmarkModel(3, RSS_4, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.VIMEO),
+        ListFeedBookmarkModel(4, RSS_5, RSS_TYPE.ATOM.indexValue, type: RSS_TITLE.YOUTUBE),
+        ListFeedBookmarkModel(5, RSS_6, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.THANHNIEN),
       ];
       await Future.forEach(listRssDefault, (element) async {
         await parseRss(element).then((value) async {
