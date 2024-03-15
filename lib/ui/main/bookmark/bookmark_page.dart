@@ -29,7 +29,7 @@ class ListBookmarkPage extends BasePage<BookmarkController> {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               final item = controller.listPost[index];
-              return FeedRecentItemView(
+              return BookmarkItemView(
                 isBookmark: controller.isBookmark,
                 type: item?.feed.value?.type ?? RSS_TITLE.GOOGLE.indexTitleValue,
                 url: item?.image ?? '',

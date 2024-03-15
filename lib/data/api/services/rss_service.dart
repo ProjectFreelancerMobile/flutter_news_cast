@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_news_cast/app/app_controller.dart';
 import 'package:flutter_news_cast/data/storage/key_constant.dart';
 import 'package:flutter_news_cast/utils/dart_rss/dart_rss.dart';
@@ -6,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:isar/isar.dart';
 
+import '../../../res/style.dart';
 import '../../storage/my_storage.dart';
 import '../api_constants.dart';
 import '../models/rss/feed_model.dart';
@@ -20,7 +23,7 @@ class RSSService extends BaseService {
 
   Future<List<ListFeedModel>> getInitRss() async {
     List<ListFeedModel> listFeed = [];
-    if (await _storage.isInstall() == false) {
+    if (await _storage.isInstall() == true) {
       _storage.saveInstall(true);
       final listRssDefault = [
         ListFeedBookmarkModel(0, RSS_1, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.THANHNIEN),
@@ -35,6 +38,36 @@ class RSSService extends BaseService {
           listFeed.add(value);
         });
       });
+      final listBookmarkDefault = [
+        PostModel(
+          title: 'Sound Cloud',
+          link: BOOKMARK_1,
+          image: Assets.icons.icSoundcloud.path,
+          content: '',
+          pubDate: DateTime.now(),
+          favorite: true,
+          fullText: false,
+        ),
+        PostModel(
+          title: 'Mix Cloud',
+          link: BOOKMARK_2,
+          image: Assets.icons.icMixcloud.path,
+          content: '',
+          pubDate: DateTime.now(),
+          favorite: true,
+          fullText: false,
+        ),
+        PostModel(
+          title: 'Audio Mack',
+          link: BOOKMARK_3,
+          image: Assets.icons.icAudiomack.path,
+          content: '',
+          pubDate: DateTime.now(),
+          favorite: true,
+          fullText: false,
+        )
+      ];
+      await saveListPost(listBookmarkDefault);
       print('Load First');
     } else {
       final feedDB = await getFeedsDB();
@@ -70,14 +103,16 @@ class RSSService extends BaseService {
   Future<void> syncRefreshFeed(List<ListFeedModel> listFeeds) async {
     await Future.forEach(listFeeds, (element) async {
       if (element.feedModel != null) {
-        await parseRss(ListFeedBookmarkModel(
-          element.feedModel?.id ?? 0,
-          element.feedModel?.url ?? '',
-          element.feedModel?.rssType ?? RSS_TYPE.RSS.indexValue,
-          title: element.feedModel?.title,
-          baseUrl: element.feedModel?.baseUrl,
-          type: element.feedModel?.type.typeTitle ?? RSS_TITLE.GOOGLE,
-        ));
+        await parseRss(
+          ListFeedBookmarkModel(
+            element.feedModel?.id ?? 0,
+            element.feedModel?.url ?? '',
+            element.feedModel?.rssType ?? RSS_TYPE.RSS.indexValue,
+            title: element.feedModel?.title,
+            baseUrl: element.feedModel?.baseUrl,
+            type: element.feedModel?.type.typeTitle ?? RSS_TITLE.GOOGLE,
+          ),
+        );
       }
     });
   }
@@ -277,6 +312,7 @@ class RSSService extends BaseService {
           });
           return listPost;
         case RSS_TYPE.JSON:
+          log('JsonFeed.fromJson::' + response.toString() + "feedModel::" + feedModel.toString());
           final JsonFeed jsonFeed = JsonFeed.fromJson(response);
           await Future.forEach(jsonFeed.list ?? List.empty(), (element) async {
             listPost.add(await _parseJsonPostItem(element, feedModel, baseUrl: feedModel.baseUrl));
@@ -372,6 +408,12 @@ class RSSService extends BaseService {
       if (listPost != null) {
         _isar.postModels.putAllSync(listPost);
       }
+    });
+  }
+
+  Future<void> saveListPost(List<PostModel> listPost) async {
+    _isar.writeTxnSync(() {
+      _isar.postModels.putAllSync(listPost);
     });
   }
 

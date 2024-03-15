@@ -16,6 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   WakelockPlus.enable();
   await Get.put<AppController>(AppController()).init(Environment.dev);
+  setupStatusBar();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

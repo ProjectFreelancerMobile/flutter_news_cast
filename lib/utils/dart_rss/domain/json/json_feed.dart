@@ -23,16 +23,20 @@ class JsonFeed {
   }
 
   JsonFeed.fromJson(dynamic json) {
-    _page = json['page'];
-    _limit = json['limit'];
-    _explicit = json['explicit'];
-    _total = json['total'];
-    _hasMore = json['has_more'];
-    if (json['list'] != null) {
-      _list = [];
-      json['list'].forEach((v) {
-        _list?.add(JsonItem.fromJson(v));
-      });
+    try {
+      _page = json['page'];
+      _limit = json['limit'];
+      _explicit = json['explicit'];
+      _total = json['total'];
+      _hasMore = json['has_more'];
+      if (json['list'] != null) {
+        _list = [];
+        json['list'].forEach((v) {
+          _list?.add(JsonItem.fromJson(v));
+        });
+      }
+    } catch (e) {
+      print('JsonFeed.fromJson::' + e.toString());
     }
   }
 
@@ -105,10 +109,14 @@ class JsonItem {
   }
 
   JsonItem.fromJson(dynamic json) {
-    _id = json['id'];
-    _title = json['title'];
-    _channel = json['channel'];
-    _owner = json['owner'];
+    try {
+      _id = json['id'];
+      _title = json['title'];
+      _channel = json['channel'];
+      _owner = json['owner'];
+    } catch (e) {
+      print('JsonItem.fromJson::' + e.toString());
+    }
   }
 
   String? _id;

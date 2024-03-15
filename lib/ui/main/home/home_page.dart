@@ -84,11 +84,11 @@ class HomePage extends BasePage<HomeController> {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               final item = controller.listBookmark[index];
-              return FeedRecentItemView(
+              return BookmarkItemView(
                 isBookmark: true,
                 type: item.feed.value?.type ?? RSS_TITLE.GOOGLE.indexTitleValue,
-                url: item.image ?? '',
-                content: item.title ?? '',
+                url: item.image,
+                content: item.title,
                 onPressed: () => controller.navigationCast(item),
                 onPressedRemove: () => controller.deleteBookmark(item),
               );
@@ -145,11 +145,19 @@ class HomePage extends BasePage<HomeController> {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    SizedBox(width: 6.ws),
+                    SizedBox(width: 8.ws),
                     Assets.icons.icFeedUrl.svg(),
                   ],
                 ),
-                onPressed: () {},
+                onPressed: () => controller.navigationCast(PostModel(
+                  title: feedModel?.title ?? '',
+                  link: feedModel?.url ?? '',
+                  image: '',
+                  content: '',
+                  pubDate: DateTime.now(),
+                  favorite: false,
+                  fullText: false,
+                )),
               ),
             ),
             SizedBox(width: 16.ws),
