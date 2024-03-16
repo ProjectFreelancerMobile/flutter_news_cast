@@ -41,13 +41,13 @@ class HomeController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    getListBookMark();
     initRssData();
   }
 
   void initRssData() async {
     showLoading();
     final listRss = await _rssRepository.getInitRss();
+    getListBookMark();
     hideLoading();
     _listFeed$.value = listRss;
   }

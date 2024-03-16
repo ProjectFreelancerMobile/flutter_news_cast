@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_cast/app/app_pages.dart';
 import 'package:flutter_news_cast/res/style.dart';
 import 'package:flutter_news_cast/ui/widgets/button/touchable_opacity.dart';
-import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../base/base_page.dart';
@@ -19,7 +17,14 @@ class CastPage extends BasePage<CastController> {
         children: [
           Row(
             children: [
-              TouchableOpacity(onPressed: () => Get.offAllNamed(AppRoutes.MAIN), child: Assets.icons.icBack.svg()),
+              TouchableOpacity(
+                onPressed: () {
+                  if (controller.isHasLoadWeb) {
+                    controller.webViewController?.goBack();
+                  }
+                },
+                child: controller.isHasLoadWeb ? Assets.icons.icBack.svg() : Assets.icons.icBack.svg(color: Colors.black12),
+              ),
               SizedBox(width: 24.ws),
               Expanded(
                 child: DTextFromField(
@@ -28,7 +33,7 @@ class CastPage extends BasePage<CastController> {
                   textStyle: text14.textColor141414,
                   prefixIcon: Padding(
                     padding: EdgeInsets.only(left: 16.ws),
-                    child: controller.isHasLoadWeb ? Assets.icons.icCastLock.svg() : Icon(Icons.search),
+                    child: controller.isHasEditUrl ? Icon(Icons.search) : Assets.icons.icCastLock.svg(),
                   ),
                   suffixIcon: MaterialButton(
                     onPressed: () {
@@ -37,7 +42,7 @@ class CastPage extends BasePage<CastController> {
                     height: 24.ws,
                     minWidth: 24.ws,
                     padding: EdgeInsets.all(0),
-                    child: controller.isHasLoadWeb ? Assets.icons.icCastReplay.svg() : Assets.icons.icRemove.svg(),
+                    child: controller.isHasEditUrl ? Assets.icons.icRemove.svg() : Assets.icons.icCastReplay.svg(),
                   ),
                   iconContraints: BoxConstraints(maxWidth: 40.ws, maxHeight: 24, minHeight: 24),
                   background: colorSearch,
@@ -48,16 +53,17 @@ class CastPage extends BasePage<CastController> {
                   onValidated: (val) {
                     return controller.validatorURL('Địa chỉ URL');
                   },
+                  onFieldSubmitted: (value) {
+                    controller.commitURL(value, isInputEdit: true);
+                  },
                   onChange: (value) {
-                    controller.commitURL(value);
+                    controller.onChangeUrl();
                   },
                 ),
               ),
               SizedBox(width: 12.ws),
               TouchableOpacity(
-                onPressed: () {
-                  controller.saveBookMark();
-                },
+                onPressed: () => controller.saveBookMark(),
                 child: controller.isHasBookmark ? Icon(Icons.bookmark) : Assets.icons.icBookmark.svg(),
               ),
               // IconButton(onPressed: () {}, icon: Assets.icons.icCast.svg(height: 22.ws)),
@@ -66,6 +72,7 @@ class CastPage extends BasePage<CastController> {
           /*Expanded(
             child: InAppWebView(
               key: controller.webViewKey,
+              keepAlive: controller.keepAlive,
               initialSettings: controller.settings,
               pullToRefreshController: controller.pullToRefreshController,
               onWebViewCreated: (controllerWeb) {

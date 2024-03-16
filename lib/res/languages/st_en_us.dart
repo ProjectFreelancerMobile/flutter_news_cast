@@ -102,5 +102,6 @@ final Map<String, String> enUS = {
   'setting.error.connect': 'Không có internet. Vui lòng kiểm tra lại kết nối mạng của bạn',
   'error.url.exist': 'This URL already exists.',
   'error.remove': 'Remove error!',
+  'error.empty.home': 'You can keep track of new content a site by touching',
   'error.empty.bookmark': 'No results, don\'t forget to bookmark the website you like the most so that you can find those easily over here.',
 };

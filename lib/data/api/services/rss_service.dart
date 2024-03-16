@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:isar/isar.dart';
 
+import '../../../res/style.dart';
 import '../../storage/my_storage.dart';
 import '../api_constants.dart';
 import '../models/rss/feed_model.dart';
@@ -23,18 +24,48 @@ class RSSService extends BaseService {
     if (await _storage.isInstall() == false) {
       _storage.saveInstall(true);
       final listRssDefault = [
-        ListFeedBookmarkModel(0, RSS_1, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.THANHNIEN),
-        ListFeedBookmarkModel(1, RSS_2, RSS_TYPE.ATOM.indexValue, type: RSS_TITLE.YOUTUBE),
-        ListFeedBookmarkModel(2, RSS_3, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.VIMEO),
-        ListFeedBookmarkModel(3, RSS_4, RSS_TYPE.JSON.indexValue, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE, type: RSS_TITLE.DAILYMOTION),
-        ListFeedBookmarkModel(4, RSS_5, RSS_TYPE.JSON.indexValue, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE, type: RSS_TITLE.DAILYMOTION),
-        ListFeedBookmarkModel(5, RSS_6, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.THEXIFFY),
+        ListFeedBookmarkModel(0, RSS_1, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.THEXIFFY),
+        ListFeedBookmarkModel(1, RSS_2, RSS_TYPE.JSON.indexValue, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE, type: RSS_TITLE.DAILYMOTION),
+        ListFeedBookmarkModel(2, RSS_3, RSS_TYPE.JSON.indexValue, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE, type: RSS_TITLE.DAILYMOTION),
+        ListFeedBookmarkModel(3, RSS_4, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.VIMEO),
+        ListFeedBookmarkModel(4, RSS_5, RSS_TYPE.ATOM.indexValue, type: RSS_TITLE.YOUTUBE),
+        ListFeedBookmarkModel(5, RSS_6, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.THANHNIEN),
       ];
       await Future.forEach(listRssDefault, (element) async {
         await parseRss(element).then((value) async {
           listFeed.add(value);
         });
       });
+      final listBookmarkDefault = [
+        PostModel(
+          title: 'Sound Cloud',
+          link: BOOKMARK_1,
+          image: Assets.icons.icSoundcloud.path,
+          content: '',
+          pubDate: DateTime.now(),
+          favorite: true,
+          fullText: false,
+        ),
+        PostModel(
+          title: 'Mix Cloud',
+          link: BOOKMARK_2,
+          image: Assets.icons.icMixcloud.path,
+          content: '',
+          pubDate: DateTime.now(),
+          favorite: true,
+          fullText: false,
+        ),
+        PostModel(
+          title: 'Audio Mack',
+          link: BOOKMARK_3,
+          image: Assets.icons.icAudiomack.path,
+          content: '',
+          pubDate: DateTime.now(),
+          favorite: true,
+          fullText: false,
+        )
+      ];
+      await saveListPost(listBookmarkDefault);
       print('Load First');
     } else {
       final feedDB = await getFeedsDB();
@@ -70,14 +101,16 @@ class RSSService extends BaseService {
   Future<void> syncRefreshFeed(List<ListFeedModel> listFeeds) async {
     await Future.forEach(listFeeds, (element) async {
       if (element.feedModel != null) {
-        await parseRss(ListFeedBookmarkModel(
-          element.feedModel?.id ?? 0,
-          element.feedModel?.url ?? '',
-          element.feedModel?.rssType ?? RSS_TYPE.RSS.indexValue,
-          title: element.feedModel?.title,
-          baseUrl: element.feedModel?.baseUrl,
-          type: element.feedModel?.type.typeTitle ?? RSS_TITLE.GOOGLE,
-        ));
+        await parseRss(
+          ListFeedBookmarkModel(
+            element.feedModel?.id ?? 0,
+            element.feedModel?.url ?? '',
+            element.feedModel?.rssType ?? RSS_TYPE.RSS.indexValue,
+            title: element.feedModel?.title,
+            baseUrl: element.feedModel?.baseUrl,
+            type: element.feedModel?.type.typeTitle ?? RSS_TITLE.GOOGLE,
+          ),
+        );
       }
     });
   }
@@ -183,9 +216,16 @@ class RSSService extends BaseService {
       return false;
     }
     final response = await getWithUrlRss(url);
-    RssVersion rssVersion = WebFeed.detectRssVersion(response);
+    print('saveRssFeed::$response');
     var rssType = RSS_TYPE.RSS.indexValue;
     final id = await _isar.feedModels.count();
+    RssVersion rssVersion = RssVersion.rss2;
+    if (response.toString().startsWith('{') || response.toString().startsWith('[')) {
+      rssType = RSS_TYPE.JSON.indexValue;
+      rssVersion = RssVersion.json;
+    } else {
+      rssVersion = WebFeed.detectRssVersion(response);
+    }
     switch (rssVersion) {
       case RssVersion.atom:
         rssType = RSS_TYPE.ATOM.indexValue;
@@ -277,6 +317,7 @@ class RSSService extends BaseService {
           });
           return listPost;
         case RSS_TYPE.JSON:
+          //log('JsonFeed.fromJson::' + response.toString() + "feedModel::" + feedModel.toString());
           final JsonFeed jsonFeed = JsonFeed.fromJson(response);
           await Future.forEach(jsonFeed.list ?? List.empty(), (element) async {
             listPost.add(await _parseJsonPostItem(element, feedModel, baseUrl: feedModel.baseUrl));
@@ -372,6 +413,12 @@ class RSSService extends BaseService {
       if (listPost != null) {
         _isar.postModels.putAllSync(listPost);
       }
+    });
+  }
+
+  Future<void> saveListPost(List<PostModel> listPost) async {
+    _isar.writeTxnSync(() {
+      _isar.postModels.putAllSync(listPost);
     });
   }
 

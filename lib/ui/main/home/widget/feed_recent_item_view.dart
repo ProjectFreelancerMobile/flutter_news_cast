@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/data/storage/key_constant.dart';
 import 'package:flutter_news_cast/res/style.dart';
 import 'package:flutter_news_cast/ui/widgets/button/touchable_opacity.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
 
-class FeedRecentItemView extends StatelessWidget {
+class BookmarkItemView extends StatelessWidget {
   final int type;
   final String url;
   final String content;
@@ -12,7 +13,7 @@ class FeedRecentItemView extends StatelessWidget {
   final VoidCallback? onPressed;
   final VoidCallback? onPressedRemove;
 
-  FeedRecentItemView({
+  BookmarkItemView({
     required this.isBookmark,
     required this.type,
     required this.url,
@@ -54,7 +55,7 @@ class FeedRecentItemView extends StatelessWidget {
             SizedBox(
               height: 20.ws,
               width: 20.ws,
-              child: buildIcon(type.typeTitle),
+              child: buildIcon(type.typeTitle, pathImg: url),
             ),
             SizedBox(width: 16.ws),
             Expanded(
@@ -70,7 +71,10 @@ class FeedRecentItemView extends StatelessWidget {
         ),
       );
 
-  Widget buildIcon(RSS_TITLE type) {
+  Widget buildIcon(RSS_TITLE type, {String? pathImg}) {
+    if (pathImg != null && pathImg.contains('assets')) {
+      return SvgPicture.asset(pathImg);
+    }
     switch (type) {
       case RSS_TITLE.THANHNIEN:
         return Assets.icons.icThanhnien.image();

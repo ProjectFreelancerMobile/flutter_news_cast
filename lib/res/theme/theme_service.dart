@@ -36,15 +36,14 @@ class ThemeService {
   }
 
   AppTheme getAppTheme(int theme) {
-    // switch (theme) {
-    //   case LIGHT_THEME:
-    //     return AppTheme.LIGHT;
-    //   case DARK_THEME:
-    //     return AppTheme.DARK;
-    //   default:
-    //     return AppTheme.LIGHT;
-    // }
-    return AppTheme.LIGHT;
+    switch (theme) {
+      case LIGHT_THEME:
+        return AppTheme.LIGHT;
+      case DARK_THEME:
+        return AppTheme.DARK;
+      default:
+        return AppTheme.LIGHT;
+    }
   }
 }
 

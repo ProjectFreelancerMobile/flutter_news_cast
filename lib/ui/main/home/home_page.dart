@@ -6,6 +6,7 @@ import 'package:flutter_news_cast/res/style.dart';
 import 'package:flutter_news_cast/ui/main/home/widget/feed_item_view.dart';
 import 'package:flutter_news_cast/ui/main/home/widget/feed_recent_item_view.dart';
 import 'package:flutter_news_cast/ui/widgets/base_scaffold_widget.dart';
+import 'package:flutter_news_cast/ui/widgets/data_empty_widget.dart';
 import 'package:get/get.dart';
 
 import '../../../data/storage/key_constant.dart';
@@ -84,11 +85,11 @@ class HomePage extends BasePage<HomeController> {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               final item = controller.listBookmark[index];
-              return FeedRecentItemView(
+              return BookmarkItemView(
                 isBookmark: true,
                 type: item.feed.value?.type ?? RSS_TITLE.GOOGLE.indexTitleValue,
-                url: item.image ?? '',
-                content: item.title ?? '',
+                url: item.image,
+                content: item.title,
                 onPressed: () => controller.navigationCast(item),
                 onPressedRemove: () => controller.deleteBookmark(item),
               );
@@ -118,11 +119,13 @@ class HomePage extends BasePage<HomeController> {
           ],
         ),
         SizedBox(height: 16.ws),
-        Column(
-          children: [
-            for (var item in controller.listFeed) buildListPostFromFeed(context, item.feedModel, item.listPost),
-          ],
-        ),
+        controller.listFeed.length > 0
+            ? Column(
+                children: [
+                  for (var item in controller.listFeed) buildListPostFromFeed(context, item.feedModel, item.listPost),
+                ],
+              )
+            : DataEmptyWidget(textEmpty: textLocalization(' error.empty.home'))
       ],
     );
   }
@@ -145,11 +148,19 @@ class HomePage extends BasePage<HomeController> {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    SizedBox(width: 6.ws),
+                    SizedBox(width: 8.ws),
                     Assets.icons.icFeedUrl.svg(),
                   ],
                 ),
-                onPressed: () {},
+                onPressed: () => controller.navigationCast(PostModel(
+                  title: feedModel?.title ?? '',
+                  link: feedModel?.url ?? '',
+                  image: '',
+                  content: '',
+                  pubDate: DateTime.now(),
+                  favorite: false,
+                  fullText: false,
+                )),
               ),
             ),
             SizedBox(width: 16.ws),
