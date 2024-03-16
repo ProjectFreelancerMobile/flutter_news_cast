@@ -217,31 +217,35 @@ class RSSService extends BaseService {
     }
     final response = await getWithUrlRss(url);
     print('saveRssFeed::$response');
-    var rssType = RSS_TYPE.RSS.indexValue;
     final id = await _isar.feedModels.count();
+    final listFeed = ListFeedBookmarkModel(id, url, RSS_TYPE.RSS.indexValue);
     RssVersion rssVersion = RssVersion.rss2;
     if (response.toString().startsWith('{') || response.toString().startsWith('[')) {
-      rssType = RSS_TYPE.JSON.indexValue;
       rssVersion = RssVersion.json;
     } else {
       rssVersion = WebFeed.detectRssVersion(response);
     }
+    if (url.contains('dailymotion')) {
+      listFeed.title = 'Dailymotion';
+      listFeed.baseUrl = BASE_JSON_PARSE;
+      listFeed.type = RSS_TITLE.DAILYMOTION;
+    }
     switch (rssVersion) {
       case RssVersion.atom:
-        rssType = RSS_TYPE.ATOM.indexValue;
+        listFeed.rssType = RSS_TYPE.ATOM.indexValue;
         break;
       case RssVersion.rss2:
-        rssType = RSS_TYPE.RSS.indexValue;
+        listFeed.rssType = RSS_TYPE.RSS.indexValue;
         break;
       case RssVersion.rss1:
-        rssType = RSS_TYPE.RSS.indexValue;
+        listFeed.rssType = RSS_TYPE.RSS.indexValue;
         break;
       default:
-        rssType = RSS_TYPE.JSON.indexValue;
+        listFeed.rssType = RSS_TYPE.JSON.indexValue;
         break;
     }
-    print('url::$url rssType:$rssType rssVersion::$rssVersion id:$id');
-    await parseRss(ListFeedBookmarkModel(id, url, rssType)).then((value) async {
+    print('url::$url rssType:${listFeed.rssType} rssVersion::$rssVersion id:$id');
+    await parseRss(listFeed).then((value) async {
       await saveFeed(value.feedModel, value.listPost);
     });
     return true;
