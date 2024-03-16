@@ -183,8 +183,7 @@ class CastController extends BaseController {
   void dispose() {
     print('disposedisposedisposedispose');
     clearAddress();
-    // webViewController?.dispose();
-    // pullToRefreshController?.dispose();
+    pullToRefreshController?.dispose();
     textSearchCl.dispose();
     super.dispose();
   }
