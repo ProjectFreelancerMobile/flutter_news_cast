@@ -2,6 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
+import 'package:flutter_news_cast/res/theme/theme_service.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -35,7 +36,7 @@ class CastController extends BaseController {
     super.onInit();
     webController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(Colors.transparent)
+      ..setBackgroundColor(getColor().bgThemeColorBackground)
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {

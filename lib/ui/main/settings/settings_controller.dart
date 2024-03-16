@@ -17,7 +17,6 @@ class SettingsController extends BaseController {
   final themeManager = Get.find<ThemeService>();
   final txtNameController = TextEditingController();
   final txtPhoneController = TextEditingController();
-  final sexType = SEX_TYPE.MEN.obs;
   var _user = TUser().obs;
   var appVersion = ''.obs;
 

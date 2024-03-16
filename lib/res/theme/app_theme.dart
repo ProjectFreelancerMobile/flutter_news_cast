@@ -36,8 +36,8 @@ final appThemeData = {
   ),
   AppTheme.DARK: ThemeData(
     brightness: Brightness.dark,
-    primaryColor: colorPrimary,
-    scaffoldBackgroundColor: colorBackground,
+    primaryColor: color141414,
+    scaffoldBackgroundColor: color141414,
     highlightColor: Colors.transparent,
     splashColor: Colors.transparent,
     dividerColor: color929394,
@@ -45,17 +45,17 @@ final appThemeData = {
     fontFamily: FontFamily.roboto,
     useMaterial3: true,
     appBarTheme: AppBarTheme(
-      color: colorBackground,
+      color: color141414,
       scrolledUnderElevation: 0,
       systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: colorPrimary,
-      background: colorBackground,
+      background: color141414,
       brightness: Brightness.dark,
     ),
     bottomAppBarTheme: BottomAppBarTheme(
-      color: colorBackground,
+      color: color141414,
     ),
     dialogBackgroundColor: Colors.white,
   ),

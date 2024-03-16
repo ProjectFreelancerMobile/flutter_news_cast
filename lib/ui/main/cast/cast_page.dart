@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/res/style.dart';
+import 'package:flutter_news_cast/res/theme/theme_service.dart';
 import 'package:flutter_news_cast/ui/widgets/button/touchable_opacity.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -45,7 +46,7 @@ class CastPage extends BasePage<CastController> {
                     child: controller.isHasEditUrl ? Assets.icons.icRemove.svg() : Assets.icons.icCastReplay.svg(),
                   ),
                   iconContraints: BoxConstraints(maxWidth: 40.ws, maxHeight: 24, minHeight: 24),
-                  background: colorSearch,
+                  background: getColor().themeColorEBEBEC,
                   borderRadius: 18,
                   strokeColor: Colors.transparent,
                   hintText: textLocalization('feed.search.url'),

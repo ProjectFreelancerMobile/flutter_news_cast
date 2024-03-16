@@ -66,7 +66,7 @@ extension MyColorScheme on ColorScheme {
   //***************************START TEXT COLOR*****************************************
   //Màu của chữ trong toàn bộ ứng dụng
 
-  Color get textColor141414 => getColorTheme(color141414, color141414);
+  Color get textColor141414 => getColorTheme(color141414, colorWhite);
 
   Color get textColor777777 => getColorTheme(color777777, color777777);
 
@@ -123,7 +123,7 @@ extension MyColorScheme on ColorScheme {
 
   Color get themeColorBBDEFA => getColorTheme(colorBBDEFA, colorBBDEFA);
 
-  Color get themeColorEBEBEC => getColorTheme(colorEBEBEC, colorEBEBEC);
+  Color get themeColorEBEBEC => getColorTheme(colorEBEBEC, color777777);
 
   Color get themeColor0EAC71 => getColorTheme(color0EAC71, color0EAC71);
 
@@ -157,6 +157,8 @@ extension MyColorScheme on ColorScheme {
 
 //***************************BACKGROUND COLOR*****************************************
   //Màu của các background
+
+  Color get bgThemeColorBackground => getColorTheme(colorBackground, color141414);
 
   Color get bgThemeColorF5F6F8 => getColorTheme(colorF5F6F8, colorF5F6F8);
 
