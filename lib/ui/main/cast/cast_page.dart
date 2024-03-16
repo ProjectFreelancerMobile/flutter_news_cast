@@ -1,10 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_news_cast/app/app_pages.dart';
 import 'package:flutter_news_cast/res/style.dart';
 import 'package:flutter_news_cast/ui/widgets/button/touchable_opacity.dart';
 import 'package:get/get.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../base/base_page.dart';
 import '../../widgets/base_scaffold_widget.dart';
@@ -64,7 +63,7 @@ class CastPage extends BasePage<CastController> {
               // IconButton(onPressed: () {}, icon: Assets.icons.icCast.svg(height: 22.ws)),
             ],
           ),
-          Expanded(
+          /*Expanded(
             child: InAppWebView(
               key: controller.webViewKey,
               initialSettings: controller.settings,
@@ -100,6 +99,9 @@ class CastPage extends BasePage<CastController> {
                 }
               },
             ),
+          ),*/
+          Expanded(
+            child: WebViewWidget(controller: controller),
           ),
         ],
       ),
