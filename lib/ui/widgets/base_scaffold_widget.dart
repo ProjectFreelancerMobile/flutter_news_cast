@@ -18,7 +18,7 @@ class ScaffoldBase extends StatelessWidget {
       body: SafeArea(
         child: Material(
           child: Padding(
-            padding: isHome == true ? EdgeInsets.only(left: 16.ws, top: 16.ws) : EdgeInsets.symmetric(horizontal: 16.ws, vertical: 16.ws),
+            padding: isHome == true ? EdgeInsets.only(left: 12.ws, top: 16.ws) : EdgeInsets.symmetric(horizontal: 12.ws, vertical: 16.ws),
             child: body,
           ),
         ),

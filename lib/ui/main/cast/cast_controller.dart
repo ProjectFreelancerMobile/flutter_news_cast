@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 
 import '../../../data/api/repositories/rss_repository.dart';
 import '../../base/base_controller.dart';
-import '../../widgets/debound_util.dart';
 import '../home/home_controller.dart';
 
 class CastController extends BaseController {
@@ -30,10 +29,15 @@ class CastController extends BaseController {
   bool get isHasLoadWeb => _isHasLoadWeb$.value;
   var _isHasLoadWeb$ = false.obs;
 
+  bool get isHasEditUrl => _isHasEditUrl$.value;
+  var _isHasEditUrl$ = false.obs;
+
   bool get isHasBookmark => _isHasBookmark$.value;
   var _isHasBookmark$ = false.obs;
 
   String get postTitle => postRss?.title ?? '';
+
+  bool get isHasDoneUrl => !isHasEditUrl && isHasLoadWeb;
 
   @override
   void onClose() {
@@ -65,6 +69,11 @@ class CastController extends BaseController {
     }
   }
 
+  void clearAddress() {
+    _isHasLoadWeb$.value = false;
+    textSearchCl.text = '';
+  }
+
   Future<void> reloadWeb() async {
     showLoading();
     if (defaultTargetPlatform == TargetPlatform.android) {
@@ -77,17 +86,20 @@ class CastController extends BaseController {
   void commitURL(String? url) {
     print('commitURL:$url');
     if (url?.isNotEmpty == true) {
-      DeBouncer.run(() {
-        showLoading();
-        final urlWeb = url?.contains('http') == true ? (url ?? '') : ('https:///www.${url ?? ''}');
-        webViewController?.loadUrl(urlRequest: URLRequest(url: WebUri(urlWeb)));
-      });
+      showLoading();
+      final urlWeb = url?.contains('http') == true ? (url ?? '') : ('https:///www.${url ?? ''}');
+      webViewController?.loadUrl(urlRequest: URLRequest(url: WebUri(urlWeb)));
     } else {
       loadWeb(false);
     }
   }
 
+  void onChangeUrl() {
+    _isHasEditUrl$.value = true;
+  }
+
   void loadWeb(bool isDone) {
+    _isHasEditUrl$.value = false;
     print('loadWeb:$isDone');
     if (textSearchCl.text.isEmpty) {
       _isHasLoadWeb$.value = false;
@@ -99,29 +111,31 @@ class CastController extends BaseController {
 
   void clearOrReload() async {
     print('clearOrReload');
-    await reloadWeb();
-    // if (isHasLoadWeb)
-    //   textSearchCl.clear();
-    // else
-    //   await reloadWeb();
+    if (isHasDoneUrl)
+      await reloadWeb();
+    else
+      textSearchCl.clear();
   }
 
   void saveBookMark() {
     if (textSearchCl.text.isEmpty) return;
     _isHasBookmark$.value = !isHasBookmark;
+    var postBookmark = postRss ??
+        PostModel(
+          title: textSearchCl.text,
+          link: textSearchCl.text,
+          image: '',
+          content: textSearchCl.text,
+          pubDate: DateTime.now(),
+          favorite: isHasBookmark,
+          fullText: false,
+          isUrlCast: true,
+        );
+    postBookmark.favorite = isHasBookmark;
     _rssRepository.updatePostStatus(
-      PostModel(
-        title: textSearchCl.text,
-        link: textSearchCl.text,
-        image: '',
-        content: textSearchCl.text,
-        pubDate: DateTime.now(),
-        favorite: true,
-        fullText: false,
-        isUrlCast: true,
-      ),
+      postBookmark,
       bookMark: isHasBookmark,
-      readTime: null,
+      readTime: DateTime.now(),
     );
     Get.find<HomeController>().getListBookMark();
   }
@@ -144,6 +158,7 @@ class CastController extends BaseController {
 
   @override
   void dispose() {
+    clearAddress();
     textSearchCl.dispose();
     super.dispose();
   }
