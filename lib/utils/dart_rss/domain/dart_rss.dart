@@ -145,5 +145,6 @@ enum RssVersion {
   rss1,
   rss2,
   atom,
+  json,
   unknown,
 }

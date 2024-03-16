@@ -218,9 +218,16 @@ class RSSService extends BaseService {
       return false;
     }
     final response = await getWithUrlRss(url);
-    RssVersion rssVersion = WebFeed.detectRssVersion(response);
+    print('saveRssFeed::$response');
     var rssType = RSS_TYPE.RSS.indexValue;
     final id = await _isar.feedModels.count();
+    RssVersion rssVersion = RssVersion.rss2;
+    if (response.toString().startsWith('{') || response.toString().startsWith('[')) {
+      rssType = RSS_TYPE.JSON.indexValue;
+      rssVersion = RssVersion.json;
+    } else {
+      rssVersion = WebFeed.detectRssVersion(response);
+    }
     switch (rssVersion) {
       case RssVersion.atom:
         rssType = RSS_TYPE.ATOM.indexValue;
