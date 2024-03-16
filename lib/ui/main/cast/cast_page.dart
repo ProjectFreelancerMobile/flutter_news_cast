@@ -64,9 +64,7 @@ class CastPage extends BasePage<CastController> {
               ),
               SizedBox(width: 12.ws),
               TouchableOpacity(
-                onPressed: () {
-                  controller.saveBookMark();
-                },
+                onPressed: () => controller.saveBookMark(),
                 child: controller.isHasBookmark ? Icon(Icons.bookmark) : Assets.icons.icBookmark.svg(),
               ),
               // IconButton(onPressed: () {}, icon: Assets.icons.icCast.svg(height: 22.ws)),
@@ -75,6 +73,7 @@ class CastPage extends BasePage<CastController> {
           Expanded(
             child: InAppWebView(
               key: controller.webViewKey,
+              keepAlive: controller.keepAlive,
               initialSettings: controller.settings,
               pullToRefreshController: controller.pullToRefreshController,
               onWebViewCreated: (controllerWeb) {

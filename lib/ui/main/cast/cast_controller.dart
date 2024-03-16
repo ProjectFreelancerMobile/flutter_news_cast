@@ -15,7 +15,7 @@ class CastController extends BaseController {
   PostModel? postModel;
 
   bool get isShowScreenError => false;
-  final GlobalKey webViewKey = GlobalKey();
+  GlobalKey webViewKey = GlobalKey();
   InAppWebViewController? webViewController;
   InAppWebViewSettings settings = InAppWebViewSettings(
     isInspectable: false,
@@ -38,6 +38,7 @@ class CastController extends BaseController {
   String get postTitle => postModel?.title ?? '';
 
   bool get isHasDoneUrl => !isHasEditUrl && isHasLoadWeb;
+  final keepAlive = InAppWebViewKeepAlive();
 
   @override
   void onClose() {
@@ -89,14 +90,15 @@ class CastController extends BaseController {
   void commitURL(String? url, {bool isInputEdit = false}) {
     print('commitURL:$url');
     if (url?.isNotEmpty == true) {
+      //isInputEdit
       showLoading();
-      var urlWeb = '';
-      if (isInputEdit) {
-        urlWeb = 'https://www.google.com/search?q=${url ?? ''}';
+      var urlWeb = WebUri(url!);
+      if (urlWeb.scheme.isEmpty) {
+        urlWeb = WebUri("https://www.google.com/search?q=$url");
       } else {
-        urlWeb = url?.contains('http') == true ? (url ?? '') : ('https:///www.${url ?? ''}');
+        urlWeb = WebUri(url.contains('http') == true ? (url ?? '') : ('https:///www.${url ?? ''}'));
       }
-      webViewController?.loadUrl(urlRequest: URLRequest(url: WebUri(urlWeb)));
+      webViewController?.loadUrl(urlRequest: URLRequest(url: urlWeb));
     } else {
       loadWeb(false);
     }
@@ -143,6 +145,7 @@ class CastController extends BaseController {
 
   //Bookmark
   void saveBookMark() async {
+    print('saveBookMark11111');
     if (textSearchCl.text.isEmpty) return;
     _isHasBookmark$.value = !isHasBookmark;
     final icon = await webViewController?.getFavicons();
@@ -178,9 +181,10 @@ class CastController extends BaseController {
 
   @override
   void dispose() {
+    print('disposedisposedisposedispose');
     clearAddress();
-    webViewController?.dispose();
-    pullToRefreshController?.dispose();
+    // webViewController?.dispose();
+    // pullToRefreshController?.dispose();
     textSearchCl.dispose();
     super.dispose();
   }

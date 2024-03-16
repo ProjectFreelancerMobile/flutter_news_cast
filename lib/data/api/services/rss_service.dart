@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_news_cast/app/app_controller.dart';
 import 'package:flutter_news_cast/data/storage/key_constant.dart';
 import 'package:flutter_news_cast/utils/dart_rss/dart_rss.dart';
@@ -319,7 +317,7 @@ class RSSService extends BaseService {
           });
           return listPost;
         case RSS_TYPE.JSON:
-          log('JsonFeed.fromJson::' + response.toString() + "feedModel::" + feedModel.toString());
+          //log('JsonFeed.fromJson::' + response.toString() + "feedModel::" + feedModel.toString());
           final JsonFeed jsonFeed = JsonFeed.fromJson(response);
           await Future.forEach(jsonFeed.list ?? List.empty(), (element) async {
             listPost.add(await _parseJsonPostItem(element, feedModel, baseUrl: feedModel.baseUrl));
