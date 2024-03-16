@@ -20,7 +20,7 @@ class CastPage extends BasePage<CastController> {
               TouchableOpacity(
                 onPressed: () {
                   if (controller.isHasLoadWeb) {
-                    controller.webViewController?.goBack();
+                    controller.webController.goBack();
                   }
                 },
                 child: controller.isHasLoadWeb ? Assets.icons.icBack.svg() : Assets.icons.icBack.svg(color: Colors.black12),
@@ -108,7 +108,7 @@ class CastPage extends BasePage<CastController> {
             ),
           ),*/
           Expanded(
-            child: WebViewWidget(controller: controller),
+            child: WebViewWidget(controller: controller.webController),
           ),
         ],
       ),

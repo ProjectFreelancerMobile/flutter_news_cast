@@ -1,9 +1,9 @@
 // ignore_for_file: invalid_use_of_protected_member
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
 import 'package:get/get.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../data/api/repositories/rss_repository.dart';
 import '../../base/base_controller.dart';
@@ -15,16 +15,6 @@ class CastController extends BaseController {
   PostModel? postModel;
 
   bool get isShowScreenError => false;
-  GlobalKey webViewKey = GlobalKey();
-  InAppWebViewController? webViewController;
-  InAppWebViewSettings settings = InAppWebViewSettings(
-    isInspectable: false,
-    mediaPlaybackRequiresUserGesture: false,
-    allowsInlineMediaPlayback: true,
-    iframeAllowFullscreen: true,
-    transparentBackground: true,
-  );
-  PullToRefreshController? pullToRefreshController;
 
   bool get isHasLoadWeb => _isHasLoadWeb$.value;
   var _isHasLoadWeb$ = false.obs;
@@ -38,27 +28,32 @@ class CastController extends BaseController {
   String get postTitle => postModel?.title ?? '';
 
   bool get isHasDoneUrl => !isHasEditUrl && isHasLoadWeb;
-  final keepAlive = InAppWebViewKeepAlive();
-
-  @override
-  void onClose() {
-    print('HomeController:onClose');
-    super.onClose();
-  }
+  late WebViewController webController;
 
   @override
   void onInit() async {
     super.onInit();
-    pullToRefreshController = kIsWeb
-        ? null
-        : PullToRefreshController(
-            settings: PullToRefreshSettings(
-              color: Colors.blue,
-            ),
-            onRefresh: () async {
-              await reloadWeb();
-            },
-          );
+    webController = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(Colors.transparent)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            if (progress == 100) {
+              loadWeb(true);
+            }
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            if (request.url.startsWith('https://www.youtube.com/')) {
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      );
   }
 
   void initUrlCast(PostModel? postModel) async {
@@ -81,24 +76,23 @@ class CastController extends BaseController {
   Future<void> reloadWeb() async {
     showLoading();
     if (defaultTargetPlatform == TargetPlatform.android) {
-      webViewController?.reload();
+      webController.reload();
     } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-      webViewController?.loadUrl(urlRequest: URLRequest(url: await webViewController?.getUrl()));
+      webController.loadRequest(Uri.parse(textSearchCl.text));
     }
   }
 
   void commitURL(String? url, {bool isInputEdit = false}) {
     print('commitURL:$url');
     if (url?.isNotEmpty == true) {
-      //isInputEdit
-      showLoading();
-      var urlWeb = WebUri(url!);
+      var urlWeb = Uri.parse(url!);
       if (urlWeb.scheme.isEmpty) {
-        urlWeb = WebUri("https://www.google.com/search?q=$url");
+        urlWeb = Uri.parse("https://www.google.com/search?q=$url");
       } else {
-        urlWeb = WebUri(url.contains('http') == true ? (url ?? '') : ('https:///www.${url ?? ''}'));
+        urlWeb = Uri.parse(url.contains('http') == true ? (url ?? '') : ('https:///www.${url ?? ''}'));
       }
-      webViewController?.loadUrl(urlRequest: URLRequest(url: urlWeb));
+      showLoading();
+      webController.loadRequest(urlWeb);
     } else {
       loadWeb(false);
     }
@@ -145,18 +139,18 @@ class CastController extends BaseController {
 
   //Bookmark
   void saveBookMark() async {
-    print('saveBookMark11111');
     if (textSearchCl.text.isEmpty) return;
     _isHasBookmark$.value = !isHasBookmark;
-    final icon = await webViewController?.getFavicons();
-    final iconUrl = icon?.first.url.rawValue;
-    print('saveBookMark::' + iconUrl.toString());
+    //final icon = await webController?.getFavicons();
+    //final iconUrl = icon?.first.url.rawValue;
+    print('saveBookMark::' + isHasBookmark.toString());
     var postBookmark = postModel ??
         PostModel(
-          title: await webViewController?.getTitle() ?? '',
+          title: await webController.getTitle() ?? '',
           link: textSearchCl.text,
-          image: iconUrl ?? '',
-          content: await webViewController?.getTitle() ?? '',
+          image: '',
+          //iconUrl
+          content: await webController.getTitle() ?? '',
           pubDate: DateTime.now(),
           favorite: isHasBookmark,
           fullText: false,
@@ -183,7 +177,6 @@ class CastController extends BaseController {
   void dispose() {
     print('disposedisposedisposedispose');
     clearAddress();
-    pullToRefreshController?.dispose();
     textSearchCl.dispose();
     super.dispose();
   }
