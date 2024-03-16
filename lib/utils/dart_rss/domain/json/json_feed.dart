@@ -36,7 +36,7 @@ class JsonFeed {
         });
       }
     } catch (e) {
-      print('JsonFeed.fromJson::' + e.toString());
+      //print('JsonFeed.fromJson::' + e.toString());
     }
   }
 
@@ -115,7 +115,7 @@ class JsonItem {
       _channel = json['channel'];
       _owner = json['owner'];
     } catch (e) {
-      print('JsonItem.fromJson::' + e.toString());
+      //print('JsonItem.fromJson::' + e.toString());
     }
   }
 

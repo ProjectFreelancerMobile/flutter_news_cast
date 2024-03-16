@@ -55,7 +55,7 @@ class CastPage extends BasePage<CastController> {
                     return controller.validatorURL('Địa chỉ URL');
                   },
                   onFieldSubmitted: (value) {
-                    controller.commitURL(value);
+                    controller.commitURL(value, isInputEdit: true);
                   },
                   onChange: (value) {
                     controller.onChangeUrl();

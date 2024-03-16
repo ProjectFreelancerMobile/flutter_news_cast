@@ -12,7 +12,7 @@ import '../home/home_controller.dart';
 class CastController extends BaseController {
   final _rssRepository = Get.find<RssRepository>();
   TextEditingController textSearchCl = TextEditingController();
-  final postRss = Get.arguments?['item'] as PostModel?;
+  PostModel? postModel;
 
   bool get isShowScreenError => false;
   final GlobalKey webViewKey = GlobalKey();
@@ -35,7 +35,7 @@ class CastController extends BaseController {
   bool get isHasBookmark => _isHasBookmark$.value;
   var _isHasBookmark$ = false.obs;
 
-  String get postTitle => postRss?.title ?? '';
+  String get postTitle => postModel?.title ?? '';
 
   bool get isHasDoneUrl => !isHasEditUrl && isHasLoadWeb;
 
@@ -60,9 +60,11 @@ class CastController extends BaseController {
           );
   }
 
-  void initUrlCast(PostModel? postModel) {
+  void initUrlCast(PostModel? postModel) async {
     if (postModel == null) return;
-    _isHasBookmark$.value = postModel.favorite;
+    this.postModel = postModel;
+    updatePostRecent(postModel);
+    _isHasBookmark$.value = await getBookMark(postModel);
     if (postModel.link.isNotEmpty) {
       textSearchCl.text = postModel.link;
       commitURL(textSearchCl.text);
@@ -70,6 +72,7 @@ class CastController extends BaseController {
   }
 
   void clearAddress() {
+    postModel = null;
     _isHasLoadWeb$.value = false;
     textSearchCl.text = '';
   }
@@ -83,11 +86,16 @@ class CastController extends BaseController {
     }
   }
 
-  void commitURL(String? url) {
+  void commitURL(String? url, {bool isInputEdit = false}) {
     print('commitURL:$url');
     if (url?.isNotEmpty == true) {
       showLoading();
-      final urlWeb = url?.contains('http') == true ? (url ?? '') : ('https:///www.${url ?? ''}');
+      var urlWeb = '';
+      if (isInputEdit) {
+        urlWeb = 'https://www.google.com/search?q=${url ?? ''}';
+      } else {
+        urlWeb = url?.contains('http') == true ? (url ?? '') : ('https:///www.${url ?? ''}');
+      }
       webViewController?.loadUrl(urlRequest: URLRequest(url: WebUri(urlWeb)));
     } else {
       loadWeb(false);
@@ -117,29 +125,6 @@ class CastController extends BaseController {
       textSearchCl.clear();
   }
 
-  void saveBookMark() {
-    if (textSearchCl.text.isEmpty) return;
-    _isHasBookmark$.value = !isHasBookmark;
-    var postBookmark = postRss ??
-        PostModel(
-          title: textSearchCl.text,
-          link: textSearchCl.text,
-          image: '',
-          content: textSearchCl.text,
-          pubDate: DateTime.now(),
-          favorite: isHasBookmark,
-          fullText: false,
-          isUrlCast: true,
-        );
-    postBookmark.favorite = isHasBookmark;
-    _rssRepository.updatePostStatus(
-      postBookmark,
-      bookMark: isHasBookmark,
-      readTime: DateTime.now(),
-    );
-    Get.find<HomeController>().getListBookMark();
-  }
-
   String? validatorURL(String fieldName) {
     return (GetUtils.isNullOrBlank(textSearchCl.text) == true)
         ? 'sign_up_msg_is_required'.trParams(
@@ -156,9 +141,46 @@ class CastController extends BaseController {
             : null;
   }
 
+  //Bookmark
+  void saveBookMark() async {
+    if (textSearchCl.text.isEmpty) return;
+    _isHasBookmark$.value = !isHasBookmark;
+    final icon = await webViewController?.getFavicons();
+    final iconUrl = icon?.first.url.rawValue;
+    print('saveBookMark::' + iconUrl.toString());
+    var postBookmark = postModel ??
+        PostModel(
+          title: await webViewController?.getTitle() ?? '',
+          link: textSearchCl.text,
+          image: iconUrl ?? '',
+          content: await webViewController?.getTitle() ?? '',
+          pubDate: DateTime.now(),
+          favorite: isHasBookmark,
+          fullText: false,
+          isUrlCast: true,
+        );
+    postBookmark.favorite = isHasBookmark;
+    _rssRepository.updatePostStatus(
+      postBookmark,
+      bookMark: isHasBookmark,
+      readTime: DateTime.now(),
+    );
+    Get.find<HomeController>().getListBookMark();
+  }
+
+  void updatePostRecent(PostModel postModel) {
+    _rssRepository.updatePostStatus(postModel, readTime: DateTime.now());
+  }
+
+  Future<bool> getBookMark(PostModel postModel) {
+    return _rssRepository.getBookmark(postModel);
+  }
+
   @override
   void dispose() {
     clearAddress();
+    webViewController?.dispose();
+    pullToRefreshController?.dispose();
     textSearchCl.dispose();
     super.dispose();
   }
