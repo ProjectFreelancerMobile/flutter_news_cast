@@ -42,14 +42,16 @@ class CastController extends BaseController {
       ..setBackgroundColor(getColor().bgThemeColorBackground)
       ..setNavigationDelegate(
         NavigationDelegate(
-          onProgress: (int progress) {
+          onProgress: (int progress) async {
             if (progress == 100) {
               updateStateCanBack();
               loadWeb(true);
             }
           },
           onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
+          onPageFinished: (String url) {
+            checkPostStatus(postModel, url);
+          },
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
             if (request.url.startsWith('https://www.youtube.com/')) {
@@ -89,11 +91,11 @@ class CastController extends BaseController {
   }
 
   void commitURL(String? url, {bool isInputEdit = false, PostModel? postModel}) {
+    _isHasBookmark$.value = false;
     if (url?.isNotEmpty == true) {
       this.postModel = postModel;
       showLoading();
       print('commitURL:$url');
-      checkPostStatus(postModel, url);
       var urlWeb = Uri.parse(url!);
       if (urlWeb.scheme.isEmpty) {
         urlWeb = Uri.parse("https://www.google.com/search?q=$url");
@@ -162,6 +164,9 @@ class CastController extends BaseController {
     //final icon = await webController?.getFavicons();
     //final iconUrl = icon?.first.url.rawValue;
     if (postModel != null) {
+      if (postModel?.title == null || postModel?.title.length == 0) {
+        postModel?.title = await webController.getTitle() ?? textSearchCl.text;
+      }
       postModel?.favorite = isHasBookmark;
       print('saveBookMark::' + postModel.toString());
       _rssRepository.updatePostStatus(
@@ -174,10 +179,10 @@ class CastController extends BaseController {
   }
 
   void checkPostStatus(PostModel? postModelItem, String? url) async {
-    _isHasBookmark$.value = false;
     if (postModelItem != null) {
       print('checkPostBookmark:0000::' + postModel.toString());
       _isHasBookmark$.value = postModelItem.favorite;
+      postModel?.readDate = DateTime.now();
     } else {
       _rssRepository.getPostBookmark(url).then((value) {
         if (value != null) {
