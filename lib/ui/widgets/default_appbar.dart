@@ -107,7 +107,7 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
           },
         )
       : ButtonIconTextWidget(
-          icon: Assets.icons.icBack.svg(color: getColor().themeColorB2B2B2),
+          icon: Assets.icons.icBack.svg(color: getColor().themeColor141414),
           onPressed: () {
             onPress != null ? onPress!() : Get.back();
           },

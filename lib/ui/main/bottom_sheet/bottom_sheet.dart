@@ -216,7 +216,7 @@ Future<void> openBottomSheetSelectDevice(HomeController controller) {
                   SizedBox(height: 16.ws),
                   Row(
                     children: [
-                      Assets.icons.icLocalPhone.svg(color: getColor().themeColorB2B2B2),
+                      Assets.icons.icLocalPhone.svg(color: getColor().themeColor141414),
                       SizedBox(width: 16.ws),
                       Text(
                         textLocalization('dialog.local.playback'),
@@ -227,7 +227,7 @@ Future<void> openBottomSheetSelectDevice(HomeController controller) {
                   SizedBox(height: 16.ws),
                   Row(
                     children: [
-                      Assets.icons.icAirplay.svg(color: getColor().themeColorB2B2B2),
+                      Assets.icons.icAirplay.svg(color: getColor().themeColor141414),
                       SizedBox(width: 16.ws),
                       Text(
                         textLocalization('dialog.airplay'),
@@ -238,7 +238,7 @@ Future<void> openBottomSheetSelectDevice(HomeController controller) {
                   SizedBox(height: 16.ws),
                   Row(
                     children: [
-                      Assets.icons.icLearnMore.svg(color: getColor().themeColorB2B2B2),
+                      Assets.icons.icLearnMore.svg(color: getColor().themeColor141414),
                       SizedBox(width: 16.ws),
                       Text(
                         textLocalization('dialog.learn.more'),

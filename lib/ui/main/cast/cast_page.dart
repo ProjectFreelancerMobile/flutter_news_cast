@@ -28,7 +28,7 @@ class CastPage extends BasePage<CastController> {
                         controller.webController.goBack();
                         controller.updateStateCanBack(isBack: true);
                       },
-                      icon: controller.isHasCanBack ? Assets.icons.icBack.svg(color: getColor().themeColor141414) : Assets.icons.icBack.svg(color: getColor().themeColorB2B2B2),
+                      icon: controller.isHasCanBack ? Assets.icons.icBack.svg(color: getColor().themeColor141414) : Assets.icons.icBack.svg(color: getColor().themeColor141414),
                     ),
                     Expanded(
                       child: DTextFromField(
@@ -37,7 +37,7 @@ class CastPage extends BasePage<CastController> {
                         textStyle: text16.textColor141414,
                         prefixIcon: Padding(
                           padding: EdgeInsets.only(left: 16.ws),
-                          child: controller.isHasEditUrl ? Icon(Icons.search, color: getColor().themeColorB2B2B2) : Assets.icons.icCastLock.svg(color: getColor().themeColorB2B2B2),
+                          child: controller.isHasEditUrl ? Icon(Icons.search, color: getColor().themeColor141414) : Assets.icons.icCastLock.svg(color: getColor().themeColor141414),
                         ),
                         suffixIcon: MaterialButton(
                           onPressed: () {
@@ -47,8 +47,8 @@ class CastPage extends BasePage<CastController> {
                           minWidth: 24.ws,
                           padding: EdgeInsets.all(0),
                           child: controller.isHasEditUrl
-                              ? Assets.icons.icRemove.svg(color: getColor().themeColorB2B2B2)
-                              : Assets.icons.icCastReplay.svg(color: getColor().themeColorB2B2B2),
+                              ? Assets.icons.icRemove.svg(color: getColor().themeColor141414)
+                              : Assets.icons.icCastReplay.svg(color: getColor().themeColor141414),
                         ),
                         iconContraints: BoxConstraints(maxWidth: 40.ws, maxHeight: 24, minHeight: 24),
                         background: getColor().themeColorEBEBEC,
@@ -71,8 +71,8 @@ class CastPage extends BasePage<CastController> {
                     TouchableOpacity(
                       onPressed: () => controller.saveBookMark(),
                       child: controller.isHasBookmark
-                          ? Icon(Icons.bookmark, size: 24.ws, color: getColor().themeColorB2B2B2)
-                          : Icon(Icons.bookmark_border, size: 24.ws, color: getColor().themeColorB2B2B2),
+                          ? Icon(Icons.bookmark, size: 24.ws, color: getColor().themeColor141414)
+                          : Icon(Icons.bookmark_border, size: 24.ws, color: getColor().themeColor141414),
                     ),
                     // IconButton(onPressed: () {}, icon: Assets.icons.icCast.svg(height: 22.ws)),
                   ],

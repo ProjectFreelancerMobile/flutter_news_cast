@@ -24,7 +24,7 @@ class MainController extends BaseController {
   onTabChanged(int index) {
     pageController.jumpToPage(index);
     pageIndex.value = index;
-    //Get.find<CastController>().clearAddress();
+    Get.find<CastController>().initBackground();
   }
 
   onRunRssPost(PostModel? postModel) {

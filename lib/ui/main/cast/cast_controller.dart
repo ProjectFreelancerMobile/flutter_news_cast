@@ -2,11 +2,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
-import 'package:flutter_news_cast/res/theme/theme_service.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../data/api/repositories/rss_repository.dart';
+import '../../../res/theme/theme_service.dart';
 import '../../base/base_controller.dart';
 import '../home/home_controller.dart';
 
@@ -59,9 +59,6 @@ class CastController extends BaseController {
           },
         ),
       );
-    String js =
-        "javascript: (function () { var css = 'html {-webkit-filter: invert(100%);' +    '-moz-filter: invert(100%);' +     '-o-filter: invert(100%);' +     '-ms-filter: invert(100%); }',head = document.getElementsByTagName('head')[0],style = document.createElement('style');style.type = 'text/css';if (style.styleSheet){style.styleSheet.cssText = css;} else {style.appendChild(document.createTextNode(css));}head.appendChild(style);}());";
-    webController.runJavaScript(js);
   }
 
   void initUrlCast(PostModel? postModel) async {
@@ -70,6 +67,10 @@ class CastController extends BaseController {
       textSearchCl.text = postModel.link;
       commitURL(textSearchCl.text, postModel: postModel);
     }
+  }
+
+  void initBackground() {
+    webController.setBackgroundColor(getColor().bgThemeColorBackground);
   }
 
   void clearAddress() {
