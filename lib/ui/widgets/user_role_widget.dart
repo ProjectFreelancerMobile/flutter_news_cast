@@ -45,11 +45,11 @@ class UserRoleWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(user.name!, style: text14.medium.textColor141414),
+              Text(user.name!, style: text16.medium.textColor141414),
               SizedBox(
                 height: 2.ws,
               ),
-              Text("${readTimeStampBySecond(createDate)} trước", style: text14.textColorB2B2B2)
+              Text("${readTimeStampBySecond(createDate)} trước", style: text16.textColorB2B2B2)
             ],
           )
         ],

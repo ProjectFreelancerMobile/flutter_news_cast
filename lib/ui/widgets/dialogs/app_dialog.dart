@@ -100,7 +100,7 @@ class AppDialog {
       child: Text(
         title,
         textAlign: TextAlign.center,
-        style: text14.bold.textColor141414,
+        style: text16.bold.textColor141414,
       ),
     );
   }
@@ -112,7 +112,7 @@ class AppDialog {
       child: Text(
         description,
         textAlign: TextAlign.center,
-        style: text14.textColor141414,
+        style: text16.textColor141414,
       ),
     );
   }
@@ -172,7 +172,7 @@ class AppDialog {
         },
         child: Text(
           midText,
-          style: text14.height16Per.textColorPrimary,
+          style: text16.height16Per.textColorPrimary,
         ),
       );
 

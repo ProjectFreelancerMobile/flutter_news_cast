@@ -6,6 +6,7 @@ import 'package:flutter_news_cast/ui/widgets/loading_widget.dart';
 import 'package:get/get.dart';
 
 import '../../widgets/button/custom_button.dart';
+import '../../widgets/button/text_button_widget.dart';
 import '../home/home_controller.dart';
 
 Future<void> openBottomSheetAddRss(HomeController controller) {
@@ -28,15 +29,15 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  TextButton(
+                  ButtonIconTextWidget(
                     onPressed: () {
                       controller.clearInputRss();
                       controller.textAddRssCl.clear();
                       Get.back();
                     },
-                    child: Text(
+                    text: Text(
                       textLocalization('dialog.cancel'),
-                      style: text14.bold.textColorFF6F15,
+                      style: text16.bold.textColorFF6F15,
                     ),
                   ),
                   SizedBox(height: 60.ws),
@@ -47,16 +48,16 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                       SizedBox(height: 16.ws),
                       Text(
                         textLocalization('feed.title'),
-                        style: text16.bold.textColor141414,
+                        style: text18.bold.textColor141414,
                       ),
                       SizedBox(height: 16.ws),
                       RichText(
                         textAlign: TextAlign.center,
                         text: TextSpan(
                           text: textLocalization('feed.content1'),
-                          style: text14.textColor141414,
+                          style: text16.textColor141414,
                           children: <TextSpan>[
-                            TextSpan(text: textLocalization('feed.content2'), style: text14.bold.textColor141414),
+                            TextSpan(text: textLocalization('feed.content2'), style: text16.bold.textColor141414),
                             TextSpan(text: textLocalization('feed.content3')),
                           ],
                         ),
@@ -71,7 +72,7 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                             ),
                             Visibility(
                               visible: controller.addRssExist,
-                              child: Text(textLocalization('error.url.exist'), style: text14.textColorFF6F15),
+                              child: Text(textLocalization('error.url.exist'), style: text16.textColorFF6F15),
                             )
                           ],
                         ),
@@ -80,7 +81,7 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                       ClearTextField(
                         keyboardType: TextInputType.text,
                         controller: controller.textAddRssCl,
-                        textStyle: text14.textColor141414,
+                        textStyle: text16.textColor141414,
                         hint: textLocalization('feed.url'),
                         contentPadding: EdgeInsets.symmetric(horizontal: 16.ws, vertical: 12.ws),
                         background: colorWhite,
@@ -100,7 +101,7 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                         isEnable: true,
                         width: 150.ws,
                         background: colorFF6F15,
-                        textStyle: text14.bold.textColorWhite,
+                        textStyle: text16.bold.textColorWhite,
                         height: 42.ws,
                         radius: 32.rs,
                       ),
@@ -109,7 +110,7 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                   SizedBox(height: 16.ws),
                   Text(
                     textLocalization('feed.popular.feeds'),
-                    style: text16.bold.textColor141414,
+                    style: text18.bold.textColor141414,
                   ),
                   SizedBox(height: 8.ws),
                   Row(
@@ -159,7 +160,7 @@ Future<void> openBottomSheetSelectDevice(HomeController controller) {
                     children: [
                       Text(
                         textLocalization('dialog.select.device'),
-                        style: text16.bold.textColor141414,
+                        style: text18.bold.textColor141414,
                       ),
                       SizedBox(width: 16.ws),
                       SizedBox(
@@ -179,7 +180,7 @@ Future<void> openBottomSheetSelectDevice(HomeController controller) {
                       SizedBox(width: 16.ws),
                       Text(
                         textLocalization('dialog.local.playback'),
-                        style: text14.textColor141414,
+                        style: text16.textColor141414,
                       ),
                     ],
                   ),
@@ -190,7 +191,7 @@ Future<void> openBottomSheetSelectDevice(HomeController controller) {
                       SizedBox(width: 16.ws),
                       Text(
                         textLocalization('dialog.airplay'),
-                        style: text14.textColor141414,
+                        style: text16.textColor141414,
                       ),
                     ],
                   ),
@@ -201,7 +202,7 @@ Future<void> openBottomSheetSelectDevice(HomeController controller) {
                       SizedBox(width: 16.ws),
                       Text(
                         textLocalization('dialog.learn.more'),
-                        style: text14.textColor141414,
+                        style: text16.textColor141414,
                       ),
                     ],
                   ),
@@ -243,7 +244,7 @@ Future<void> openBottomSheetScanDevice(HomeController controller) {
                   SizedBox(height: 12.ws),
                   Text(
                     textLocalization('dialog.no.device'),
-                    style: text16.bold.textColor141414,
+                    style: text18.bold.textColor141414,
                   ),
                   Expanded(
                     child: Padding(
@@ -254,36 +255,36 @@ Future<void> openBottomSheetScanDevice(HomeController controller) {
                         children: [
                           Text(
                             textLocalization('dialog.local.network'),
-                            style: text14.bold.textColor141414,
+                            style: text16.bold.textColor141414,
                           ),
                           SizedBox(height: 12.ws),
                           Text(
                             textLocalization('dialog.local.setting'),
-                            style: text14.textColor141414,
+                            style: text16.textColor141414,
                           ),
                           SizedBox(height: 12.ws),
                           TouchableOpacity(
                             child: Text(
                               textLocalization('settings.title'),
-                              style: text14.medium.textColorPrimary,
+                              style: text16.medium.textColorPrimary,
                             ),
                             onPressed: () {},
                           ),
                           SizedBox(height: 24.ws),
                           Text(
                             textLocalization('dialog.check.wifi'),
-                            style: text14.bold.textColor141414,
+                            style: text16.bold.textColor141414,
                           ),
                           SizedBox(height: 12.ws),
                           Text(
                             textLocalization('dialog.cast.device'),
-                            style: text14.textColor141414,
+                            style: text16.textColor141414,
                           ),
                           SizedBox(height: 12.ws),
                           TouchableOpacity(
                             child: Text(
                               textLocalization('dialog.learn.more'),
-                              style: text14.medium.textColorPrimary,
+                              style: text16.medium.textColorPrimary,
                             ),
                             onPressed: () {},
                           ),

@@ -6,6 +6,7 @@ import 'package:flutter_news_cast/ui/widgets/button/touchable_opacity.dart';
 import 'package:get/get.dart';
 
 import '../../res/style.dart';
+import 'button/text_button_widget.dart';
 
 enum AppBarStyle { NONE, BACK, CLOSE }
 
@@ -41,22 +42,39 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return PreferredSize(
       preferredSize: preferredSize,
-      child: Padding(
-        padding: EdgeInsets.only(left: 16.ws, top: 10.ws),
-        child: AppBar(
-          centerTitle: isLeft == true ? false : true,
-          automaticallyImplyLeading: false,
-          actions: actions,
-          leading: buildWidgetLeading(appBarStyle, leading),
-          title: Text(
-            title ?? "",
-            style: style ?? text16.medium.textColor141414,
-          ),
-          leadingWidth: 7.ws,
-          backgroundColor: color ?? getColor().bgThemeColorBackground,
-          elevation: 0,
-          bottom: tabBar,
-        ),
+      child: isLeft == true
+          ? TouchableOpacity(
+              child: buildTitle(),
+              onPressed: () => Get.back(),
+            )
+          : buildTitle(),
+    );
+  }
+
+  Widget buildTitle() {
+    return Padding(
+      padding: EdgeInsets.only(left: 16.ws, top: 10.ws),
+      child: AppBar(
+        centerTitle: isLeft == true ? false : true,
+        automaticallyImplyLeading: false,
+        actions: actions,
+        leading: buildWidgetLeading(appBarStyle, leading),
+        title: isLeft == true
+            ? Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.ws),
+                child: Text(
+                  title ?? "",
+                  style: style ?? text16.medium.textColor141414,
+                ),
+              )
+            : Text(
+                title ?? "",
+                style: style ?? text16.medium.textColor141414,
+              ),
+        leadingWidth: 7.ws,
+        backgroundColor: color ?? getColor().bgThemeColorBackground,
+        elevation: 0,
+        bottom: tabBar,
       ),
     );
   }
@@ -88,8 +106,8 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
             onPress != null ? onPress!() : Get.back();
           },
         )
-      : TouchableOpacity(
-          child: Assets.icons.icBack.svg(),
+      : ButtonIconTextWidget(
+          icon: Assets.icons.icBack.svg(),
           onPressed: () {
             onPress != null ? onPress!() : Get.back();
           },

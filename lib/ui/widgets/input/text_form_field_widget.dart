@@ -118,7 +118,7 @@ class DTextFromField extends StatelessWidget {
               fillColor: background ?? Colors.transparent,
               counterText: isHideCounterText == true ? "" : null,
               errorText: errorText,
-              counterStyle: text14.textColor777777,
+              counterStyle: text16.textColor777777,
               hintText: hintText ?? "",
               hintStyle: textStyle?.copyWith(color: getColor().textColorB2B2B2) ?? text18.textColor777777,
               prefixIconConstraints: prefixConstraints,

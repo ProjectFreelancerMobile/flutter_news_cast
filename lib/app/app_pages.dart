@@ -19,6 +19,7 @@ class AppPages {
       page: () => ListBookmarkPage(),
       binding: BookmarkBinding(),
       transition: Transition.rightToLeft,
+      transitionDuration: const Duration(milliseconds: 200),
     ),
     // GetPage(
     //   name: AppRoutes.READ_RSS,

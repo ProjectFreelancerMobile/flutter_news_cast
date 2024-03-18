@@ -19,6 +19,10 @@ class RSSService extends BaseService {
   final _storage = Get.find<MyStorage>();
   final _isar = Get.find<AppController>().isar;
 
+  Future<bool> isInitFirst() async {
+    return await _storage.isInstall();
+  }
+
   Future<List<ListFeedModel>> getInitRss() async {
     List<ListFeedModel> listFeed = [];
     if (await _storage.isInstall() == false) {

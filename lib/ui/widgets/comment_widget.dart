@@ -25,7 +25,7 @@ class CommentWidget extends GetWidget {
               height: iconSize,
               color: getColor().themeColorB2B2B2,
             ),
-            Obx(() => Text("${totalComment.value} bình luận", style: text14.textColor777777, textAlign: TextAlign.left))
+            Obx(() => Text("${totalComment.value} bình luận", style: text16.textColor777777, textAlign: TextAlign.left))
           ],
         ),
         onPressed: () {

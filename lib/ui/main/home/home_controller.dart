@@ -32,6 +32,8 @@ class HomeController extends BaseController {
 
   bool get isShowScreenError => false;
 
+  var isShowFirst = true;
+
   @override
   void onClose() {
     print('HomeController:onClose');
@@ -44,7 +46,12 @@ class HomeController extends BaseController {
     initRssData();
   }
 
+  Future<bool> isInitFirst() async {
+    return _rssRepository.isInitFirst();
+  }
+
   void initRssData() async {
+    isShowFirst = await isInitFirst();
     showLoading();
     final listRss = await _rssRepository.getInitRss();
     getListBookMark();

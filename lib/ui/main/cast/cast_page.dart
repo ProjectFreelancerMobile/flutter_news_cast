@@ -31,7 +31,7 @@ class CastPage extends BasePage<CastController> {
                 child: DTextFromField(
                   keyboardType: TextInputType.text,
                   controller: controller.textSearchCl,
-                  textStyle: text14.textColor141414,
+                  textStyle: text16.textColor141414,
                   prefixIcon: Padding(
                     padding: EdgeInsets.only(left: 16.ws),
                     child: controller.isHasEditUrl ? Icon(Icons.search) : Assets.icons.icCastLock.svg(),
@@ -65,7 +65,7 @@ class CastPage extends BasePage<CastController> {
               SizedBox(width: 12.ws),
               TouchableOpacity(
                 onPressed: () => controller.saveBookMark(),
-                child: controller.isHasBookmark ? Icon(Icons.bookmark) : Assets.icons.icBookmark.svg(),
+                child: controller.isHasBookmark ? Icon(Icons.bookmark, size: 24.ws, color: Color(0xFF333333)) : Icon(Icons.bookmark_border, size: 24.ws, color: Color(0xFF333333)),
               ),
               // IconButton(onPressed: () {}, icon: Assets.icons.icCast.svg(height: 22.ws)),
             ],
@@ -181,7 +181,7 @@ class CastPage extends BasePage<CastController> {
 //                 Padding(
 //                   padding: EdgeInsets.symmetric(vertical: 8.ws),
 //                   child: Text(controller.getMainController.nameFarmPick.value.isNotEmpty ? controller.getMainController.nameFarmPick.value : 'Farm của tôi',
-//                       style: text14.textColor141414),
+//                       style: text16.textColor141414),
 //                 ),
 //                 TouchableOpacity(
 //                   child: Padding(
@@ -210,7 +210,7 @@ class CastPage extends BasePage<CastController> {
 //       children: [
 //         Padding(
 //           padding: const EdgeInsets.symmetric(vertical: 8),
-//           child: Text(textLocalization('home_list_device').toUpperCase(), style: text14.height20Per.textColor141414),
+//           child: Text(textLocalization('home_list_device').toUpperCase(), style: text16.height20Per.textColor141414),
 //         ),
 //         TouchableOpacity(
 //           child: Padding(

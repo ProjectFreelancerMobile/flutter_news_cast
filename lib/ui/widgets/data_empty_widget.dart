@@ -23,7 +23,7 @@ class DataEmptyWidget extends StatelessWidget {
           ),
           Text(
             textEmpty ?? textLocalization('data.empty'),
-            style: text16.textColor141414,
+            style: text18.textColor141414,
             textAlign: TextAlign.center,
           )
         ],

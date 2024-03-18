@@ -99,7 +99,7 @@ abstract class BaseController<C> extends GetxController {
               ),
               Text(
                 content,
-                style: text14.textColor141414,
+                style: text16.textColor141414,
                 textAlign: TextAlign.center,
               ),
               SizedBox(
@@ -107,7 +107,7 @@ abstract class BaseController<C> extends GetxController {
               ),
               CustomButton(
                 text: "Đóng",
-                textStyle: text14.bold.textColorWhite,
+                textStyle: text16.bold.textColorWhite,
                 onPressed: () => Get.back(),
                 width: 100.ws,
                 height: 30.ws,

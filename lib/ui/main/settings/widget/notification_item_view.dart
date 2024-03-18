@@ -25,7 +25,7 @@ class _NotificationItemViewState extends State<NotificationItemView> {
         padding: EdgeInsets.symmetric(horizontal: 10.ws, vertical: 8.ws),
         child: Row(
           children: [
-            Text(widget.title, style: text14.textColor141414),
+            Text(widget.title, style: text16.textColor141414),
             Spacer(),
             Switch(
               value: isSwitched,

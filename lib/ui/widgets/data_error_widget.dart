@@ -26,7 +26,7 @@ class DataErrorWidget extends StatelessWidget {
           ),
           Text(
             messageError ?? textLocalization('data.error'),
-            style: text16.textColor141414,
+            style: text18.textColor141414,
             textAlign: TextAlign.center,
           ),
           SizedBox(

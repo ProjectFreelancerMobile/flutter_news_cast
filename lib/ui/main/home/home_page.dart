@@ -46,7 +46,7 @@ class HomePage extends BasePage<HomeController> {
                 ),
               ],
             ),
-            SizedBox(height: 12.ws),
+            SizedBox(height: 24.ws),
             buildListFeedBookMark(),
             SizedBox(height: 24.ws),
             buildListFeed(context),
@@ -72,7 +72,7 @@ class HomePage extends BasePage<HomeController> {
                 Expanded(
                   child: Text(
                     textLocalization('home.bookmarks'),
-                    style: text16.bold.textColor141414,
+                    style: text18.bold.textColor141414,
                   ),
                 ),
                 Assets.icons.icSettingsNext.svg(),
@@ -111,7 +111,7 @@ class HomePage extends BasePage<HomeController> {
             Expanded(
               child: Text(
                 textLocalization('home.feeds'),
-                style: text16.bold.textColor141414,
+                style: text18.bold.textColor141414,
               ),
             ),
             TouchableOpacity(child: Assets.icons.icAdd.svg(), onPressed: () => openBottomSheetAddRss(controller)),
@@ -119,13 +119,13 @@ class HomePage extends BasePage<HomeController> {
           ],
         ),
         SizedBox(height: 16.ws),
-        controller.listFeed.length > 0
-            ? Column(
+        controller.listFeed.length == 0 && !controller.isShowFirst
+            ? DataEmptyWidget(textEmpty: textLocalization(' error.empty.home'))
+            : Column(
                 children: [
                   for (var item in controller.listFeed) buildListPostFromFeed(context, item.feedModel, item.listPost),
                 ],
               )
-            : DataEmptyWidget(textEmpty: textLocalization(' error.empty.home'))
       ],
     );
   }
@@ -143,7 +143,7 @@ class HomePage extends BasePage<HomeController> {
                     Flexible(
                       child: Text(
                         feedModel?.title ?? '',
-                        style: text14.bold.textColor141414,
+                        style: text16.bold.textColor141414,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

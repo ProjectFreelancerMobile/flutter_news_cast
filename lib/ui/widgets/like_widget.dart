@@ -33,7 +33,7 @@ class LikeWidget extends GetWidget {
             },
           ),
           Obx(
-            () => Text("${totalLike.value} lượt thích", style: text14.textColor777777, textAlign: TextAlign.left),
+            () => Text("${totalLike.value} lượt thích", style: text16.textColor777777, textAlign: TextAlign.left),
           )
         ],
       ),

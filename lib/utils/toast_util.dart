@@ -17,7 +17,7 @@ void showMessage(String message, {bool isForeShow = true, int second = 3}) {
       borderRadius: BorderRadius.circular(10.0),
       color: Colors.black.withOpacity(0.75),
     ),
-    child: Text(message, style: text14.textColorWhite, textAlign: TextAlign.start),
+    child: Text(message, style: text16.textColorWhite, textAlign: TextAlign.start),
   );
   return fToast.showToast(
     child: toast,

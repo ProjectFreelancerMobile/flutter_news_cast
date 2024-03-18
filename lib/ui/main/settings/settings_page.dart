@@ -24,18 +24,18 @@ class SettingsPage extends BasePage<SettingsController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(textLocalization('settings.general'), style: text14.medium.textColor141414),
+            Text(textLocalization('settings.general'), style: text16.medium.textColor141414),
             buildSettingsGeneral(context),
             SizedBox(height: 24.ws),
-            Text(textLocalization('settings.social'), style: text14.medium.textColor141414),
+            Text(textLocalization('settings.social'), style: text16.medium.textColor141414),
             buildSettingsSocial(),
             SizedBox(height: 24.ws),
-            Text(textLocalization('settings.help'), style: text14.medium.textColor141414),
+            Text(textLocalization('settings.help'), style: text16.medium.textColor141414),
             buildSettingsHelp(),
             SizedBox(height: 24.ws),
             CustomButton(
               text: textLocalization('settings.remove.ads'),
-              textStyle: text14.medium.textColorWhite,
+              textStyle: text16.medium.textColorWhite,
               onPressed: () => {},
               width: double.infinity,
               height: 42.ws,
@@ -89,10 +89,10 @@ class SettingsPage extends BasePage<SettingsController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(textLocalization('settings.block.ads'), style: text14.textColor141414),
+                    Text(textLocalization('settings.block.ads'), style: text16.textColor141414),
                     Text(
                       textLocalization('settings.ads.name'),
-                      style: text14.textColorB2B2B2,
+                      style: text16.textColorB2B2B2,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -109,10 +109,10 @@ class SettingsPage extends BasePage<SettingsController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(textLocalization('settings.plugin.title'), style: text14.textColor141414),
+                    Text(textLocalization('settings.plugin.title'), style: text16.textColor141414),
                     Text(
                       textLocalization('settings.plugin.content'),
-                      style: text14.textColorB2B2B2,
+                      style: text16.textColorB2B2B2,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -124,7 +124,7 @@ class SettingsPage extends BasePage<SettingsController> {
           ),
           Row(
             children: [
-              Expanded(child: Text(textLocalization('settings.notification'), style: text14.textColor141414)),
+              Expanded(child: Text(textLocalization('settings.notification'), style: text16.textColor141414)),
               buildSwitch(context, SWITCH_TYPE.NOTI),
             ],
           ),
