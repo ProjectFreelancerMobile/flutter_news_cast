@@ -154,7 +154,7 @@ class HomePage extends BasePage<HomeController> {
                 ),
                 onPressed: () => controller.navigationCast(PostModel(
                   title: feedModel?.title ?? '',
-                  link: feedModel?.url ?? '',
+                  link: feedModel?.hostUrl ?? Uri.parse(feedModel?.url ?? '').host,
                   image: '',
                   content: '',
                   pubDate: DateTime.now(),

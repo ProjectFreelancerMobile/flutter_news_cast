@@ -12,6 +12,7 @@ class FeedModel {
   bool fullText;
   int rssType;
   String? baseUrl;
+  String? hostUrl;
   int type;
 
   FeedModel({
@@ -23,6 +24,7 @@ class FeedModel {
     required this.fullText,
     required this.rssType,
     required this.type,
+    this.hostUrl,
     this.baseUrl,
   });
 

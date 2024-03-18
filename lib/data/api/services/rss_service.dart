@@ -141,6 +141,7 @@ class RSSService extends BaseService {
             rssType: feedModel.rssType,
             baseUrl: feedModel.baseUrl,
             type: feedModel.type.indexTitleValue,
+            hostUrl: rssFeed.link,
           );
           feedItemModel.feedModel = feedSyncModel;
           feedItemModel.listPost = await fetchPostFromFeed(response, feedSyncModel);
@@ -158,6 +159,7 @@ class RSSService extends BaseService {
             rssType: feedModel.rssType,
             baseUrl: feedModel.baseUrl,
             type: feedModel.type.indexTitleValue,
+            hostUrl: (atomFeed.links.length > 0) ? (atomFeed.links.lastOrNull?.href ?? '') : '',
           );
           feedItemModel.feedModel = feedSyncModel;
           feedItemModel.listPost = await fetchPostFromFeed(response, feedSyncModel);
@@ -175,6 +177,7 @@ class RSSService extends BaseService {
             rssType: feedModel.rssType,
             baseUrl: feedModel.baseUrl,
             type: feedModel.type.indexTitleValue,
+            hostUrl: null,
           );
           feedItemModel.feedModel = feedSyncModel;
           feedItemModel.listPost = await fetchPostFromFeed(response, feedSyncModel);
@@ -193,6 +196,7 @@ class RSSService extends BaseService {
             rssType: feedModel.rssType,
             baseUrl: feedModel.baseUrl,
             type: feedModel.type.indexTitleValue,
+            hostUrl: rssFeed.link,
           );
           feedItemModel.feedModel = feedSyncModel;
           feedItemModel.listPost = await fetchPostFromFeed(response, feedSyncModel);
@@ -470,6 +474,7 @@ class RSSService extends BaseService {
   }
 
   Future<void> updatePostStatus(PostModel post, {DateTime? readTime, bool? bookMark}) async {
+    print('readTime:$readTime bookMark:$bookMark');
     post.readDate = readTime;
     post.favorite = bookMark ?? post.favorite;
     await savePost(post);

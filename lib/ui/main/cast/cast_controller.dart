@@ -60,11 +60,10 @@ class CastController extends BaseController {
   void initUrlCast(PostModel? postModel) async {
     if (postModel == null) return;
     this.postModel = postModel;
-    updatePostRecent(postModel);
     _isHasBookmark$.value = await getBookMark(postModel);
     if (postModel.link.isNotEmpty) {
       textSearchCl.text = postModel.link;
-      commitURL(textSearchCl.text);
+      commitURL(textSearchCl.text, postModel: postModel);
     }
   }
 
@@ -83,9 +82,10 @@ class CastController extends BaseController {
     }
   }
 
-  void commitURL(String? url, {bool isInputEdit = false}) {
-    print('commitURL:$url');
+  void commitURL(String? url, {bool isInputEdit = false, PostModel? postModel}) {
     if (url?.isNotEmpty == true) {
+      print('commitURL:$url');
+      updatePostRecent(postModel);
       var urlWeb = Uri.parse(url!);
       if (urlWeb.scheme.isEmpty) {
         urlWeb = Uri.parse("https://www.google.com/search?q=$url");
@@ -145,7 +145,31 @@ class CastController extends BaseController {
     //final icon = await webController?.getFavicons();
     //final iconUrl = icon?.first.url.rawValue;
     print('saveBookMark::' + isHasBookmark.toString());
-    var postBookmark = postModel ??
+    var postBookmark = await getCreatePostModel();
+    postBookmark.favorite = isHasBookmark;
+    _rssRepository.updatePostStatus(
+      postBookmark,
+      bookMark: isHasBookmark,
+      readTime: DateTime.now(),
+    );
+    Get.find<HomeController>().getListBookMark();
+  }
+
+  void updatePostRecent(PostModel? postModel) async {
+    var postBookmark = postModel;
+    if (postBookmark == null) {
+      postBookmark = await getCreatePostModel();
+    }
+    print('updatePostRecent::' + postBookmark.toString());
+    _rssRepository.updatePostStatus(postBookmark, readTime: DateTime.now());
+  }
+
+  Future<bool> getBookMark(PostModel postModel) {
+    return _rssRepository.getBookmark(postModel);
+  }
+
+  Future<PostModel> getCreatePostModel() async {
+    return postModel ??
         PostModel(
           title: await webController.getTitle() ?? '',
           link: textSearchCl.text,
@@ -157,21 +181,6 @@ class CastController extends BaseController {
           fullText: false,
           isUrlCast: true,
         );
-    postBookmark.favorite = isHasBookmark;
-    _rssRepository.updatePostStatus(
-      postBookmark,
-      bookMark: isHasBookmark,
-      readTime: DateTime.now(),
-    );
-    Get.find<HomeController>().getListBookMark();
-  }
-
-  void updatePostRecent(PostModel postModel) {
-    _rssRepository.updatePostStatus(postModel, readTime: DateTime.now());
-  }
-
-  Future<bool> getBookMark(PostModel postModel) {
-    return _rssRepository.getBookmark(postModel);
   }
 
   @override
