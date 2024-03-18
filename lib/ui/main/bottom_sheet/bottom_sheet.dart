@@ -5,6 +5,7 @@ import 'package:flutter_news_cast/ui/widgets/input/text_form_field_widget.dart';
 import 'package:flutter_news_cast/ui/widgets/loading_widget.dart';
 import 'package:get/get.dart';
 
+import '../../../data/api/api_constants.dart';
 import '../../widgets/button/custom_button.dart';
 import '../../widgets/button/text_button_widget.dart';
 import '../home/home_controller.dart';
@@ -115,9 +116,27 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                   SizedBox(height: 8.ws),
                   Row(
                     children: [
-                      Assets.icons.icYoutubeText.svg(),
-                      Assets.icons.icVimeoText.svg(),
-                      Assets.icons.icDailymotionText.svg(),
+                      TouchableOpacity(
+                        child: Assets.icons.icYoutubeText.svg(),
+                        onPressed: () {
+                          controller.textAddRssCl.text = RSS_FAVORITE_1;
+                          controller.saveRssFeed();
+                        },
+                      ),
+                      TouchableOpacity(
+                        child: Assets.icons.icVimeoText.svg(),
+                        onPressed: () {
+                          controller.textAddRssCl.text = RSS_FAVORITE_2;
+                          controller.saveRssFeed();
+                        },
+                      ),
+                      TouchableOpacity(
+                        child: Assets.icons.icDailymotionText.svg(),
+                        onPressed: () {
+                          controller.textAddRssCl.text = RSS_FAVORITE_3;
+                          controller.saveRssFeed();
+                        },
+                      ),
                     ],
                   ),
                 ],

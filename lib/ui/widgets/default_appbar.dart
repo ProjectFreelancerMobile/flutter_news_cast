@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_news_cast/res/theme/theme_service.dart';
 import 'package:flutter_news_cast/ui/widgets/button/touchable_opacity.dart';
 import 'package:get/get.dart';
 
@@ -64,15 +63,15 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
                 padding: EdgeInsets.symmetric(horizontal: 12.ws),
                 child: Text(
                   title ?? "",
-                  style: style ?? text16.medium.textColor141414,
+                  style: style ?? text18.medium.textColor141414,
                 ),
               )
             : Text(
                 title ?? "",
-                style: style ?? text16.medium.textColor141414,
+                style: style ?? text18.medium.textColor141414,
               ),
         leadingWidth: 7.ws,
-        backgroundColor: color ?? getColor().bgThemeColorBackground,
+        backgroundColor: color ?? Colors.transparent,
         elevation: 0,
         bottom: tabBar,
       ),

@@ -20,6 +20,9 @@ class CastController extends BaseController {
   bool get isHasLoadWeb => _isHasLoadWeb$.value;
   var _isHasLoadWeb$ = false.obs;
 
+  bool get isHasCanBack => _isHasCanBack$.value;
+  var _isHasCanBack$ = false.obs;
+
   bool get isHasEditUrl => _isHasEditUrl$.value;
   var _isHasEditUrl$ = false.obs;
 
@@ -41,6 +44,7 @@ class CastController extends BaseController {
         NavigationDelegate(
           onProgress: (int progress) {
             if (progress == 100) {
+              updateStateCanBack();
               loadWeb(true);
             }
           },
@@ -84,6 +88,7 @@ class CastController extends BaseController {
 
   void commitURL(String? url, {bool isInputEdit = false, PostModel? postModel}) {
     if (url?.isNotEmpty == true) {
+      showLoading();
       print('commitURL:$url');
       updatePostRecent(postModel);
       var urlWeb = Uri.parse(url!);
@@ -92,7 +97,6 @@ class CastController extends BaseController {
       } else {
         urlWeb = Uri.parse(url.contains('http') == true ? (url ?? '') : ('https:///www.${url ?? ''}'));
       }
-      showLoading();
       webController.loadRequest(urlWeb);
     } else {
       loadWeb(false);
@@ -120,6 +124,10 @@ class CastController extends BaseController {
       await reloadWeb();
     else
       textSearchCl.clear();
+  }
+
+  void updateStateCanBack() async {
+    _isHasCanBack$.value = await webController.canGoBack();
   }
 
   String? validatorURL(String fieldName) {

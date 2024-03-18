@@ -20,6 +20,10 @@ const RSS_4 = "https://vimeo.com/georgiafootball/videos/rss"; //Rss
 const RSS_5 = "https://www.youtube.com/feeds/videos.xml?channel_id=UCXuqSBlHAE6Xw-yeJA0Tunw"; //atom
 const RSS_6 = "https://tuoitre.vn/rss/tin-moi-nhat.rss"; //Rss
 
+const RSS_FAVORITE_1 = "https://www.youtube.com/feeds/videos.xml?channel_id=UCsVcseUYbYjldc-XgcsiEbg"; //atom
+const RSS_FAVORITE_2 = "https://vimeo.com/channels/bestofstaffpicks/videos/rss"; //Rss
+const RSS_FAVORITE_3 = "https://api.dailymotion.com/videos?limit=20&sort=recent"; //Json
+
 const BASE_JSON_PARSE = "https://www.dailymotion.com/video/";
 
 const BOOKMARK_1 = "https://soundcloud.com/";

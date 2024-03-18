@@ -16,7 +16,7 @@ class ButtonIconTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = TextButton.styleFrom(
       padding: EdgeInsets.zero,
-      minimumSize: Size(50, 30),
+      minimumSize: Size(30, 30),
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       alignment: Alignment.centerLeft,
     );
