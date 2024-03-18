@@ -26,7 +26,7 @@ class CastPage extends BasePage<CastController> {
                     ButtonIconTextWidget(
                       onPressed: () {
                         controller.webController.goBack();
-                        controller.updateStateCanBack();
+                        controller.updateStateCanBack(isBack: true);
                       },
                       icon: controller.isHasCanBack ? Assets.icons.icBack.svg() : Assets.icons.icBack.svg(color: Colors.black12),
                     ),

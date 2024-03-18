@@ -37,23 +37,28 @@ const FeedModelSchema = CollectionSchema(
       name: r'fullText',
       type: IsarType.bool,
     ),
-    r'rssType': PropertySchema(
+    r'hostUrl': PropertySchema(
       id: 4,
+      name: r'hostUrl',
+      type: IsarType.string,
+    ),
+    r'rssType': PropertySchema(
+      id: 5,
       name: r'rssType',
       type: IsarType.long,
     ),
     r'title': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'title',
       type: IsarType.string,
     ),
     r'type': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'type',
       type: IsarType.long,
     ),
     r'url': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'url',
       type: IsarType.string,
     )
@@ -86,6 +91,12 @@ int _feedModelEstimateSize(
   }
   bytesCount += 3 + object.category.length * 3;
   bytesCount += 3 + object.description.length * 3;
+  {
+    final value = object.hostUrl;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.title.length * 3;
   bytesCount += 3 + object.url.length * 3;
   return bytesCount;
@@ -101,10 +112,11 @@ void _feedModelSerialize(
   writer.writeString(offsets[1], object.category);
   writer.writeString(offsets[2], object.description);
   writer.writeBool(offsets[3], object.fullText);
-  writer.writeLong(offsets[4], object.rssType);
-  writer.writeString(offsets[5], object.title);
-  writer.writeLong(offsets[6], object.type);
-  writer.writeString(offsets[7], object.url);
+  writer.writeString(offsets[4], object.hostUrl);
+  writer.writeLong(offsets[5], object.rssType);
+  writer.writeString(offsets[6], object.title);
+  writer.writeLong(offsets[7], object.type);
+  writer.writeString(offsets[8], object.url);
 }
 
 FeedModel _feedModelDeserialize(
@@ -118,11 +130,12 @@ FeedModel _feedModelDeserialize(
     category: reader.readString(offsets[1]),
     description: reader.readString(offsets[2]),
     fullText: reader.readBool(offsets[3]),
+    hostUrl: reader.readStringOrNull(offsets[4]),
     id: id,
-    rssType: reader.readLong(offsets[4]),
-    title: reader.readString(offsets[5]),
-    type: reader.readLong(offsets[6]),
-    url: reader.readString(offsets[7]),
+    rssType: reader.readLong(offsets[5]),
+    title: reader.readString(offsets[6]),
+    type: reader.readLong(offsets[7]),
+    url: reader.readString(offsets[8]),
   );
   return object;
 }
@@ -143,12 +156,14 @@ P _feedModelDeserializeProp<P>(
     case 3:
       return (reader.readBool(offset)) as P;
     case 4:
-      return (reader.readLong(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (reader.readString(offset)) as P;
-    case 6:
       return (reader.readLong(offset)) as P;
+    case 6:
+      return (reader.readString(offset)) as P;
     case 7:
+      return (reader.readLong(offset)) as P;
+    case 8:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -668,6 +683,153 @@ extension FeedModelQueryFilter
     });
   }
 
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> hostUrlIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'hostUrl',
+      ));
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> hostUrlIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'hostUrl',
+      ));
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> hostUrlEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hostUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> hostUrlGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'hostUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> hostUrlLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'hostUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> hostUrlBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'hostUrl',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> hostUrlStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'hostUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> hostUrlEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'hostUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> hostUrlContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'hostUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> hostUrlMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'hostUrl',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> hostUrlIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hostUrl',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition>
+      hostUrlIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'hostUrl',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> idIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1159,6 +1321,18 @@ extension FeedModelQuerySortBy on QueryBuilder<FeedModel, FeedModel, QSortBy> {
     });
   }
 
+  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> sortByHostUrl() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hostUrl', Sort.asc);
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> sortByHostUrlDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hostUrl', Sort.desc);
+    });
+  }
+
   QueryBuilder<FeedModel, FeedModel, QAfterSortBy> sortByRssType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'rssType', Sort.asc);
@@ -1258,6 +1432,18 @@ extension FeedModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> thenByHostUrl() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hostUrl', Sort.asc);
+    });
+  }
+
+  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> thenByHostUrlDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hostUrl', Sort.desc);
+    });
+  }
+
   QueryBuilder<FeedModel, FeedModel, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1348,6 +1534,13 @@ extension FeedModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<FeedModel, FeedModel, QDistinct> distinctByHostUrl(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hostUrl', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<FeedModel, FeedModel, QDistinct> distinctByRssType() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'rssType');
@@ -1404,6 +1597,12 @@ extension FeedModelQueryProperty
   QueryBuilder<FeedModel, bool, QQueryOperations> fullTextProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'fullText');
+    });
+  }
+
+  QueryBuilder<FeedModel, String?, QQueryOperations> hostUrlProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hostUrl');
     });
   }
 

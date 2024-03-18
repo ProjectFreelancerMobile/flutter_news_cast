@@ -63,8 +63,6 @@ class CastController extends BaseController {
 
   void initUrlCast(PostModel? postModel) async {
     if (postModel == null) return;
-    this.postModel = postModel;
-    _isHasBookmark$.value = await getBookMark(postModel);
     if (postModel.link.isNotEmpty) {
       textSearchCl.text = postModel.link;
       commitURL(textSearchCl.text, postModel: postModel);
@@ -88,9 +86,10 @@ class CastController extends BaseController {
 
   void commitURL(String? url, {bool isInputEdit = false, PostModel? postModel}) {
     if (url?.isNotEmpty == true) {
+      this.postModel = postModel;
       showLoading();
       print('commitURL:$url');
-      updatePostRecent(postModel);
+      checkPostStatus(postModel, url);
       var urlWeb = Uri.parse(url!);
       if (urlWeb.scheme.isEmpty) {
         urlWeb = Uri.parse("https://www.google.com/search?q=$url");
@@ -109,7 +108,6 @@ class CastController extends BaseController {
 
   void loadWeb(bool isDone) {
     _isHasEditUrl$.value = false;
-    print('loadWeb:$isDone');
     if (textSearchCl.text.isEmpty) {
       _isHasLoadWeb$.value = false;
     } else {
@@ -126,8 +124,15 @@ class CastController extends BaseController {
       textSearchCl.clear();
   }
 
-  void updateStateCanBack() async {
+  void updateStateCanBack({bool isBack = false}) async {
     _isHasCanBack$.value = await webController.canGoBack();
+    if (isBack) {
+      webController.currentUrl().then((value) {
+        if (value != null) {
+          textSearchCl.text = value;
+        }
+      });
+    }
   }
 
   String? validatorURL(String fieldName) {
@@ -152,43 +157,62 @@ class CastController extends BaseController {
     _isHasBookmark$.value = !isHasBookmark;
     //final icon = await webController?.getFavicons();
     //final iconUrl = icon?.first.url.rawValue;
-    print('saveBookMark::' + isHasBookmark.toString());
-    var postBookmark = await getCreatePostModel();
-    postBookmark.favorite = isHasBookmark;
-    _rssRepository.updatePostStatus(
-      postBookmark,
-      bookMark: isHasBookmark,
-      readTime: DateTime.now(),
-    );
-    Get.find<HomeController>().getListBookMark();
-  }
-
-  void updatePostRecent(PostModel? postModel) async {
-    var postBookmark = postModel;
-    if (postBookmark == null) {
-      postBookmark = await getCreatePostModel();
+    if (postModel != null) {
+      postModel?.favorite = isHasBookmark;
+      print('saveBookMark::' + postModel.toString());
+      _rssRepository.updatePostStatus(
+        postModel!,
+        bookMark: isHasBookmark,
+        readTime: postModel?.readDate,
+      );
+      Get.find<HomeController>().getListBookMark();
     }
-    print('updatePostRecent::' + postBookmark.toString());
-    _rssRepository.updatePostStatus(postBookmark, readTime: DateTime.now());
   }
 
-  Future<bool> getBookMark(PostModel postModel) {
-    return _rssRepository.getBookmark(postModel);
+  void checkPostStatus(PostModel? postModelItem, String? url) async {
+    _isHasBookmark$.value = false;
+    if (postModelItem != null) {
+      print('checkPostBookmark:0000::' + postModel.toString());
+      _isHasBookmark$.value = postModelItem.favorite;
+    } else {
+      _rssRepository.getPostBookmark(url).then((value) {
+        if (value != null) {
+          print('checkPostBookmark:1111::' + value.toString());
+          postModel = value;
+          _isHasBookmark$.value = value.favorite;
+        }
+      });
+    }
+    if (postModel == null) {
+      postModel = await getCreatePostModel();
+      print('checkPostBookmark:3333::' + postModel.toString());
+    }
+    if (postModel != null) {
+      _rssRepository.updatePostStatus(postModel!, bookMark: postModel!.favorite, readTime: postModel!.readDate);
+    }
   }
 
   Future<PostModel> getCreatePostModel() async {
-    return postModel ??
-        PostModel(
-          title: await webController.getTitle() ?? '',
-          link: textSearchCl.text,
-          image: '',
-          //iconUrl
-          content: await webController.getTitle() ?? '',
-          pubDate: DateTime.now(),
-          favorite: isHasBookmark,
-          fullText: false,
-          isUrlCast: true,
-        );
+    print('postModel::' + postModel.toString());
+    if (postModel != null) {
+      return postModel!;
+    } else {
+      final title = await webController.getTitle() ?? textSearchCl.text;
+      //final idPost = await _rssRepository.getIdPost();
+      return postModel ??
+          PostModel(
+            //id: idPost,
+            title: title,
+            link: textSearchCl.text,
+            image: '',
+            //iconUrl
+            content: title,
+            readDate: DateTime.now(),
+            pubDate: DateTime.now(),
+            favorite: isHasBookmark,
+            fullText: false,
+          );
+    }
   }
 
   @override

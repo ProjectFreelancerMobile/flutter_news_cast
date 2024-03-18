@@ -435,21 +435,22 @@ class RSSService extends BaseService {
   }
 
   Future<void> savePost(PostModel postModel) async {
+    print('savePost::' + postModel.toString());
     _isar.writeTxnSync(() {
       _isar.postModels.putSync(postModel);
     });
+  }
+
+  Future<int> getIdPost() async {
+    return await _isar.feedModels.count();
   }
 
   Future<List<PostModel>> getAllPosts() async {
     return await _isar.postModels.where().findAll();
   }
 
-  Future<PostModel?> getPosts(PostModel postModel) async {
-    if (postModel.isUrlCast) {
-      return await _isar.postModels.where().filter().linkContains(postModel.link).findFirst();
-    } else {
-      return await _isar.postModels.where().filter().idEqualTo(postModel.id).findFirst();
-    }
+  Future<PostModel?> getPosts(String? url) async {
+    return await _isar.postModels.where().filter().linkContains(url ?? '').findFirst();
   }
 
   Future<List<PostModel>> getPostsByListFeeds(List<FeedModel> feeds) async {
@@ -474,9 +475,9 @@ class RSSService extends BaseService {
   }
 
   Future<void> updatePostStatus(PostModel post, {DateTime? readTime, bool? bookMark}) async {
-    print('readTime:$readTime bookMark:$bookMark');
     post.readDate = readTime;
     post.favorite = bookMark ?? post.favorite;
+    print('updatePostStatus:$post');
     await savePost(post);
   }
 

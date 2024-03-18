@@ -38,8 +38,11 @@ class RssRepository extends BaseRepository {
     return await _rssService.saveRssFeed(url);
   }
 
-  Future<bool> getBookmark(PostModel postModel) async {
-    final post = await _rssService.getPosts(postModel);
-    return post?.favorite ?? false;
+  Future<int> getIdPost() async {
+    return await _rssService.getIdPost();
+  }
+
+  Future<PostModel?> getPostBookmark(String? url) async {
+    return await _rssService.getPosts(url);
   }
 }
