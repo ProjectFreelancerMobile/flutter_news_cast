@@ -6,6 +6,7 @@ import 'package:flutter_news_cast/ui/widgets/loading_widget.dart';
 import 'package:get/get.dart';
 
 import '../../../data/api/api_constants.dart';
+import '../../../res/theme/theme_service.dart';
 import '../../widgets/button/custom_button.dart';
 import '../../widgets/button/text_button_widget.dart';
 import '../home/home_controller.dart';
@@ -18,7 +19,7 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
       height: Get.height * 0.93,
       padding: EdgeInsets.symmetric(vertical: 16.ws, horizontal: 16.ws),
       decoration: BoxDecoration(
-        color: colorBackground,
+        color: getColor().bgThemeColorBackground,
         borderRadius: BorderRadius.only(topLeft: Radius.circular(12.rs), topRight: Radius.circular(12.rs)),
       ),
       child: SingleChildScrollView(
@@ -85,7 +86,7 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                         textStyle: text16.textColor141414,
                         hint: textLocalization('feed.url'),
                         contentPadding: EdgeInsets.symmetric(horizontal: 16.ws, vertical: 12.ws),
-                        background: colorWhite,
+                        background: getColor().themeColorWhite,
                         onClear: () {
                           controller.clearInputRss();
                         },
@@ -117,21 +118,41 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                   Row(
                     children: [
                       TouchableOpacity(
-                        child: Assets.icons.icYoutubeText.svg(),
+                        child: Column(
+                          children: [
+                            Assets.icons.icYoutubeText.svg(),
+                            SizedBox(height: 4),
+                            Text('Youtube', style: text14.textColor141414),
+                          ],
+                        ),
                         onPressed: () {
                           controller.textAddRssCl.text = RSS_FAVORITE_1;
                           controller.saveRssFeed();
                         },
                       ),
+                      SizedBox(width: 12.ws),
                       TouchableOpacity(
-                        child: Assets.icons.icVimeoText.svg(),
+                        child: Column(
+                          children: [
+                            Assets.icons.icVimeoText.svg(),
+                            SizedBox(height: 4),
+                            Text('Vimeo', style: text14.textColor141414),
+                          ],
+                        ),
                         onPressed: () {
                           controller.textAddRssCl.text = RSS_FAVORITE_2;
                           controller.saveRssFeed();
                         },
                       ),
+                      SizedBox(width: 12.ws),
                       TouchableOpacity(
-                        child: Assets.icons.icDailymotionText.svg(),
+                        child: Column(
+                          children: [
+                            Assets.icons.icDailymotionText.svg(),
+                            SizedBox(height: 4),
+                            Text('Vimeo', style: text14.textColor141414),
+                          ],
+                        ),
                         onPressed: () {
                           controller.textAddRssCl.text = RSS_FAVORITE_3;
                           controller.saveRssFeed();
@@ -195,7 +216,7 @@ Future<void> openBottomSheetSelectDevice(HomeController controller) {
                   SizedBox(height: 16.ws),
                   Row(
                     children: [
-                      Assets.icons.icLocalPhone.svg(),
+                      Assets.icons.icLocalPhone.svg(color: getColor().themeColorB2B2B2),
                       SizedBox(width: 16.ws),
                       Text(
                         textLocalization('dialog.local.playback'),
@@ -206,7 +227,7 @@ Future<void> openBottomSheetSelectDevice(HomeController controller) {
                   SizedBox(height: 16.ws),
                   Row(
                     children: [
-                      Assets.icons.icAirplay.svg(),
+                      Assets.icons.icAirplay.svg(color: getColor().themeColorB2B2B2),
                       SizedBox(width: 16.ws),
                       Text(
                         textLocalization('dialog.airplay'),
@@ -217,7 +238,7 @@ Future<void> openBottomSheetSelectDevice(HomeController controller) {
                   SizedBox(height: 16.ws),
                   Row(
                     children: [
-                      Assets.icons.icLearnMore.svg(),
+                      Assets.icons.icLearnMore.svg(color: getColor().themeColorB2B2B2),
                       SizedBox(width: 16.ws),
                       Text(
                         textLocalization('dialog.learn.more'),

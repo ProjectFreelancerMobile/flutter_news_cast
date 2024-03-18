@@ -5,6 +5,7 @@ import 'package:flutter_news_cast/ui/widgets/button/touchable_opacity.dart';
 import 'package:get/get.dart';
 
 import '../../res/style.dart';
+import '../../res/theme/theme_service.dart';
 import 'button/text_button_widget.dart';
 
 enum AppBarStyle { NONE, BACK, CLOSE }
@@ -106,7 +107,7 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
           },
         )
       : ButtonIconTextWidget(
-          icon: Assets.icons.icBack.svg(),
+          icon: Assets.icons.icBack.svg(color: getColor().themeColorB2B2B2),
           onPressed: () {
             onPress != null ? onPress!() : Get.back();
           },

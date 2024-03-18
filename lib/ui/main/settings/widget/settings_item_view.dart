@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/res/style.dart';
+import 'package:flutter_news_cast/res/theme/theme_service.dart';
 
 import '../../../widgets/button/touchable_opacity.dart';
 
@@ -40,7 +41,7 @@ class AccountItemView extends StatelessWidget {
               SizedBox(width: 10.ws),
             ],
             if (isIconNext) ...[
-              Assets.icons.icSettingsNext.svg(width: 8.ws),
+              Assets.icons.icSettingsNext.svg(width: 8.ws, color: getColor().themeColorB2B2B2),
             ]
           ],
         ),

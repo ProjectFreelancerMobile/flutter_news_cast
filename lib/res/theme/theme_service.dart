@@ -99,13 +99,13 @@ extension MyColorScheme on ColorScheme {
 
   Color get themeColorPrimary => getColorTheme(colorPrimary, colorPrimary);
 
-  Color get themeColorB2B2B2 => getColorTheme(colorB2B2B2, colorB2B2B2);
+  Color get themeColorB2B2B2 => getColorTheme(colorB2B2B2, colorWhite);
 
   Color get themeColor00AC44 => getColorTheme(color00AC44, color00AC44);
 
   Color get themeColorF5F6F8 => getColorTheme(colorF5F6F8, colorF5F6F8);
 
-  Color get themeColorWhite => getColorTheme(colorWhite, colorWhite);
+  Color get themeColorWhite => getColorTheme(colorWhite, color141414);
 
   Color get themeColor0060E0 => getColorTheme(color0060E0, color0060E0);
 
@@ -113,13 +113,13 @@ extension MyColorScheme on ColorScheme {
 
   Color get themeColorF2F9FE => getColorTheme(colorF2F9FE, colorF2F9FE);
 
-  Color get themeColor141414 => getColorTheme(color141414, color141414);
+  Color get themeColor141414 => getColorTheme(color141414, colorWhite);
 
   Color get themeColor929394 => getColorTheme(color929394, color929394);
 
   Color get themeColorE5F2FF => getColorTheme(colorE5F2FF, colorE5F2FF);
 
-  Color get themeColorD3D3D4 => getColorTheme(colorD3D3D4, colorD3D3D4);
+  Color get themeColorD3D3D4 => getColorTheme(colorD3D3D4, colorWhite);
 
   Color get themeColorBBDEFA => getColorTheme(colorBBDEFA, colorBBDEFA);
 

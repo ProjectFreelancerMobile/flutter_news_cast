@@ -21,7 +21,7 @@ class SettingsController extends BaseController {
   var appVersion = ''.obs;
 
   var switchBlockAds = true.obs;
-  var switchPlugin = false.obs;
+  var switchDarkMode = false.obs;
   var switchNotification = false.obs;
 
   TUser get user => _user.value;
@@ -44,6 +44,7 @@ class SettingsController extends BaseController {
     // sexType.value = user.gender == 1 ? SEX_TYPE.MEN : (user.gender == 0 ? SEX_TYPE.WOMAN : SEX_TYPE.OTHER);
     // txtNameController.text = user.name ?? '';
     // txtPhoneController.text = user.phone ?? '';
+    switchDarkMode.value = themeManager.getAppTheme(await storage.getTheme()) == AppTheme.DARK;
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     appVersion.value = packageInfo.version;
   }
@@ -54,7 +55,7 @@ class SettingsController extends BaseController {
         switchBlockAds.value = value;
         break;
       case SWITCH_TYPE.PLUGIN:
-        switchPlugin.value = value;
+        switchDarkMode.value = value;
         themeManager.updateTheme(value ? AppTheme.DARK.index : AppTheme.LIGHT.index);
         break;
       case SWITCH_TYPE.NOTI:
@@ -70,7 +71,7 @@ class SettingsController extends BaseController {
       case SWITCH_TYPE.BLOCK_ADS:
         return switchBlockAds.value;
       case SWITCH_TYPE.PLUGIN:
-        return switchPlugin.value;
+        return switchDarkMode.value;
       case SWITCH_TYPE.NOTI:
         return switchNotification.value;
       default:

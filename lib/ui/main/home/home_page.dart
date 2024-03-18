@@ -10,6 +10,7 @@ import 'package:flutter_news_cast/ui/widgets/data_empty_widget.dart';
 import 'package:get/get.dart';
 
 import '../../../data/storage/key_constant.dart';
+import '../../../res/theme/theme_service.dart';
 import '../../base/base_page.dart';
 import '../../widgets/button/touchable_opacity.dart';
 import '../../widgets/dialogs/app_dialog.dart';
@@ -36,7 +37,7 @@ class HomePage extends BasePage<HomeController> {
                 TouchableOpacity(
                   child: Row(
                     children: [
-                      Assets.icons.icRecent.svg(),
+                      Assets.icons.icRecent.svg(color: getColor().themeColorB2B2B2),
                       SizedBox(width: 16.ws),
                     ],
                   ),
@@ -67,7 +68,7 @@ class HomePage extends BasePage<HomeController> {
             },
             child: Row(
               children: [
-                Assets.icons.icHomeBookmark.svg(),
+                Assets.icons.icHomeBookmark.svg(color: getColor().themeColorB2B2B2),
                 SizedBox(width: 16.ws),
                 Expanded(
                   child: Text(
@@ -75,7 +76,7 @@ class HomePage extends BasePage<HomeController> {
                     style: text18.bold.textColor141414,
                   ),
                 ),
-                Assets.icons.icSettingsNext.svg(),
+                Assets.icons.icSettingsNext.svg(color: getColor().themeColorB2B2B2),
               ],
             ),
           ),
@@ -106,7 +107,7 @@ class HomePage extends BasePage<HomeController> {
       children: [
         Row(
           children: [
-            Assets.icons.icFeed.svg(),
+            Assets.icons.icFeed.svg(color: getColor().themeColorB2B2B2),
             SizedBox(width: 16.ws),
             Expanded(
               child: Text(
@@ -114,7 +115,7 @@ class HomePage extends BasePage<HomeController> {
                 style: text18.bold.textColor141414,
               ),
             ),
-            TouchableOpacity(child: Assets.icons.icAdd.svg(), onPressed: () => openBottomSheetAddRss(controller)),
+            TouchableOpacity(child: Assets.icons.icAdd.svg(color: getColor().themeColorB2B2B2), onPressed: () => openBottomSheetAddRss(controller)),
             SizedBox(width: 16.ws),
           ],
         ),
@@ -149,7 +150,7 @@ class HomePage extends BasePage<HomeController> {
                       ),
                     ),
                     SizedBox(width: 8.ws),
-                    Assets.icons.icFeedUrl.svg(),
+                    Assets.icons.icFeedUrl.svg(color: getColor().themeColorB2B2B2),
                   ],
                 ),
                 onPressed: () => controller.navigationCast(PostModel(
@@ -165,7 +166,7 @@ class HomePage extends BasePage<HomeController> {
             ),
             SizedBox(width: 16.ws),
             TouchableOpacity(
-              child: Assets.icons.icDelete.svg(),
+              child: Assets.icons.icDelete.svg(color: getColor().themeColorB2B2B2),
               onPressed: () {
                 AppDialog(
                   context: context,
