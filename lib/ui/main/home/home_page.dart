@@ -119,8 +119,8 @@ class HomePage extends BasePage<HomeController> {
           ],
         ),
         SizedBox(height: 16.ws),
-        controller.listFeed.length == 0 && !controller.isShowFirst
-            ? DataEmptyWidget(textEmpty: textLocalization(' error.empty.home'))
+        controller.listFeed.length == 0 && controller.isShowNotFirst
+            ? DataEmptyWidget(textEmpty: textLocalization('error.empty.home'))
             : Column(
                 children: [
                   for (var item in controller.listFeed) buildListPostFromFeed(context, item.feedModel, item.listPost),

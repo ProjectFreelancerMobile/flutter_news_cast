@@ -76,9 +76,9 @@ class AppDialog {
                       children: [
                         SizedBox(height: 30),
                         _buildTitleText,
-                        SizedBox(height: 8),
+                        SizedBox(height: 4),
                         _buildDescriptionText,
-                        SizedBox(height: 16),
+                        SizedBox(height: 32),
                         Divider(height: 1, thickness: 1, color: colorDivider),
                         _buildActions,
                       ],
@@ -186,7 +186,7 @@ class AppDialog {
         },
         child: Text(
           cancelText,
-          style: cancelStyle ?? text14.bold.height16Per.textColorPrimary,
+          style: cancelStyle ?? text14.bold.height16Per.textColor0083ED,
         ),
       );
 

@@ -32,7 +32,7 @@ class HomeController extends BaseController {
 
   bool get isShowScreenError => false;
 
-  var isShowFirst = true;
+  var isShowNotFirst = false;
 
   @override
   void onClose() {
@@ -51,8 +51,9 @@ class HomeController extends BaseController {
   }
 
   void initRssData() async {
-    isShowFirst = await isInitFirst();
     showLoading();
+    isShowNotFirst = await isInitFirst();
+    print('listFeed::' + listFeed.length.toString() + "isShowFirst::" + isShowNotFirst.toString());
     final listRss = await _rssRepository.getInitRss();
     getListBookMark();
     hideLoading();
@@ -99,6 +100,8 @@ class HomeController extends BaseController {
     final isSuccess = await _rssRepository.deleteRssFeed(feedModel);
     hideLoading();
     if (isSuccess) {
+      isShowNotFirst = await isInitFirst();
+      print('listFeed::' + listFeed.length.toString() + "isShowFirst::" + isShowNotFirst.toString());
       await _rssRepository.getInitRss().then((value) {
         _listFeed$.value = value;
       });
