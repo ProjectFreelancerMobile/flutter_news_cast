@@ -5,7 +5,7 @@ const colorBackground = Color(0xFFF1F1F1);
 
 const colorB2B2B2 = Color(0xFFB0B0B0);
 const color00AC44 = Color(0xFF00AC44);
-const color141414 = Color(0xFF141414);
+const color141414 = Color(0xFF333333);
 const color777777 = Color(0xFF777777);
 const colorF20606 = Color(0xFFF20606);
 const colorFF6F15 = Color(0xFFFF6F15);
