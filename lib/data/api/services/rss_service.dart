@@ -77,9 +77,9 @@ class RSSService extends BaseService {
       syncRefreshFeed(feedDB);
       print('load Local');
     }
-    listFeed.forEach((element) {
-      print('listFeed:::::${element.feedModel?.id} url=${element.feedModel?.url} listPost=${element.listPost?.length}');
-    });
+    // listFeed.forEach((element) {
+    //   print('listFeed:::::${element.feedModel?.id} url=${element.feedModel?.url} listPost=${element.listPost?.length}');
+    // });
     return listFeed.reversed.toList();
   }
 
@@ -450,7 +450,7 @@ class RSSService extends BaseService {
   }
 
   Future<PostModel?> getPosts(String? url) async {
-    return await _isar.postModels.where().filter().linkContains(url ?? '').findFirst();
+    return await _isar.postModels.where().filter().linkEqualTo(url ?? '').findFirst();
   }
 
   Future<List<PostModel>> getPostsByListFeeds(List<FeedModel> feeds) async {

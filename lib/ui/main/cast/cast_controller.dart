@@ -47,14 +47,14 @@ class CastController extends BaseController {
         NavigationDelegate(
           onProgress: (int progress) async {
             if (progress == 100) {
-              updateStateCanBack();
               loadWeb(true);
             }
           },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {
+          onPageStarted: (String url) {
+            updateStateCanBack();
             checkPostStatus(postModel, url);
           },
+          onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
             if (request.url.startsWith('https://www.youtube.com/')) {
@@ -102,16 +102,16 @@ class CastController extends BaseController {
       if (!urlFull.contains('http://') || urlFull.contains('https://')) {
         urlFull = ('http://$urlFull');
       }
-      print('urlFull::' + urlFull.toString());
+      //print('urlFull::' + urlFull.toString());
       final isUrl = urlFull.isUrl();
-      print('listString::' + isUrl.toString());
+      //print('listString::' + isUrl.toString());
       var urlWeb;
       if (isUrl) {
         urlWeb = Uri.parse(urlFull);
       } else {
         urlWeb = Uri.parse("https://www.google.com/search?q=$url");
       }
-      print('urlWeb::' + urlWeb.toString());
+      print('urlWeb::' + urlWeb.toString() + "postModel::" + this.postModel.toString());
       webController.loadRequest(urlWeb);
     } else {
       loadWeb(false);
@@ -140,15 +140,14 @@ class CastController extends BaseController {
       textSearchCl.clear();
   }
 
-  void updateStateCanBack({bool isBack = false}) async {
+  void updateStateCanBack() async {
+    postModel = null;
     _isHasCanBack$.value = await webController.canGoBack();
-    if (isBack) {
-      webController.currentUrl().then((value) {
-        if (value != null) {
-          textSearchCl.text = value;
-        }
-      });
-    }
+    webController.currentUrl().then((value) {
+      if (value != null) {
+        textSearchCl.text = value;
+      }
+    });
   }
 
   String? validatorURL(String fieldName) {
@@ -189,6 +188,7 @@ class CastController extends BaseController {
   }
 
   void checkPostStatus(PostModel? postModelItem, String? url) async {
+    print('checkPostStatus::$url');
     if (postModelItem != null) {
       print('checkPostBookmark:0000::' + postModel.toString());
       _isHasBookmark$.value = postModelItem.favorite;
@@ -203,7 +203,8 @@ class CastController extends BaseController {
       });
     }
     if (postModel == null) {
-      postModel = await getCreatePostModel();
+      postModel = await getCreatePostModel(url);
+      _isHasBookmark$.value = postModel?.favorite ?? false;
       print('checkPostBookmark:3333::' + postModel.toString());
     }
     if (postModel != null) {
@@ -211,24 +212,25 @@ class CastController extends BaseController {
     }
   }
 
-  Future<PostModel> getCreatePostModel() async {
+  Future<PostModel> getCreatePostModel(String? url) async {
     print('postModel::' + postModel.toString());
     if (postModel != null) {
       return postModel!;
     } else {
       final title = await webController.getTitle() ?? textSearchCl.text;
+
       //final idPost = await _rssRepository.getIdPost();
       return postModel ??
           PostModel(
             //id: idPost,
             title: title,
-            link: textSearchCl.text,
+            link: url ?? textSearchCl.text,
             image: '',
             //iconUrl
             content: title,
             readDate: DateTime.now(),
             pubDate: DateTime.now(),
-            favorite: isHasBookmark,
+            favorite: false,
             fullText: false,
           );
     }

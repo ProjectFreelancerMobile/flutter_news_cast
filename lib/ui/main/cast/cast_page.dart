@@ -30,9 +30,9 @@ class CastPage extends BasePage<CastController> {
                       ButtonIconTextWidget(
                         onPressed: () {
                           controller.webController.goBack();
-                          controller.updateStateCanBack(isBack: true);
+                          controller.updateStateCanBack();
                         },
-                        icon: controller.isHasCanBack ? Assets.icons.icBack.svg(color: getColor().themeColor141414) : Assets.icons.icBack.svg(color: getColor().themeColor141414),
+                        icon: controller.isHasCanBack ? Assets.icons.icBack.svg(color: getColor().themeColor141414) : Assets.icons.icBack.svg(color: getColor().themeColorB2B2B2),
                       ),
                       Expanded(
                         child: DTextFromField(
@@ -43,7 +43,7 @@ class CastPage extends BasePage<CastController> {
                           prefixIcon: Padding(
                             padding: EdgeInsets.only(left: 16.ws),
                             child:
-                                controller.isHasEditUrl ? Icon(Icons.search, color: getColor().themeColor141414) : Assets.icons.icCastLock.svg(color: getColor().themeColor141414),
+                                controller.isHasEditUrl ? Icon(Icons.search, color: getColor().themeColor141414) : Assets.icons.icCastLock.svg(color: getColor().themeColorB2B2B2),
                           ),
                           suffixIcon: MaterialButton(
                             onPressed: () {
