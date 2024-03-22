@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
 import 'package:get/get.dart';
+import 'package:regexpattern/regexpattern.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../data/api/repositories/rss_repository.dart';
@@ -95,13 +96,20 @@ class CastController extends BaseController {
     if (url?.isNotEmpty == true) {
       this.postModel = postModel;
       showLoading();
-      print('commitURL:$url');
-      var urlWeb = Uri.parse(url!);
-      if (urlWeb.scheme.isEmpty) {
-        urlWeb = Uri.parse("https://www.google.com/search?q=$url");
-      } else {
-        urlWeb = Uri.parse(url.contains('http') == true ? (url ?? '') : ('https:///www.${url ?? ''}'));
+      var urlFull = url ?? '';
+      if (!urlFull.contains('http://') || urlFull.contains('https://')) {
+        urlFull = ('http://$urlFull');
       }
+      print('urlFull::' + urlFull.toString());
+      final isUrl = urlFull.isUrl();
+      print('listString::' + isUrl.toString());
+      var urlWeb;
+      if (isUrl) {
+        urlWeb = Uri.parse(urlFull);
+      } else {
+        urlWeb = Uri.parse("https://www.google.com/search?q=$url");
+      }
+      print('urlWeb::' + urlWeb.toString());
       webController.loadRequest(urlWeb);
     } else {
       loadWeb(false);
