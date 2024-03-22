@@ -35,6 +35,7 @@ class DTextFromField extends StatelessWidget {
   final bool? isHideCounterText;
   final bool? textCenter;
   final double? borderRadius;
+  final FocusNode? focusNode;
 
   DTextFromField({
     this.controller,
@@ -58,6 +59,7 @@ class DTextFromField extends StatelessWidget {
     this.rightTitle,
     this.errorText,
     this.autoFocus = false,
+    this.focusNode,
     this.textInputAction,
     this.onFieldSubmitted,
     this.prefixPadding,
@@ -97,6 +99,7 @@ class DTextFromField extends StatelessWidget {
             ],
           ),
         TextFormField(
+          focusNode: focusNode,
           maxLength: maxLength,
           enabled: enabled,
           autofocus: autoFocus,

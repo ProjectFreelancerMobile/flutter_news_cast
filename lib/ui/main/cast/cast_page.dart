@@ -17,114 +17,121 @@ class CastPage extends BasePage<CastController> {
       extendBodyBehindAppBar: true,
       body: SafeArea(
         child: Material(
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.ws, vertical: 24.ws),
-                child: Row(
-                  children: [
-                    ButtonIconTextWidget(
-                      onPressed: () {
-                        controller.webController.goBack();
-                        controller.updateStateCanBack(isBack: true);
-                      },
-                      icon: controller.isHasCanBack ? Assets.icons.icBack.svg(color: getColor().themeColor141414) : Assets.icons.icBack.svg(color: getColor().themeColor141414),
-                    ),
-                    Expanded(
-                      child: DTextFromField(
-                        keyboardType: TextInputType.text,
-                        controller: controller.textSearchCl,
-                        textStyle: text16.textColor141414,
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.only(left: 16.ws),
-                          child: controller.isHasEditUrl ? Icon(Icons.search, color: getColor().themeColor141414) : Assets.icons.icCastLock.svg(color: getColor().themeColor141414),
-                        ),
-                        suffixIcon: MaterialButton(
-                          onPressed: () {
-                            controller.clearOrReload();
-                          },
-                          height: 24.ws,
-                          minWidth: 24.ws,
-                          padding: EdgeInsets.all(0),
-                          child: controller.isHasEditUrl
-                              ? Assets.icons.icRemove.svg(color: getColor().themeColor141414)
-                              : Assets.icons.icCastReplay.svg(color: getColor().themeColor141414),
-                        ),
-                        iconContraints: BoxConstraints(maxWidth: 40.ws, maxHeight: 24, minHeight: 24),
-                        background: getColor().themeColorEBEBEC,
-                        borderRadius: 18,
-                        strokeColor: Colors.transparent,
-                        hintText: textLocalization('feed.search.url'),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 2.ws, vertical: 12.ws),
-                        onValidated: (val) {
-                          return controller.validatorURL('Địa chỉ URL');
+          child: GestureDetector(
+            onTapDown: (value) {
+              controller.focusNode.value.unfocus();
+            },
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.ws, vertical: 24.ws),
+                  child: Row(
+                    children: [
+                      ButtonIconTextWidget(
+                        onPressed: () {
+                          controller.webController.goBack();
+                          controller.updateStateCanBack(isBack: true);
                         },
-                        onFieldSubmitted: (value) {
-                          controller.commitURL(value, isInputEdit: true);
-                        },
-                        onChange: (value) {
-                          controller.onChangeUrl();
-                        },
+                        icon: controller.isHasCanBack ? Assets.icons.icBack.svg(color: getColor().themeColor141414) : Assets.icons.icBack.svg(color: getColor().themeColor141414),
                       ),
-                    ),
-                    SizedBox(width: 12.ws),
-                    TouchableOpacity(
-                      onPressed: () => controller.saveBookMark(),
-                      child: controller.isHasBookmark
-                          ? Icon(Icons.bookmark, size: 24.ws, color: getColor().themeColor141414)
-                          : Icon(Icons.bookmark_border, size: 24.ws, color: getColor().themeColor141414),
-                    ),
-                    // IconButton(onPressed: () {}, icon: Assets.icons.icCast.svg(height: 22.ws)),
-                  ],
+                      Expanded(
+                        child: DTextFromField(
+                          focusNode: controller.focusNode.value,
+                          keyboardType: TextInputType.text,
+                          controller: controller.textSearchCl,
+                          textStyle: text16.textColor141414,
+                          prefixIcon: Padding(
+                            padding: EdgeInsets.only(left: 16.ws),
+                            child:
+                                controller.isHasEditUrl ? Icon(Icons.search, color: getColor().themeColor141414) : Assets.icons.icCastLock.svg(color: getColor().themeColor141414),
+                          ),
+                          suffixIcon: MaterialButton(
+                            onPressed: () {
+                              controller.clearOrReload();
+                            },
+                            height: 24.ws,
+                            minWidth: 24.ws,
+                            padding: EdgeInsets.all(0),
+                            child: controller.isHasEditUrl
+                                ? Assets.icons.icRemove.svg(color: getColor().themeColor141414)
+                                : Assets.icons.icCastReplay.svg(color: getColor().themeColor141414),
+                          ),
+                          iconContraints: BoxConstraints(maxWidth: 40.ws, maxHeight: 24, minHeight: 24),
+                          background: getColor().themeColorEBEBEC,
+                          borderRadius: 18,
+                          strokeColor: Colors.transparent,
+                          hintText: textLocalization('feed.search.url'),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 2.ws, vertical: 12.ws),
+                          onValidated: (val) {
+                            return controller.validatorURL('Địa chỉ URL');
+                          },
+                          onFieldSubmitted: (value) {
+                            controller.commitURL(value, isInputEdit: true);
+                          },
+                          onChange: (value) {
+                            controller.onChangeUrl();
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 12.ws),
+                      TouchableOpacity(
+                        onPressed: () => controller.saveBookMark(),
+                        child: controller.isHasBookmark
+                            ? Icon(Icons.bookmark, size: 24.ws, color: getColor().themeColor141414)
+                            : Icon(Icons.bookmark_border, size: 24.ws, color: getColor().themeColor141414),
+                      ),
+                      // IconButton(onPressed: () {}, icon: Assets.icons.icCast.svg(height: 22.ws)),
+                    ],
+                  ),
                 ),
-              ),
-              /*Expanded(
-          child: InAppWebView(
-            key: controller.webViewKey,
-            keepAlive: controller.keepAlive,
-            initialSettings: controller.settings,
-            pullToRefreshController: controller.pullToRefreshController,
-            onWebViewCreated: (controllerWeb) {
-              controller.webViewController = controllerWeb;
-            },
-            onLoadStart: (controllerWeb, url) {
-              controller.loadWeb(false);
-            },
-            onPermissionRequest: (controller, request) async {
-              return PermissionResponse(resources: request.resources, action: PermissionResponseAction.GRANT);
-            },
-            shouldOverrideUrlLoading: (controller, navigationAction) async {
-              return NavigationActionPolicy.ALLOW;
-            },
-            onLoadStop: (controllerWeb, url) async {
-              controller.pullToRefreshController?.endRefreshing();
-            },
-            onReceivedError: (controllerWeb, request, error) {
-              controller.pullToRefreshController?.endRefreshing();
-            },
-            onProgressChanged: (controllerWeb, progress) {
-              if (progress == 100) {
-                controller.loadWeb(true);
+                /*Expanded(
+            child: InAppWebView(
+              key: controller.webViewKey,
+              keepAlive: controller.keepAlive,
+              initialSettings: controller.settings,
+              pullToRefreshController: controller.pullToRefreshController,
+              onWebViewCreated: (controllerWeb) {
+                controller.webViewController = controllerWeb;
+              },
+              onLoadStart: (controllerWeb, url) {
+                controller.loadWeb(false);
+              },
+              onPermissionRequest: (controller, request) async {
+                return PermissionResponse(resources: request.resources, action: PermissionResponseAction.GRANT);
+              },
+              shouldOverrideUrlLoading: (controller, navigationAction) async {
+                return NavigationActionPolicy.ALLOW;
+              },
+              onLoadStop: (controllerWeb, url) async {
                 controller.pullToRefreshController?.endRefreshing();
-              }
-            },
-            onUpdateVisitedHistory: (controllerWeb, url, androidIsReload) {},
-            onConsoleMessage: (controllerWeb, consoleMessage) {
-              if (kDebugMode) {
-                print(consoleMessage);
-              }
-            },
-          ),
-        ),*/
-              Expanded(
-                child: GestureDetector(
-                  child: WebViewWidget(controller: controller.webController),
-                  onTapDown: (value) {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  },
+              },
+              onReceivedError: (controllerWeb, request, error) {
+                controller.pullToRefreshController?.endRefreshing();
+              },
+              onProgressChanged: (controllerWeb, progress) {
+                if (progress == 100) {
+                  controller.loadWeb(true);
+                  controller.pullToRefreshController?.endRefreshing();
+                }
+              },
+              onUpdateVisitedHistory: (controllerWeb, url, androidIsReload) {},
+              onConsoleMessage: (controllerWeb, consoleMessage) {
+                if (kDebugMode) {
+                  print(consoleMessage);
+                }
+              },
+            ),
+                    ),*/
+                Expanded(
+                  child: GestureDetector(
+                    child: WebViewWidget(controller: controller.webController),
+                    onTapDown: (value) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

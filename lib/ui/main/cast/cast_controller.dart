@@ -16,6 +16,8 @@ class CastController extends BaseController {
   TextEditingController textSearchCl = TextEditingController();
   PostModel? postModel;
 
+  final focusNode = FocusNode().obs;
+
   bool get isShowScreenError => false;
 
   bool get isHasLoadWeb => _isHasLoadWeb$.value;
