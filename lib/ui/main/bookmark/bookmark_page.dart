@@ -30,7 +30,7 @@ class ListBookmarkPage extends BasePage<BookmarkController> {
             itemBuilder: (context, index) {
               final item = controller.listPost[index];
               return BookmarkItemView(
-                isBookmark: controller.isBookmark,
+                isRemove: true,
                 type: item?.feed.value?.type ?? RSS_TITLE.GOOGLE.indexTitleValue,
                 url: item?.image ?? '',
                 content: item?.title ?? '',

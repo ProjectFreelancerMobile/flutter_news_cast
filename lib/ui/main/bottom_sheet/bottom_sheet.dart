@@ -114,16 +114,20 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                     textLocalization('feed.popular.feeds'),
                     style: text18.bold.textColor141414,
                   ),
-                  SizedBox(height: 8.ws),
+                  SizedBox(height: 24.ws),
                   Row(
                     children: [
                       TouchableOpacity(
-                        child: Column(
-                          children: [
-                            Assets.icons.icYoutubeText.svg(),
-                            SizedBox(height: 4),
-                            Text('Youtube', style: text14.textColor141414),
-                          ],
+                        child: SizedBox(
+                          width: 80.ws,
+                          height: 80.ws,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Assets.icons.icYoutubeText.svg(),
+                              Text('Youtube', style: text14.textColor141414),
+                            ],
+                          ),
                         ),
                         onPressed: () {
                           controller.textAddRssCl.text = RSS_FAVORITE_1;
@@ -132,12 +136,16 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                       ),
                       SizedBox(width: 12.ws),
                       TouchableOpacity(
-                        child: Column(
-                          children: [
-                            Assets.icons.icVimeoText.svg(),
-                            SizedBox(height: 4),
-                            Text('Vimeo', style: text14.textColor141414),
-                          ],
+                        child: SizedBox(
+                          width: 80.ws,
+                          height: 80.ws,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Assets.icons.icVimeoText.svg(),
+                              Text('Vimeo', style: text14.textColor141414),
+                            ],
+                          ),
                         ),
                         onPressed: () {
                           controller.textAddRssCl.text = RSS_FAVORITE_2;
@@ -146,12 +154,16 @@ Future<void> openBottomSheetAddRss(HomeController controller) {
                       ),
                       SizedBox(width: 12.ws),
                       TouchableOpacity(
-                        child: Column(
-                          children: [
-                            Assets.icons.icDailymotionText.svg(),
-                            SizedBox(height: 4),
-                            Text('Vimeo', style: text14.textColor141414),
-                          ],
+                        child: SizedBox(
+                          width: 80.ws,
+                          height: 80.ws,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Assets.icons.icDailymotionText.svg(),
+                              Text('Dailymotion', style: text14.textColor141414),
+                            ],
+                          ),
                         ),
                         onPressed: () {
                           controller.textAddRssCl.text = RSS_FAVORITE_3;

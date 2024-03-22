@@ -81,22 +81,28 @@ class HomePage extends BasePage<HomeController> {
             ),
           ),
           SizedBox(height: 8.ws),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              final item = controller.listBookmark[index];
-              return BookmarkItemView(
-                isBookmark: true,
-                type: item.feed.value?.type ?? RSS_TITLE.GOOGLE.indexTitleValue,
-                url: item.image,
-                content: item.title,
-                onPressed: () => controller.navigationCast(item),
-                onPressedRemove: () => controller.deleteBookmark(item),
-              );
-            },
-            itemCount: controller.listBookmark.length > 5 ? 5 : controller.listBookmark.length,
-          ),
+          controller.listBookmark.length > 0
+              ? ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final item = controller.listBookmark[index];
+                    return BookmarkItemView(
+                      isRemove: false,
+                      type: item.feed.value?.type ?? RSS_TITLE.GOOGLE.indexTitleValue,
+                      url: item.image,
+                      content: item.title,
+                      onPressed: () => controller.navigationCast(item),
+                      onPressedRemove: () => controller.deleteBookmark(item),
+                    );
+                  },
+                  itemCount: controller.listBookmark.length > 5 ? 5 : controller.listBookmark.length,
+                )
+              : Text(
+                  textLocalization('error.empty.bookmark'),
+                  style: text14.textColor141414,
+                  textAlign: TextAlign.center,
+                ),
         ],
       ),
     );

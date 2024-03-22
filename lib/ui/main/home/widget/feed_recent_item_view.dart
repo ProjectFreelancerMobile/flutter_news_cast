@@ -9,12 +9,12 @@ class BookmarkItemView extends StatelessWidget {
   final int type;
   final String url;
   final String content;
-  final bool isBookmark;
+  final bool isRemove;
   final VoidCallback? onPressed;
   final VoidCallback? onPressedRemove;
 
   BookmarkItemView({
-    required this.isBookmark,
+    this.isRemove = true,
     required this.type,
     required this.url,
     required this.content,
@@ -26,23 +26,25 @@ class BookmarkItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return TouchableOpacity(
       onPressed: onPressed,
-      child: SwipeActionCell(
-        key: ObjectKey(url),
-        trailingActions: <SwipeAction>[
-          SwipeAction(
-            title: textLocalization('home.delete'),
-            style: text16.textColorWhite,
-            widthSpace: 60.ws,
-            onTap: (CompletionHandler handler) async {
-              if (onPressedRemove != null) {
-                onPressedRemove!();
-              }
-            },
-            color: Colors.red,
-          ),
-        ],
-        child: buildItem(),
-      ),
+      child: isRemove
+          ? SwipeActionCell(
+              key: ObjectKey(url),
+              trailingActions: <SwipeAction>[
+                SwipeAction(
+                  title: textLocalization('home.delete'),
+                  style: text16.textColorWhite,
+                  widthSpace: 60.ws,
+                  onTap: (CompletionHandler handler) async {
+                    if (onPressedRemove != null) {
+                      onPressedRemove!();
+                    }
+                  },
+                  color: Colors.red,
+                ),
+              ],
+              child: buildItem(),
+            )
+          : buildItem(),
     );
   }
 
