@@ -102,7 +102,7 @@ class HomePage extends BasePage<HomeController> {
                   textLocalization('error.empty.bookmark'),
                   style: text14.textColor141414,
                   textAlign: TextAlign.center,
-                ),
+                )
         ],
       ),
     );

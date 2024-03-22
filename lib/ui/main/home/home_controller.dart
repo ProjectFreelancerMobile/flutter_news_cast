@@ -27,8 +27,11 @@ class HomeController extends BaseController {
 
   bool get addRssExist => _addRssExist$.value;
 
+  bool get refreshBookmark => _refreshBookmark$.value;
+
   var _addRssLoading$ = false.obs;
   var _addRssExist$ = false.obs;
+  var _refreshBookmark$ = false.obs;
 
   bool get isShowScreenError => false;
 
@@ -61,7 +64,9 @@ class HomeController extends BaseController {
   }
 
   Future<List<PostModel>> getListBookMark() async {
+    _refreshBookmark$.value = true;
     _listBookmark$.value = await _rssRepository.getListBookmark();
+    _refreshBookmark$.value = false;
     return listBookmark;
   }
 

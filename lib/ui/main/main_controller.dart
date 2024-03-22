@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:connecteo/connecteo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_news_cast/ui/main/cast/cast_controller.dart';
+import 'package:flutter_news_cast/ui/main/home/home_controller.dart';
 import 'package:get/get.dart';
 
 import '../../data/api/api_constants.dart';
@@ -25,6 +26,9 @@ class MainController extends BaseController {
     pageController.jumpToPage(index);
     pageIndex.value = index;
     Get.find<CastController>().initBackground();
+    if (index == 0) {
+      Get.find<HomeController>().getListBookMark();
+    }
   }
 
   onRunRssPost(PostModel? postModel) {

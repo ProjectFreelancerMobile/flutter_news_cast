@@ -10,7 +10,6 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../../../data/api/repositories/rss_repository.dart';
 import '../../../res/theme/theme_service.dart';
 import '../../base/base_controller.dart';
-import '../home/home_controller.dart';
 
 class CastController extends BaseController {
   final _rssRepository = Get.find<RssRepository>();
@@ -196,12 +195,11 @@ class CastController extends BaseController {
       }
       postModel?.favorite = isHasBookmark;
       print('saveBookMark::' + postModel.toString());
-      _rssRepository.updatePostStatus(
+      await _rssRepository.updatePostStatus(
         postModel!,
         bookMark: isHasBookmark,
         readTime: postModel?.readDate,
       );
-      Get.find<HomeController>().getListBookMark();
     }
   }
 
