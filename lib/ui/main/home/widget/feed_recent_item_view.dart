@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/data/storage/key_constant.dart';
 import 'package:flutter_news_cast/res/style.dart';
 import 'package:flutter_news_cast/ui/widgets/button/touchable_opacity.dart';
+import 'package:flutter_news_cast/ui/widgets/image_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
 
@@ -72,8 +73,14 @@ class BookmarkItemView extends StatelessWidget {
       );
 
   Widget buildIcon(RSS_TITLE type, {String? pathImg}) {
+    //print('pathImg:::' + pathImg.toString());
     if (pathImg != null && pathImg.contains('assets')) {
       return SvgPicture.asset(pathImg);
+    } else if (pathImg?.contains('http') == true) {
+      return CircleNetworkImage(
+        url: url,
+        size: 24.ws,
+      );
     }
     switch (type) {
       case RSS_TITLE.THANHNIEN:

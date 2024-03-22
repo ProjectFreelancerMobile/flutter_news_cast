@@ -1,4 +1,5 @@
 // ignore_for_file: invalid_use_of_protected_member
+import 'package:favicon/favicon.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news_cast/data/api/models/rss/post_model.dart';
@@ -36,6 +37,7 @@ class CastController extends BaseController {
 
   bool get isHasDoneUrl => !isHasEditUrl && isHasLoadWeb;
   late WebViewController webController;
+  bool isFirstFromHome = false;
 
   @override
   void onInit() async {
@@ -51,12 +53,13 @@ class CastController extends BaseController {
             }
           },
           onPageStarted: (String url) {
-            updateStateCanBack();
+            updateStateCanBack(url: url);
             checkPostStatus(postModel, url);
           },
           onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
+            postModel = null;
             if (request.url.startsWith('https://www.youtube.com/')) {
               return NavigationDecision.prevent;
             }
@@ -69,6 +72,7 @@ class CastController extends BaseController {
   void initUrlCast(PostModel? postModel) async {
     if (postModel == null) return;
     if (postModel.link.isNotEmpty) {
+      isFirstFromHome = true;
       textSearchCl.text = postModel.link;
       commitURL(textSearchCl.text, postModel: postModel);
     }
@@ -97,19 +101,25 @@ class CastController extends BaseController {
     _isHasBookmark$.value = false;
     if (url?.isNotEmpty == true) {
       this.postModel = postModel;
+      print('this.postModel::' + this.postModel.toString());
       showLoading();
-      var urlFull = url ?? '';
-      if (!urlFull.contains('http://') || urlFull.contains('https://')) {
-        urlFull = ('http://$urlFull');
-      }
-      //print('urlFull::' + urlFull.toString());
-      final isUrl = urlFull.isUrl();
-      //print('listString::' + isUrl.toString());
       var urlWeb;
-      if (isUrl) {
-        urlWeb = Uri.parse(urlFull);
+      var urlFull = url ?? '';
+      if (isInputEdit) {
+        if (!urlFull.contains('http://') || urlFull.contains('https://')) {
+          urlFull = ('http://$urlFull');
+        }
+        print('urlFull::' + urlFull.toString());
+        final isUrl = urlFull.isUrl();
+        print('listString::' + isUrl.toString());
+
+        if (isUrl) {
+          urlWeb = Uri.parse(urlFull);
+        } else {
+          urlWeb = Uri.parse("https://www.google.com/search?q=$url");
+        }
       } else {
-        urlWeb = Uri.parse("https://www.google.com/search?q=$url");
+        urlWeb = Uri.parse(urlFull);
       }
       print('urlWeb::' + urlWeb.toString() + "postModel::" + this.postModel.toString());
       webController.loadRequest(urlWeb);
@@ -140,14 +150,22 @@ class CastController extends BaseController {
       textSearchCl.clear();
   }
 
-  void updateStateCanBack() async {
-    postModel = null;
+  void updateStateCanBack({String? url}) async {
+    if (!isFirstFromHome) {
+      postModel = null;
+    } else {
+      isFirstFromHome = false;
+    }
     _isHasCanBack$.value = await webController.canGoBack();
-    webController.currentUrl().then((value) {
-      if (value != null) {
-        textSearchCl.text = value;
-      }
-    });
+    if (url != null) {
+      textSearchCl.text = url;
+    } else {
+      webController.currentUrl().then((value) {
+        if (value != null) {
+          textSearchCl.text = value;
+        }
+      });
+    }
   }
 
   String? validatorURL(String fieldName) {
@@ -203,8 +221,8 @@ class CastController extends BaseController {
       });
     }
     if (postModel == null) {
-      postModel = await getCreatePostModel(url);
       _isHasBookmark$.value = postModel?.favorite ?? false;
+      postModel = await getCreatePostModel(url);
       print('checkPostBookmark:3333::' + postModel.toString());
     }
     if (postModel != null) {
@@ -218,15 +236,15 @@ class CastController extends BaseController {
       return postModel!;
     } else {
       final title = await webController.getTitle() ?? textSearchCl.text;
-
+      var iconUrl = await FaviconFinder.getBest(url ?? '');
+      //print('iconUrl' + iconUrl.toString());
       //final idPost = await _rssRepository.getIdPost();
       return postModel ??
           PostModel(
             //id: idPost,
             title: title,
             link: url ?? textSearchCl.text,
-            image: '',
-            //iconUrl
+            image: iconUrl?.url ?? '',
             content: title,
             readDate: DateTime.now(),
             pubDate: DateTime.now(),

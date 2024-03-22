@@ -436,8 +436,8 @@ class RSSService extends BaseService {
 
   Future<void> savePost(PostModel postModel) async {
     print('savePost::' + postModel.toString());
-    _isar.writeTxnSync(() {
-      _isar.postModels.putSync(postModel);
+    _isar.writeTxn(() async {
+      _isar.postModels.put(postModel);
     });
   }
 
