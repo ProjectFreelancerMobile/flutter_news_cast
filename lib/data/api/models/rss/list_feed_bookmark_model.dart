@@ -7,11 +7,11 @@ class ListFeedBookmarkModel {
   String? title = '';
   int rssType;
   String? baseUrl;
-
-  ListFeedBookmarkModel(this.id, this.url, this.rssType, {this.title, this.baseUrl, this.type = RSS_TITLE.GOOGLE});
+  String? icon;
+  ListFeedBookmarkModel(this.id, this.url, this.rssType, this.icon, {this.title, this.baseUrl, this.type = RSS_TITLE.GOOGLE});
 
   @override
   String toString() {
-    return 'ListFeedBookmarkModel{id:$id, title:$title, url: $url, rssType: $rssType, baseUrl:$baseUrl}';
+    return 'ListFeedBookmarkModel{id:$id, title:$title, icon:$icon, url: $url, rssType: $rssType, baseUrl:$baseUrl}';
   }
 }
