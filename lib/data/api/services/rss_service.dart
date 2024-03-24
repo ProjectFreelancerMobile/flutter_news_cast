@@ -491,9 +491,11 @@ class RSSService extends BaseService {
     post.readDate = readTime;
     post.favorite = bookMark ?? post.favorite;
     if (bookMark == true && post.icon.isEmpty) {
-      await FaviconFinder.getBest(post.link).then((value) {
-        post.icon = value?.url ?? '';
-      });
+      try {
+        await FaviconFinder.getBest(post.link).then((value) {
+          post.icon = value?.url ?? '';
+        });
+      } catch (e) {}
     }
     print('updatePostStatus:$post');
     await savePost(post, isSync: isSync);

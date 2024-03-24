@@ -8,6 +8,7 @@ import 'package:regexpattern/regexpattern.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../data/api/repositories/rss_repository.dart';
+import '../../../res/style.dart';
 import '../../../res/theme/theme_service.dart';
 import '../../base/base_controller.dart';
 
@@ -52,8 +53,10 @@ class CastController extends BaseController {
             }
           },
           onPageStarted: (String url) {
-            updateStateCanBack(url: url);
-            checkPostStatus(postModel, url);
+            Future.delayed(Duration(seconds: 1), () {
+              updateStateCanBack(url: url);
+              checkPostStatus(postModel, url);
+            });
           },
           onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {},
@@ -234,8 +237,17 @@ class CastController extends BaseController {
       return postModel!;
     } else {
       final title = await webController.getTitle() ?? textSearchCl.text;
-      var iconUrl = await FaviconFinder.getBest(url ?? '');
-      print('iconUrl' + iconUrl.toString());
+      var iconUrl;
+      try {
+        iconUrl = await FaviconFinder.getBest(url ?? '');
+      } catch (e) {
+        if (url?.contains('zingmp3.vn') == true) {
+          iconUrl = Favicon(Assets.icons.icZingmp3.path);
+        } else {
+          iconUrl = null;
+        }
+      }
+      print('title:::' + title.toString());
       //final idPost = await _rssRepository.getIdPost();
       return postModel ??
           PostModel(

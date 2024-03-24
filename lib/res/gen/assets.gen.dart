@@ -135,6 +135,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_youtube_text.svg
   SvgGenImage get icYoutubeText => const SvgGenImage('assets/icons/ic_youtube_text.svg');
 
+  /// File path: assets/icons/ic_zingmp3.svg
+  SvgGenImage get icZingmp3 => const SvgGenImage('assets/icons/ic_zingmp3.svg');
+
   /// List of all assets
   List<dynamic> get values => [
         icAdd,
@@ -171,7 +174,8 @@ class $AssetsIconsGen {
         icVimeo,
         icVimeoText,
         icYoutube,
-        icYoutubeText
+        icYoutubeText,
+        icZingmp3
       ];
 }
 
