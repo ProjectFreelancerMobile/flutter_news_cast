@@ -9,7 +9,6 @@ class FeedModel {
   String url;
   String description;
   String category;
-  String icon;
   bool fullText;
   int rssType;
   String? baseUrl;
@@ -21,7 +20,6 @@ class FeedModel {
     required this.title,
     required this.url,
     required this.description,
-    required this.icon,
     required this.category,
     required this.fullText,
     required this.rssType,
@@ -32,6 +30,6 @@ class FeedModel {
 
   @override
   String toString() {
-    return 'FeedModel{id: $id, title: $title, url: $url, icon:$icon, description: $description, category: $category, fullText: $fullText, rssType: $rssType, type:$type, baseUrl:$baseUrl}';
+    return 'FeedModel{id: $id, title: $title, url: $url, description: $description, category: $category, fullText: $fullText, rssType: $rssType, type:$type, baseUrl:$baseUrl}';
   }
 }

@@ -42,28 +42,23 @@ const FeedModelSchema = CollectionSchema(
       name: r'hostUrl',
       type: IsarType.string,
     ),
-    r'icon': PropertySchema(
-      id: 5,
-      name: r'icon',
-      type: IsarType.string,
-    ),
     r'rssType': PropertySchema(
-      id: 6,
+      id: 5,
       name: r'rssType',
       type: IsarType.long,
     ),
     r'title': PropertySchema(
-      id: 7,
+      id: 6,
       name: r'title',
       type: IsarType.string,
     ),
     r'type': PropertySchema(
-      id: 8,
+      id: 7,
       name: r'type',
       type: IsarType.long,
     ),
     r'url': PropertySchema(
-      id: 9,
+      id: 8,
       name: r'url',
       type: IsarType.string,
     )
@@ -102,7 +97,6 @@ int _feedModelEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
-  bytesCount += 3 + object.icon.length * 3;
   bytesCount += 3 + object.title.length * 3;
   bytesCount += 3 + object.url.length * 3;
   return bytesCount;
@@ -119,11 +113,10 @@ void _feedModelSerialize(
   writer.writeString(offsets[2], object.description);
   writer.writeBool(offsets[3], object.fullText);
   writer.writeString(offsets[4], object.hostUrl);
-  writer.writeString(offsets[5], object.icon);
-  writer.writeLong(offsets[6], object.rssType);
-  writer.writeString(offsets[7], object.title);
-  writer.writeLong(offsets[8], object.type);
-  writer.writeString(offsets[9], object.url);
+  writer.writeLong(offsets[5], object.rssType);
+  writer.writeString(offsets[6], object.title);
+  writer.writeLong(offsets[7], object.type);
+  writer.writeString(offsets[8], object.url);
 }
 
 FeedModel _feedModelDeserialize(
@@ -138,12 +131,11 @@ FeedModel _feedModelDeserialize(
     description: reader.readString(offsets[2]),
     fullText: reader.readBool(offsets[3]),
     hostUrl: reader.readStringOrNull(offsets[4]),
-    icon: reader.readString(offsets[5]),
     id: id,
-    rssType: reader.readLong(offsets[6]),
-    title: reader.readString(offsets[7]),
-    type: reader.readLong(offsets[8]),
-    url: reader.readString(offsets[9]),
+    rssType: reader.readLong(offsets[5]),
+    title: reader.readString(offsets[6]),
+    type: reader.readLong(offsets[7]),
+    url: reader.readString(offsets[8]),
   );
   return object;
 }
@@ -166,14 +158,12 @@ P _feedModelDeserializeProp<P>(
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 6:
-      return (reader.readLong(offset)) as P;
-    case 7:
       return (reader.readString(offset)) as P;
-    case 8:
+    case 7:
       return (reader.readLong(offset)) as P;
-    case 9:
+    case 8:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -840,136 +830,6 @@ extension FeedModelQueryFilter
     });
   }
 
-  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> iconEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'icon',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> iconGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'icon',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> iconLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'icon',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> iconBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'icon',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> iconStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'icon',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> iconEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'icon',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> iconContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'icon',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> iconMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'icon',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> iconIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'icon',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> iconIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'icon',
-        value: '',
-      ));
-    });
-  }
-
   QueryBuilder<FeedModel, FeedModel, QAfterFilterCondition> idIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1473,18 +1333,6 @@ extension FeedModelQuerySortBy on QueryBuilder<FeedModel, FeedModel, QSortBy> {
     });
   }
 
-  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> sortByIcon() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'icon', Sort.asc);
-    });
-  }
-
-  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> sortByIconDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'icon', Sort.desc);
-    });
-  }
-
   QueryBuilder<FeedModel, FeedModel, QAfterSortBy> sortByRssType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'rssType', Sort.asc);
@@ -1596,18 +1444,6 @@ extension FeedModelQuerySortThenBy
     });
   }
 
-  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> thenByIcon() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'icon', Sort.asc);
-    });
-  }
-
-  QueryBuilder<FeedModel, FeedModel, QAfterSortBy> thenByIconDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'icon', Sort.desc);
-    });
-  }
-
   QueryBuilder<FeedModel, FeedModel, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1705,13 +1541,6 @@ extension FeedModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<FeedModel, FeedModel, QDistinct> distinctByIcon(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'icon', caseSensitive: caseSensitive);
-    });
-  }
-
   QueryBuilder<FeedModel, FeedModel, QDistinct> distinctByRssType() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'rssType');
@@ -1774,12 +1603,6 @@ extension FeedModelQueryProperty
   QueryBuilder<FeedModel, String?, QQueryOperations> hostUrlProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'hostUrl');
-    });
-  }
-
-  QueryBuilder<FeedModel, String, QQueryOperations> iconProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'icon');
     });
   }
 

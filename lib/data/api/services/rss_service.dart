@@ -1,3 +1,4 @@
+import 'package:favicon/favicon.dart';
 import 'package:flutter_news_cast/app/app_controller.dart';
 import 'package:flutter_news_cast/data/storage/key_constant.dart';
 import 'package:flutter_news_cast/utils/dart_rss/dart_rss.dart';
@@ -28,12 +29,12 @@ class RSSService extends BaseService {
     if (await _storage.isInstall() == false) {
       _storage.saveInstall(true);
       final listRssDefault = [
-        ListFeedBookmarkModel(0, RSS_1, RSS_TYPE.RSS.indexValue, Assets.icons.icThexiffy.path, type: RSS_TITLE.THEXIFFY),
-        ListFeedBookmarkModel(1, RSS_2, RSS_TYPE.JSON.indexValue, Assets.icons.icDailymotion.path, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE, type: RSS_TITLE.DAILYMOTION),
-        ListFeedBookmarkModel(2, RSS_3, RSS_TYPE.JSON.indexValue, Assets.icons.icDailymotion.path, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE, type: RSS_TITLE.DAILYMOTION),
-        ListFeedBookmarkModel(3, RSS_4, RSS_TYPE.RSS.indexValue, Assets.icons.icVimeo.path, type: RSS_TITLE.VIMEO),
-        ListFeedBookmarkModel(4, RSS_5, RSS_TYPE.ATOM.indexValue, Assets.icons.icYoutube.path, type: RSS_TITLE.YOUTUBE),
-        ListFeedBookmarkModel(5, RSS_6, RSS_TYPE.RSS.indexValue, Assets.icons.icThanhnien.path, type: RSS_TITLE.THANHNIEN),
+        ListFeedBookmarkModel(0, RSS_1, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.THEXIFFY),
+        ListFeedBookmarkModel(1, RSS_2, RSS_TYPE.JSON.indexValue, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE, type: RSS_TITLE.DAILYMOTION),
+        ListFeedBookmarkModel(2, RSS_3, RSS_TYPE.JSON.indexValue, title: 'Dailymotion', baseUrl: BASE_JSON_PARSE, type: RSS_TITLE.DAILYMOTION),
+        ListFeedBookmarkModel(3, RSS_4, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.VIMEO),
+        ListFeedBookmarkModel(4, RSS_5, RSS_TYPE.ATOM.indexValue, type: RSS_TITLE.YOUTUBE),
+        ListFeedBookmarkModel(5, RSS_6, RSS_TYPE.RSS.indexValue, type: RSS_TITLE.THANHNIEN),
       ];
       await Future.forEach(listRssDefault, (element) async {
         await parseRss(element).then((value) async {
@@ -95,7 +96,7 @@ class RSSService extends BaseService {
       // ListFeedBookmarkModel(3, RSS_4, RSS_TYPE.JSON.indexValue, baseUrl: BASE_JSON_PARSE),
       // ListFeedBookmarkModel(4, RSS_5, RSS_TYPE.JSON.indexValue, baseUrl: BASE_JSON_PARSE),
       // ListFeedBookmarkModel(5, RSS_6, RSS_TYPE.RSS.indexValue),
-      ListFeedBookmarkModel(6, 'https://vnexpress.net/rss/tin-moi-nhat.rss', RSS_TYPE.RSS.indexValue, ''),
+      ListFeedBookmarkModel(6, 'https://vnexpress.net/rss/tin-moi-nhat.rss', RSS_TYPE.RSS.indexValue),
     ];
     await Future.forEach(listRssDefault, (element) async {
       await parseRss(element).then((value) async {
@@ -113,7 +114,6 @@ class RSSService extends BaseService {
             element.feedModel?.id ?? 0,
             element.feedModel?.url ?? '',
             element.feedModel?.rssType ?? RSS_TYPE.RSS.indexValue,
-            element.feedModel?.icon ?? '',
             title: element.feedModel?.title,
             baseUrl: element.feedModel?.baseUrl,
             type: element.feedModel?.type.typeTitle ?? RSS_TITLE.GOOGLE,
@@ -140,7 +140,6 @@ class RSSService extends BaseService {
             title: feedTitle ?? '',
             url: feedModel.url,
             description: rssFeed.description ?? '',
-            icon: feedModel.icon ?? '',
             category: categoryName,
             fullText: false,
             rssType: feedModel.rssType,
@@ -159,7 +158,6 @@ class RSSService extends BaseService {
             title: atomFeed.title ?? '',
             url: feedModel.url,
             description: atomFeed.subtitle ?? '',
-            icon: feedModel.icon ?? '',
             category: categoryName,
             fullText: false,
             rssType: feedModel.rssType,
@@ -178,7 +176,6 @@ class RSSService extends BaseService {
             title: feedTitle ?? '',
             url: feedModel.url,
             description: '',
-            icon: feedModel.icon ?? '',
             category: categoryName,
             fullText: false,
             rssType: feedModel.rssType,
@@ -198,7 +195,6 @@ class RSSService extends BaseService {
             title: feedTitle ?? '',
             url: feedModel.url,
             description: rssFeed.description ?? '',
-            icon: feedModel.icon ?? '',
             category: categoryName,
             fullText: false,
             rssType: feedModel.rssType,
@@ -234,7 +230,7 @@ class RSSService extends BaseService {
     final response = await getWithUrlRss(url);
     print('saveRssFeed::$response');
     final id = await _isar.feedModels.count();
-    final listFeed = ListFeedBookmarkModel(id, url, RSS_TYPE.RSS.indexValue, Assets.icons.icGoogle.path);
+    final listFeed = ListFeedBookmarkModel(id, url, RSS_TYPE.RSS.indexValue);
     RssVersion rssVersion = RssVersion.rss2;
     if (response.toString().startsWith('{') || response.toString().startsWith('[')) {
       rssVersion = RssVersion.json;
@@ -364,6 +360,7 @@ class RSSService extends BaseService {
       title: title,
       link: item.link!,
       image: item.image ?? item.enclosure?.url ?? ((item.media?.thumbnails.isNotEmpty == true) ? item.media?.thumbnails.first.url : '') ?? '',
+      icon: '',
       content: item.description ?? '',
       pubDate: _parsePubDate(item.pubDate),
       favorite: false,
@@ -379,6 +376,7 @@ class RSSService extends BaseService {
       title: title,
       link: item.links[0].href ?? '',
       image: item.media?.group?.thumbnail?.url ?? item.image ?? '',
+      icon: '',
       content: item.content ?? '',
       pubDate: _parsePubDate(item.updated),
       favorite: false,
@@ -394,6 +392,7 @@ class RSSService extends BaseService {
       title: title,
       link: '$baseUrl${item.id}',
       image: '',
+      icon: '',
       content: title,
       pubDate: DateTime.now(),
       favorite: false,
@@ -491,6 +490,11 @@ class RSSService extends BaseService {
   Future<void> updatePostStatus(PostModel post, {DateTime? readTime, bool? bookMark, bool isSync = false}) async {
     post.readDate = readTime;
     post.favorite = bookMark ?? post.favorite;
+    if (bookMark == true && post.icon.isEmpty) {
+      await FaviconFinder.getBest(post.link).then((value) {
+        post.icon = value?.url ?? '';
+      });
+    }
     print('updatePostStatus:$post');
     await savePost(post, isSync: isSync);
   }
