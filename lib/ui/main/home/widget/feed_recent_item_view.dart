@@ -74,14 +74,6 @@ class BookmarkItemView extends StatelessWidget {
 
   Widget buildIcon(RSS_TITLE type, {String? pathImg}) {
     //print('pathImg:::' + pathImg.toString());
-    if (pathImg != null && pathImg.contains('assets')) {
-      return SvgPicture.asset(pathImg);
-    } else if (pathImg?.contains('http') == true) {
-      return CircleNetworkImage(
-        url: pathImg,
-        size: 24.ws,
-      );
-    }
     switch (type) {
       case RSS_TITLE.THANHNIEN:
         return Assets.icons.icThanhnien.image();
@@ -94,6 +86,14 @@ class BookmarkItemView extends StatelessWidget {
       case RSS_TITLE.THEXIFFY:
         return Assets.icons.icThexiffy.image();
       default:
+        if (pathImg != null && pathImg.contains('assets')) {
+          return SvgPicture.asset(pathImg);
+        } else if (pathImg?.contains('http') == true) {
+          return CircleNetworkImage(
+            url: pathImg,
+            size: 24.ws,
+          );
+        }
         return Assets.icons.icGoogle.image();
     }
   }
