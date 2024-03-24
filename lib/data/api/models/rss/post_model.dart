@@ -30,6 +30,6 @@ class PostModel {
 
   @override
   String toString() {
-    return 'PostModel{id: $id, feed: $feed, title: $title, link: $link, readDate: $readDate, favorite: $favorite}';
+    return 'PostModel{id: $id, feed: $feed, title: $title, image:$image, link: $link, readDate: $readDate, favorite: $favorite}';
   }
 }

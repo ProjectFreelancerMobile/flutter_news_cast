@@ -434,11 +434,17 @@ class RSSService extends BaseService {
     });
   }
 
-  Future<void> savePost(PostModel postModel) async {
+  Future<void> savePost(PostModel postModel, {bool isSync = false}) async {
     print('savePost::' + postModel.toString());
-    _isar.writeTxn(() async {
-      _isar.postModels.put(postModel);
-    });
+    if (isSync) {
+      _isar.writeTxnSync(() {
+        _isar.postModels.putSync(postModel);
+      });
+    } else {
+      _isar.writeTxn(() async {
+        _isar.postModels.put(postModel);
+      });
+    }
   }
 
   Future<int> getIdPost() async {
@@ -474,11 +480,11 @@ class RSSService extends BaseService {
     });
   }
 
-  Future<void> updatePostStatus(PostModel post, {DateTime? readTime, bool? bookMark}) async {
+  Future<void> updatePostStatus(PostModel post, {DateTime? readTime, bool? bookMark, bool isSync = false}) async {
     post.readDate = readTime;
     post.favorite = bookMark ?? post.favorite;
     print('updatePostStatus:$post');
-    await savePost(post);
+    await savePost(post, isSync: isSync);
   }
 
   Future<List<PostModel>> getListBookmark() async {
