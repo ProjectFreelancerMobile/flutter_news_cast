@@ -32,7 +32,7 @@ class ListBookmarkPage extends BasePage<BookmarkController> {
               return BookmarkItemView(
                 isRemove: true,
                 type: item?.feed.value?.type ?? RSS_TITLE.GOOGLE.indexTitleValue,
-                url: item?.image ?? '',
+                urlIcon: item?.icon ?? '',
                 content: item?.title ?? '',
                 onPressed: () => controller.navigationCast(item),
                 onPressedRemove: () => controller.deleteBookmark(item),

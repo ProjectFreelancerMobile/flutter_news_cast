@@ -90,7 +90,7 @@ class HomePage extends BasePage<HomeController> {
                     return BookmarkItemView(
                       isRemove: false,
                       type: item.feed.value?.type ?? RSS_TITLE.GOOGLE.indexTitleValue,
-                      url: item.image,
+                      urlIcon: item.icon,
                       content: item.title,
                       onPressed: () => controller.navigationCast(item),
                       onPressedRemove: () => controller.deleteBookmark(item),
@@ -164,6 +164,7 @@ class HomePage extends BasePage<HomeController> {
                   link: feedModel?.hostUrl ?? Uri.parse(feedModel?.url ?? '').host,
                   image: '',
                   content: '',
+                  icon: '',
                   pubDate: DateTime.now(),
                   favorite: false,
                   fullText: false,

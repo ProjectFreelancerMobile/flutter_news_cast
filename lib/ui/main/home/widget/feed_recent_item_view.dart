@@ -8,7 +8,7 @@ import 'package:flutter_swipe_action_cell/core/cell.dart';
 
 class BookmarkItemView extends StatelessWidget {
   final int type;
-  final String url;
+  final String urlIcon;
   final String content;
   final bool isRemove;
   final VoidCallback? onPressed;
@@ -17,7 +17,7 @@ class BookmarkItemView extends StatelessWidget {
   BookmarkItemView({
     this.isRemove = true,
     required this.type,
-    required this.url,
+    required this.urlIcon,
     required this.content,
     required this.onPressed,
     required this.onPressedRemove,
@@ -29,7 +29,7 @@ class BookmarkItemView extends StatelessWidget {
       onPressed: onPressed,
       child: isRemove
           ? SwipeActionCell(
-              key: ObjectKey(url),
+              key: ObjectKey(urlIcon),
               trailingActions: <SwipeAction>[
                 SwipeAction(
                   title: textLocalization('home.delete'),
@@ -56,7 +56,7 @@ class BookmarkItemView extends StatelessWidget {
             SizedBox(
               height: 20.ws,
               width: 20.ws,
-              child: buildIcon(type.typeTitle, pathImg: url),
+              child: buildIcon(type.typeTitle, pathImg: urlIcon),
             ),
             SizedBox(width: 16.ws),
             Expanded(
@@ -78,7 +78,7 @@ class BookmarkItemView extends StatelessWidget {
       return SvgPicture.asset(pathImg);
     } else if (pathImg?.contains('http') == true) {
       return CircleNetworkImage(
-        url: url,
+        url: pathImg,
         size: 24.ws,
       );
     }

@@ -32,28 +32,33 @@ const PostModelSchema = CollectionSchema(
       name: r'fullText',
       type: IsarType.bool,
     ),
-    r'image': PropertySchema(
+    r'icon': PropertySchema(
       id: 3,
+      name: r'icon',
+      type: IsarType.string,
+    ),
+    r'image': PropertySchema(
+      id: 4,
       name: r'image',
       type: IsarType.string,
     ),
     r'link': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'link',
       type: IsarType.string,
     ),
     r'pubDate': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'pubDate',
       type: IsarType.dateTime,
     ),
     r'readDate': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'readDate',
       type: IsarType.dateTime,
     ),
     r'title': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'title',
       type: IsarType.string,
     )
@@ -86,6 +91,7 @@ int _postModelEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.content.length * 3;
+  bytesCount += 3 + object.icon.length * 3;
   bytesCount += 3 + object.image.length * 3;
   bytesCount += 3 + object.link.length * 3;
   bytesCount += 3 + object.title.length * 3;
@@ -101,11 +107,12 @@ void _postModelSerialize(
   writer.writeString(offsets[0], object.content);
   writer.writeBool(offsets[1], object.favorite);
   writer.writeBool(offsets[2], object.fullText);
-  writer.writeString(offsets[3], object.image);
-  writer.writeString(offsets[4], object.link);
-  writer.writeDateTime(offsets[5], object.pubDate);
-  writer.writeDateTime(offsets[6], object.readDate);
-  writer.writeString(offsets[7], object.title);
+  writer.writeString(offsets[3], object.icon);
+  writer.writeString(offsets[4], object.image);
+  writer.writeString(offsets[5], object.link);
+  writer.writeDateTime(offsets[6], object.pubDate);
+  writer.writeDateTime(offsets[7], object.readDate);
+  writer.writeString(offsets[8], object.title);
 }
 
 PostModel _postModelDeserialize(
@@ -118,12 +125,13 @@ PostModel _postModelDeserialize(
     content: reader.readString(offsets[0]),
     favorite: reader.readBool(offsets[1]),
     fullText: reader.readBool(offsets[2]),
+    icon: reader.readString(offsets[3]),
     id: id,
-    image: reader.readString(offsets[3]),
-    link: reader.readString(offsets[4]),
-    pubDate: reader.readDateTime(offsets[5]),
-    readDate: reader.readDateTimeOrNull(offsets[6]),
-    title: reader.readString(offsets[7]),
+    image: reader.readString(offsets[4]),
+    link: reader.readString(offsets[5]),
+    pubDate: reader.readDateTime(offsets[6]),
+    readDate: reader.readDateTimeOrNull(offsets[7]),
+    title: reader.readString(offsets[8]),
   );
   return object;
 }
@@ -146,10 +154,12 @@ P _postModelDeserializeProp<P>(
     case 4:
       return (reader.readString(offset)) as P;
     case 5:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 6:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 7:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 8:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -395,6 +405,136 @@ extension PostModelQueryFilter
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'fullText',
         value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> iconEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'icon',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> iconGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'icon',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> iconLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'icon',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> iconBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'icon',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> iconStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'icon',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> iconEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'icon',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> iconContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'icon',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> iconMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'icon',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> iconIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'icon',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterFilterCondition> iconIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'icon',
+        value: '',
       ));
     });
   }
@@ -1038,6 +1178,18 @@ extension PostModelQuerySortBy on QueryBuilder<PostModel, PostModel, QSortBy> {
     });
   }
 
+  QueryBuilder<PostModel, PostModel, QAfterSortBy> sortByIcon() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'icon', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterSortBy> sortByIconDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'icon', Sort.desc);
+    });
+  }
+
   QueryBuilder<PostModel, PostModel, QAfterSortBy> sortByImage() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'image', Sort.asc);
@@ -1137,6 +1289,18 @@ extension PostModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<PostModel, PostModel, QAfterSortBy> thenByIcon() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'icon', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PostModel, PostModel, QAfterSortBy> thenByIconDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'icon', Sort.desc);
+    });
+  }
+
   QueryBuilder<PostModel, PostModel, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1231,6 +1395,13 @@ extension PostModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<PostModel, PostModel, QDistinct> distinctByIcon(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'icon', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<PostModel, PostModel, QDistinct> distinctByImage(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1288,6 +1459,12 @@ extension PostModelQueryProperty
   QueryBuilder<PostModel, bool, QQueryOperations> fullTextProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'fullText');
+    });
+  }
+
+  QueryBuilder<PostModel, String, QQueryOperations> iconProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'icon');
     });
   }
 

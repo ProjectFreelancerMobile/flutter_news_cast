@@ -235,13 +235,14 @@ class CastController extends BaseController {
     } else {
       final title = await webController.getTitle() ?? textSearchCl.text;
       var iconUrl = await FaviconFinder.getBest(url ?? '');
-      //print('iconUrl' + iconUrl.toString());
+      print('iconUrl' + iconUrl.toString());
       //final idPost = await _rssRepository.getIdPost();
       return postModel ??
           PostModel(
             //id: idPost,
             title: title,
             link: url ?? textSearchCl.text,
+            icon: iconUrl?.url ?? '',
             image: iconUrl?.url ?? '',
             content: title,
             readDate: DateTime.now(),

@@ -10,6 +10,7 @@ class PostModel {
   String title;
   String link;
   String image;
+  String icon;
   String content;
   DateTime pubDate;
   DateTime? readDate;
@@ -22,6 +23,7 @@ class PostModel {
     required this.title,
     required this.link,
     required this.image,
+    required this.icon,
     required this.content,
     required this.pubDate,
     required this.favorite,
@@ -30,6 +32,6 @@ class PostModel {
 
   @override
   String toString() {
-    return 'PostModel{id: $id, feed: $feed, title: $title, image:$image, link: $link, readDate: $readDate, favorite: $favorite}';
+    return 'PostModel{id: $id, feed: $feed, title: $title, icon:$icon, image:$image, link: $link, readDate: $readDate, favorite: $favorite}';
   }
 }
