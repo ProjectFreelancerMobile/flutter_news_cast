@@ -59,6 +59,9 @@ class CastController extends BaseController {
             });
           },
           onPageFinished: (String url) {},
+          onUrlChange: (url) {
+            updateStateCanBack(url: url.url);
+          },
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
             postModel = null;
@@ -160,9 +163,11 @@ class CastController extends BaseController {
     }
     _isHasCanBack$.value = await webController.canGoBack();
     if (url != null) {
+      print('updateStateCanBack:::url:' + url.toString());
       textSearchCl.text = url;
     } else {
       webController.currentUrl().then((value) {
+        print('updateStateCanBack:::currentUrl:' + url.toString());
         if (value != null) {
           textSearchCl.text = value;
         }
