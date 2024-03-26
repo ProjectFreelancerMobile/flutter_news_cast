@@ -32,26 +32,6 @@ class AppController extends GetxController {
     await setupLocator();
     await initTheme();
     await initLanguage();
-    await initAuth();
-  }
-
-  Future<void> initAuth() async {
-    authState.value = AuthState.authorized;
-    // final storage = Get.find<MyStorage>();
-    // user = await storage.getUserInfo();
-    // final tokenModel = await storage.getDeviceToken();
-    //
-    // if (tokenModel != null) {
-    //   await initApi();
-    //   if (user?.name != null && user!.name!.isNotEmpty) {
-    //     authState.value = AuthState.authorized;
-    //   } else {
-    //     authState.value = AuthState.uncompleted;
-    //   }
-    // } else {
-    //   await initApi();
-    //   authState.value = AuthState.unauthorized;
-    // }
   }
 
   Future<void> initFirebase() async {

@@ -75,11 +75,6 @@ class MainPage extends BasePage<MainController> {
   }
 
   buildPage(BuildContext context) {
-    if (!controller.checkConnect.value) {
-      Future.delayed(Duration(seconds: 1), () {
-        showMessage(textLocalization('setting.error.connect'), second: 5);
-      });
-    }
     return SizedBox.expand(
       child: PageView(
         controller: controller.pageController,
